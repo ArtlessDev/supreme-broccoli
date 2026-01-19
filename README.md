@@ -1,2 +1,2 @@
 # supreme-broccoli
-Pirate Jam 18 sugmission
+Pirate Jam 18 submission
