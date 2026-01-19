@@ -1,19 +1,26 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JairLib;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Screens;
+using SupremeBroccoli.Screens;
 
 namespace SupremeBroccoli
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-
+        public SpriteBatch _spriteBatch;
+        private readonly ScreenManager screenManager;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Globals.GlobalContent = Content;
             IsMouseVisible = true;
+            
+            screenManager = new ScreenManager();
+            Components.Add( screenManager );
         }
 
         protected override void Initialize()
@@ -21,6 +28,7 @@ namespace SupremeBroccoli
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            screenManager.ShowScreen(new ActualGame(this));
         }
 
         protected override void LoadContent()
@@ -34,6 +42,8 @@ namespace SupremeBroccoli
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            Globals.Update(gameTime);
 
             // TODO: Add your update logic here
 
