@@ -9,12 +9,15 @@ namespace SupremeBroccoli
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager _graphics;
+        public GraphicsDevice _device;
         public SpriteBatch _spriteBatch;
         private readonly ScreenManager screenManager;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = Globals.ViewportWidth;
+            _graphics.PreferredBackBufferHeight = Globals.ViewportHeight;
             Content.RootDirectory = "Content";
             Globals.GlobalContent = Content;
             IsMouseVisible = true;

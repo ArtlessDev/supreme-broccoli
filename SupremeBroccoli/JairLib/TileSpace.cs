@@ -11,7 +11,7 @@ namespace JairLib
         public int csvValue { get; set; }
         public Vector3 altitude { get; set; }
         public bool isPit {  get; set; }
-        public TileSpaceType spaceType { get; set; }
+        public TileBeast spaceType { get; set; }
 
         public TileSpace()
         {
@@ -28,8 +28,9 @@ namespace JairLib
             isPit = setPit();
 
             altitude = setAltitude();
-            spaceType = setSpaceType();
-            texture = Globals.gameTilePrototypeAtlas[value];
+            spaceType = TileBeast.nameless;
+            //spaceType = setSpaceType();
+            texture = Globals.beastiaryAtlas[value];
             rectangle = new Rectangle();
             color = Color.White;
         }

@@ -163,7 +163,7 @@ namespace JairLib.TileGenerators
                         var xValue = (64 * (Array.IndexOf(item.ToCharArray(), digit) + 1));
 
                         TileSpace tileSpace = new TileSpace();
-                        tileSpace.texture = Globals.gameTilePrototypeAtlas[digit - '0'];
+                        tileSpace.texture = Globals.beastiaryDexAtlas[digit - '0'];
 
                         Globals.tileSpaces.Add(tileSpace);
                     }

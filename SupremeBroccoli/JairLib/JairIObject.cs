@@ -51,6 +51,11 @@ public enum TileSpaceType
     Pit,
 }
 
+public enum TileBeast
+{
+    nameless
+}
+
 public enum PlayerSide
 {
     Offense,

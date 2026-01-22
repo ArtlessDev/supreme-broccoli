@@ -14,12 +14,12 @@ namespace JairLib
     {
         public static ContentManager GlobalContent;
 
-        public static int mapWidth = 20;
-        public static int mapHeight = 40;
+        public static int mapWidth = 40;
+        public static int mapHeight = 60;
         public static int TileSize = 128;
 
-        public static Texture2D gameTilePrototypeSet, playerPrototypeSet;
-        public static Texture2DAtlas gameTilePrototypeAtlas, playerPrototypeAtlas;
+        public static Texture2D gameTilePrototypeSet, beastiary_tileset, beastiaryDex;
+        public static Texture2DAtlas gameTilePrototypeAtlas, beastiaryAtlas, beastiaryDexAtlas;
         public static int PUZZLE_SIZE = 25;
         public static int PUZZLE_SIZE_ADJUSTED = (int)(2 + Math.Sqrt(PUZZLE_SIZE)) * (int)(2 + Math.Sqrt(PUZZLE_SIZE));
         public static SpriteSheet spriteSheet, gameObjectSheet;
@@ -42,15 +42,20 @@ namespace JairLib
 
         public static Vector2 STARTING_POSITION = new Vector2(128,128);
 
+        public static MapBuilder map { get; set; }
+
         public static void Load()
         {
-            gameTilePrototypeSet = GlobalContent.Load<Texture2D>("game_tileset_prototype");
-            gameTilePrototypeAtlas = Texture2DAtlas.Create("gameTileMapPrototype", gameTilePrototypeSet, TileSize, TileSize);
+            //gameTilePrototypeSet = GlobalContent.Load<Texture2D>("game_tileset_prototype");
+            //gameTilePrototypeAtlas = Texture2DAtlas.Create("gameTileMapPrototype", gameTilePrototypeSet, TileSize, TileSize);
             
-            playerPrototypeSet = GlobalContent.Load<Texture2D>("player_spritesheet");
-            playerPrototypeAtlas = Texture2DAtlas.Create("playerTileMapPrototype", playerPrototypeSet, TileSize, TileSize);
+            beastiaryDex = GlobalContent.Load<Texture2D>("beastiary_dex");
+            beastiaryDexAtlas = Texture2DAtlas.Create("beastTileMapPrototype", beastiaryDex, TileSize, TileSize);
+            
+            beastiary_tileset = GlobalContent.Load<Texture2D>("beastiary_tileset");
+            beastiaryAtlas = Texture2DAtlas.Create("playerTileMapPrototype", beastiary_tileset, TileSize, TileSize);
 
-            //font = GlobalContent.Load<SpriteFont>("File");
+            font = GlobalContent.Load<SpriteFont>("coolvetica");
             tileSpaces = new List<TileSpace>();
         }
 
@@ -60,6 +65,7 @@ namespace JairLib
             keyb = KeyboardExtended.GetState();
             MouseExtended.Update();
             mouseState = MouseExtended.GetState();
+
         }
 
         /// <summary>
@@ -89,7 +95,7 @@ namespace JairLib
                 Globals.tileSpaces.Clear();
                 seed = SeedBuilder.TheSeedGetsSomeOnes(seed);
                 SeedBuilder.MaketheSeedGrid(gridSeed);
-                //SeedBuilder.MakeSeedGridFromList();
+                SeedBuilder.MakeSeedGridFromList();
                 gridSeed = SeedBuilder.SplitTheSeedToAGrid(seed);
             }
         }
@@ -109,8 +115,8 @@ namespace JairLib
 
             _spriteBatch.DrawString(font, "press enter to generate a new seed", new Vector2(0, 32), Color.White);
 
-            //SeedBuilder.DrawtheSeedGrid(_spriteBatch, gridSeed);
-            //SeedBuilder.DrawSeedGridFromList(_spriteBatch, map);
+            SeedBuilder.DrawtheSeedGrid(_spriteBatch, gridSeed);
+            SeedBuilder.DrawSeedGridFromList(_spriteBatch, map);
         }
 
         public static bool CheckMouseIntersection(AnyObject obj)

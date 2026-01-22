@@ -16,7 +16,7 @@ namespace JairLib.TileGenerators
             //var defaultFilePath = "C:\\Code\\Jamsepticeye-submission\\JamSepticEyeGame\\JamSepticEyeGame\\Content\\Sprites\\test.csv";
             
             //filePath = ".\\Content\\grayboxedMap.csv";
-            filePath = ".\\Content\\TiledWork\\gridironField.csv";
+            filePath = "C:\\Code\\supreme-broccoli\\SupremeBroccoli\\SupremeBroccoli\\Content\\beastiary_map.csv";
             
             Spaces = new List<TileSpace>();
 
@@ -40,7 +40,7 @@ namespace JairLib.TileGenerators
                         Spaces.Add(
                             new TileSpace(csvSpaceValue)
                             {
-                                rectangle = new Rectangle(i * 64, numberOfRows*64,64,64)
+                                rectangle = new Rectangle(i * 128, numberOfRows*128,128,128)
                             }
                         );
                         indexer++;

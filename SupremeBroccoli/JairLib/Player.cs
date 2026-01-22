@@ -24,12 +24,12 @@ public class BasePlayer : AnyObject
         //could make methods to handle animations in this sort of way
         if (deltaTime < 500)
         {
-            texture = Globals.playerPrototypeAtlas[0];
+            texture = Globals.beastiaryAtlas[0];
             Debug.WriteLine($"{deltaTime}");
         }
         else
         {
-            texture = Globals.playerPrototypeAtlas[1];
+            texture = Globals.beastiaryAtlas[1];
             Debug.WriteLine($"{deltaTime}");
         }
     }
@@ -37,7 +37,7 @@ public class BasePlayer : AnyObject
 
     public void AnimatePlayerMoving(GameTime gameTime)
     {
-        texture = Globals.playerPrototypeAtlas[0];
+        texture = Globals.beastiaryAtlas[0];
 
         var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
 
@@ -71,7 +71,7 @@ public class PlayerPlatformer : BasePlayer
     {
         identifier = "player";
 
-        texture = Globals.playerPrototypeAtlas[0]; //blue
+        texture = Globals.beastiaryAtlas[0]; //blue
         rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
         frameStartRectangle = rectangle;
         color = Color.White;
@@ -129,7 +129,7 @@ public class PlayerPlatformer : BasePlayer
         if (BasicInputs.HandleKeyDown(Keys.Left, Keys.A))
         {
             //flipper = SpriteEffects.None;
-            texture = Globals.playerPrototypeAtlas[0]; //blue
+            texture = Globals.beastiaryAtlas[0]; //blue
             playerDirection = Direction.Left;
             var adjustedX = (int)(rectangle.X - playerCurrentSpeed);
             
@@ -139,7 +139,7 @@ public class PlayerPlatformer : BasePlayer
         {
             //flipper = SpriteEffects.FlipHorizontally;
             playerDirection = Direction.Right;
-            texture = Globals.playerPrototypeAtlas[0]; //blue
+            texture = Globals.beastiaryAtlas[0]; //blue
             var adjustedX = (int)(rectangle.X + playerCurrentSpeed);
 
             rectangle = new Rectangle(adjustedX, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
@@ -204,8 +204,10 @@ public class PlayerOverworld : BasePlayer
     {
         identifier = "player";
         //texture = Globals.atlas[2 - '0'];
-        texture = Globals.playerPrototypeAtlas[1]; //blue
-        rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+        texture = Globals.beastiaryAtlas[1]; //blue
+        int startposx = Globals.TileSize * (Globals.mapWidth / 2);
+        int startposy = Globals.TileSize * (int)(Globals.mapHeight * .95);
+        rectangle = new Rectangle(startposx, startposy, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
         color = Color.White;
         flipper = SpriteEffects.None;
         state = PlayerState.Waiting;
@@ -230,7 +232,7 @@ public class PlayerOverworld : BasePlayer
 
     public void PlayerReset()
     {
-        texture = Globals.playerPrototypeAtlas[3]; //idk lol
+        texture = Globals.beastiaryAtlas[3]; //idk lol
 
         if (Globals.keyb.WasKeyPressed(Keys.R))
         {
@@ -358,16 +360,16 @@ public class PlayerOverworld : BasePlayer
         switch (state)
         {
             case PlayerState.Walking: 
-                texture = Globals.playerPrototypeAtlas[1]; //white
+                texture = Globals.beastiaryAtlas[1]; //white
                 break;
             case PlayerState.Jumping: 
-                texture = Globals.playerPrototypeAtlas[6]; //yellow
+                texture = Globals.beastiaryAtlas[6]; //yellow
                 break;
             case PlayerState.Freefall: 
-                texture = Globals.playerPrototypeAtlas[7]; //red
+                texture = Globals.beastiaryAtlas[7]; //red
                 break;
             case PlayerState.Waiting:
-                texture = Globals.playerPrototypeAtlas[8]; //orange
+                texture = Globals.beastiaryAtlas[8]; //orange
                 break;
         }
     }
@@ -400,7 +402,7 @@ public class PlayerOverworld : BasePlayer
             }
 
             //this gatekeeps the player from getting onto a platform being under it
-            if (mapEntry.spaceType == TileSpaceType.Walkable
+            if (true
                 && rectangle.Intersects(mapEntry.rectangle) 
                 && (state != PlayerState.Jumping || state != PlayerState.Freefall)
                 )
@@ -432,7 +434,7 @@ public class PlayerOverworld : BasePlayer
 
                 //this makes the player not allowed to get onto a platform if they miss a jump
                 if (space.rectangle.Intersects(rectangle) 
-                    && space.spaceType == TileSpaceType.Walkable
+                    && true //space.spaceType == TileSpaceType.Walkable
                     && playerAltitude.Z < space.altitude.Z)
                 {
                     switch (playerDirection)
