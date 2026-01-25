@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace SupremeBroccoli.Screens
 {
@@ -14,7 +16,7 @@ namespace SupremeBroccoli.Screens
         private SpriteFont _font;
         private Vector2 _titlePosition;
         private PlayerOverworld playerOverworld;
-
+        private List<TileSpace> roomMysterySpaces;
 
         public ActualGame(Game game) : base(game)
         {
@@ -29,6 +31,27 @@ namespace SupremeBroccoli.Screens
             Globals.map = new JairLib.TileGenerators.MapBuilder();
             playerOverworld = new PlayerOverworld();
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
+            roomMysterySpaces = new List<TileSpace>();
+
+            foreach (var tile in Globals.map.Spaces)
+            {
+                if (tile.csvValue == 1)
+                {
+                    roomMysterySpaces.Add(tile);
+                }
+
+                //if (Globals.mouseRect.Intersects(tile.rectangle))// && tile.csvValue == 1)
+                //{
+                //    Debug.WriteLine("gfdsgfds");
+                //    tile.color = Color.AliceBlue;
+                //}
+                //else if (tile.color == Color.AliceBlue && !Globals.mouseRect.Intersects(tile.rectangle))
+                //{
+                //    tile.color = Color.White;
+                //}
+
+            }
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -52,7 +75,7 @@ namespace SupremeBroccoli.Screens
             Game._spriteBatch.End();
             
         }
-
+        int ran = 0;
         public override void Update(GameTime gameTime)
         {
 
@@ -60,9 +83,33 @@ namespace SupremeBroccoli.Screens
             Globals.CamMove(playerOverworld.rectangle);
 
             Globals.Update(gameTime);
-            Globals.
 
-            if(Globals.keyb.WasKeyPressed(Keys.H))
+            foreach (var tile in Globals.map.Spaces)
+            {
+                //if (tile.csvValue != 1)
+                //{
+                //    break;
+                //}
+
+                if (Globals.CheckMouseIntersectionRect(tile) && Globals.mouseRect.Intersects(tile.rectangle) )
+                {
+
+                    //Debug.WriteLine("gfdsgfds");
+                    tile.color = Color.Red;
+                }
+                //else if (tile.color == Color.AliceBlue && !Globals.mouseRect.Intersects(tile.rectangle))
+                //{
+                //    tile.color = Color.White;
+                //}
+
+
+            }
+
+            //Debug.WriteLine(ran);
+            //Debug.WriteLine(Globals.mouseRect);
+
+
+            if (Globals.keyb.WasKeyPressed(Keys.H))
                 ScreenManager.ShowScreen(new MainMenu(Game));
             
         }

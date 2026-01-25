@@ -19,6 +19,7 @@ namespace JairLib.TileGenerators
             filePath = "C:\\Code\\supreme-broccoli\\SupremeBroccoli\\SupremeBroccoli\\Content\\beastiary_map.csv";
             
             Spaces = new List<TileSpace>();
+            HighlightSpaces = new List<TileSpace>();
 
             /// imports the csv, and fills the Spaces List to  
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -40,9 +41,21 @@ namespace JairLib.TileGenerators
                         Spaces.Add(
                             new TileSpace(csvSpaceValue)
                             {
-                                rectangle = new Rectangle(i * 128, numberOfRows*128,128,128)
+                                rectangle = new Rectangle(i * Globals.TileSize, numberOfRows* Globals.TileSize, Globals.TileSize, Globals.TileSize),
+                                //absolutePosition = new Vector3(i * 128, numberOfRows*128,0),
                             }
                         );
+
+                        if (csvSpaceValue == 1)
+                        {
+                            HighlightSpaces.Add(
+                                new TileSpace(csvSpaceValue)
+                                {
+                                    rectangle = new Rectangle(i * Globals.TileSize, numberOfRows * Globals.TileSize, Globals.TileSize, Globals.TileSize),
+                                    //absolutePosition = new Vector3(i * 128, numberOfRows*128,0),
+                                }
+                            );
+                        }
                         indexer++;
                     }
                     ///column needs to be the height value which is 40 in this case
@@ -57,6 +70,7 @@ namespace JairLib.TileGenerators
 
         public string filePath{ get; set; }
         public List<TileSpace> Spaces { get; set; }
+        public List<TileSpace> HighlightSpaces { get; set; }
         public int rows { get; set; }
         public int columns { get; set; }
         public static CsvReader csvFileReader {  get; set; }
@@ -73,7 +87,27 @@ namespace JairLib.TileGenerators
                     for (int left = 0; left < columns; left++)
                     {
                         TileSpace t = Spaces[indexer];
-                        _spriteBatch.Draw(Spaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), Color.White);
+                        _spriteBatch.Draw(Spaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
+                        //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
+                        indexer++;
+                    }
+                }
+            }
+        }
+
+        public void DrawHighlightMapFromList(SpriteBatch _spriteBatch)
+        {
+            if (Spaces != null)
+            {
+                var indexer = 0;
+
+                ///currently will make a square and does not fill out the entire map, the map is however coming in correctly and has 1200 values
+                for (int down = 0; down < rows; down++)
+                {
+                    for (int left = 0; left < columns; left++)
+                    {
+                        TileSpace t = HighlightSpaces[indexer];
+                        _spriteBatch.Draw(HighlightSpaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
                         //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
                         indexer++;
                     }

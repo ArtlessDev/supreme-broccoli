@@ -83,8 +83,8 @@ public class PlayerPlatformer : BasePlayer
 
     public void Update(GameTime gameTime)
     {
-        HandleGravity();
-        HandleJump();
+        //HandleGravity();
+        //HandleJump();
 
         CheckDirection();
         HorizontalMovement();
@@ -224,7 +224,7 @@ public class PlayerOverworld : BasePlayer
         {
             DiagonalMovement(mapBuilder);
             DetectCollision(mapBuilder);
-            HandleGravity(gameTime, mapBuilder);
+            //HandleGravity(gameTime, mapBuilder);
             CheckStateForColor();
         }
         
@@ -379,7 +379,7 @@ public class PlayerOverworld : BasePlayer
     //this is a bit much should probably refactor to offload tothe tilespaces 
     public void HandleGravity(GameTime gameTime, MapBuilder map)
     {
-        Debug.WriteLine(playerAltitude.Z);
+        //Debug.WriteLine(playerAltitude.Z);
         foreach (var mapEntry in map.Spaces)
         {
             //handles for when the player is above pit zones so somewhere where the player could 'fall into the void'

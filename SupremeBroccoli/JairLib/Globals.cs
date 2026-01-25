@@ -15,7 +15,7 @@ namespace JairLib
         public static ContentManager GlobalContent;
 
         public static int mapWidth = 40;
-        public static int mapHeight = 60;
+        public static int mapHeight = 29;
         public static int TileSize = 128;
 
         public static Texture2D gameTilePrototypeSet, beastiary_tileset, beastiaryDex;
@@ -65,7 +65,7 @@ namespace JairLib
             keyb = KeyboardExtended.GetState();
             MouseExtended.Update();
             mouseState = MouseExtended.GetState();
-
+            mouseRect = new (mouseState.X, mouseState.Y, 32,32);
         }
 
         /// <summary>
@@ -122,6 +122,11 @@ namespace JairLib
         public static bool CheckMouseIntersection(AnyObject obj)
         {
             return mouseRect.Intersects(new Rectangle((int)obj.absolutePosition.X, (int)obj.absolutePosition.Y, TileSize, TileSize));
+        }
+        
+        public static bool CheckMouseIntersectionRect(AnyObject obj)
+        {
+            return mouseRect.Intersects(new Rectangle((int)obj.rectangle.X, (int)obj.rectangle.Y, TileSize, TileSize));
         }
 
         public static void IsMouseHovering(FootballPlayer obj)
