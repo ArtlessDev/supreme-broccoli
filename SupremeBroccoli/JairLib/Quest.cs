@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Text.Json;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
-using System.Security.AccessControl;
-using System.Runtime.CompilerServices;
 
 namespace JairLib
 {
@@ -55,9 +53,9 @@ namespace JairLib
             if (CurrentQuest.QuestComplete)
             {
                 if (CurrentQuest.SideObjectives[2].IsCompletedFlag)
-                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2)-32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2)-32), Color.White);
+                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2) - 32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2) - 32), Color.White);
                 else 
-                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth/2) - 32, Globals.MainCamera.Position.Y +(Globals.ViewportHeight/2) - 32), Color.Red);
+                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2) - 32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2) - 32), Color.Red);
             }
 
             foreach (var objective in objectives)

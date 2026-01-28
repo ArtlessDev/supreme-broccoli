@@ -65,7 +65,9 @@ namespace JairLib
             keyb = KeyboardExtended.GetState();
             MouseExtended.Update();
             mouseState = MouseExtended.GetState();
-            mouseRect = new (mouseState.X, mouseState.Y, 32,32);
+
+            Globals.mouseRect = new(Globals.mouseState.Position.X + (int)Globals.MainCamera.Position.X, Globals.mouseState.Position.Y + (int)Globals.MainCamera.Position.Y, 8, 8);
+
         }
 
         /// <summary>
@@ -129,15 +131,25 @@ namespace JairLib
             return mouseRect.Intersects(new Rectangle((int)obj.rectangle.X, (int)obj.rectangle.Y, TileSize, TileSize));
         }
 
-        public static void IsMouseHovering(FootballPlayer obj)
+        public static void MouseHovering(TileSpace obj, PlayerOverworld player)
         {
-            if (CheckMouseIntersection(obj))
+            if (CheckMouseIntersectionRect(obj))
             {
-                obj.color = Color.White;
+
+                if (obj.csvValue == 1
+                    && obj.Position.X == player.Position.X
+                    && obj.Position.Y == player.Position.Y-128)
+                {
+                    obj.color = Color.DarkGreen;//obj.reservedColor;
+                }
+                else //if (obj.csvValue != 1)
+                {
+                    obj.color = Color.Red;
+                }
             }
-            else
+            else 
             {
-                obj.color = obj.reservedColor;
+                obj.color = Color.White;//obj.reservedColor;
             }
         }
     }

@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Screens;
+using MonoGame.Extended.ViewportAdapters;
 using SupremeBroccoli.Screens;
 
 namespace SupremeBroccoli
@@ -13,11 +15,12 @@ namespace SupremeBroccoli
         public GraphicsDevice _device;
         public SpriteBatch _spriteBatch;
         private readonly ScreenManager screenManager;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = Globals.ViewportWidth;
-            _graphics.PreferredBackBufferHeight = Globals.ViewportHeight;
+            //_graphics.PreferredBackBufferWidth = Globals.ViewportWidth;
+            //_graphics.PreferredBackBufferHeight = Globals.ViewportHeight;
             Content.RootDirectory = "Content";
             Globals.GlobalContent = Content;
             IsMouseVisible = true;
@@ -31,6 +34,10 @@ namespace SupremeBroccoli
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
+            Globals.MainCamera = new OrthographicCamera(viewportAdapter);
+
             screenManager.ShowScreen(new ActualGame(this));
         }
 
@@ -46,7 +53,7 @@ namespace SupremeBroccoli
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            Globals.Update(gameTime);
+            //Globals.Update(gameTime);
 
             // TODO: Add your update logic here
 

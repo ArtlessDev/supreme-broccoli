@@ -41,21 +41,12 @@ namespace JairLib.TileGenerators
                         Spaces.Add(
                             new TileSpace(csvSpaceValue)
                             {
-                                rectangle = new Rectangle(i * Globals.TileSize, numberOfRows* Globals.TileSize, Globals.TileSize, Globals.TileSize),
+                                rectangle = new Rectangle(i * Globals.TileSize, numberOfRows * Globals.TileSize, Globals.TileSize, Globals.TileSize),
+                                Position = new Vector2(i * Globals.TileSize, numberOfRows * Globals.TileSize)
                                 //absolutePosition = new Vector3(i * 128, numberOfRows*128,0),
                             }
                         );
 
-                        if (csvSpaceValue == 1)
-                        {
-                            HighlightSpaces.Add(
-                                new TileSpace(csvSpaceValue)
-                                {
-                                    rectangle = new Rectangle(i * Globals.TileSize, numberOfRows * Globals.TileSize, Globals.TileSize, Globals.TileSize),
-                                    //absolutePosition = new Vector3(i * 128, numberOfRows*128,0),
-                                }
-                            );
-                        }
                         indexer++;
                     }
                     ///column needs to be the height value which is 40 in this case

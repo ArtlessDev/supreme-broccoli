@@ -1,0 +1,106 @@
+{
+  "BeastList": [
+    {
+      "BeastId": 0,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 1,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 2,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 3,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 4,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 5,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 6,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 7,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 8,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 9,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 10,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 11,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 12,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 13,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 14,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 15,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    },
+    {
+      "BeastId": 16,
+      "BeastName": "chichy",
+      "FirstRow": [ 0, 0 ],
+      "SecondRow": [ 1, 0 ]
+    }
+  ]
+}

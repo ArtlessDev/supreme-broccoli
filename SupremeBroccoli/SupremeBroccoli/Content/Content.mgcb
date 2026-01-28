@@ -37,6 +37,9 @@
 /processorParam:TextureFormat=Color
 /build:beastiary_tileset.png
 
+#begin beasts.json
+/copy:beasts.json
+
 #begin coolvetica.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

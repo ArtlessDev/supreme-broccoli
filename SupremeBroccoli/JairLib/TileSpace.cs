@@ -12,6 +12,7 @@ namespace JairLib
         public Vector3 altitude { get; set; }
         public bool isPit {  get; set; }
         public TileBeast spaceType { get; set; }
+        public Beast beast { get; set; }
 
         public TileSpace()
         {
@@ -25,7 +26,7 @@ namespace JairLib
             csvValue = value;
             isCollidable = setCollision();
             
-            isPit = setPit();
+            //isPit = setPit();
 
             altitude = setAltitude();
             spaceType = TileBeast.nameless;

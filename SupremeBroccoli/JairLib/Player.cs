@@ -204,14 +204,16 @@ public class PlayerOverworld : BasePlayer
     {
         identifier = "player";
         //texture = Globals.atlas[2 - '0'];
-        texture = Globals.beastiaryAtlas[1]; //blue
+        texture = Globals.beastiaryAtlas[3]; //blue
         int startposx = Globals.TileSize * (Globals.mapWidth / 2);
         int startposy = Globals.TileSize * (int)(Globals.mapHeight * .95);
         rectangle = new Rectangle(startposx, startposy, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+        Position = new(startposx, startposy);
+
         color = Color.White;
         flipper = SpriteEffects.None;
         state = PlayerState.Waiting;
-        playerSpeed = 3;
+        playerSpeed = Globals.TileSize;
         playerAltitude = new Vector3(0, 0, 7);
     }
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
@@ -222,10 +224,11 @@ public class PlayerOverworld : BasePlayer
         }
         else
         {
-            DiagonalMovement(mapBuilder);
+            GridMovement(mapBuilder);
+            //DiagonalMovement(mapBuilder);
             DetectCollision(mapBuilder);
             //HandleGravity(gameTime, mapBuilder);
-            CheckStateForColor();
+            //CheckStateForColor();
         }
         
     }
@@ -252,9 +255,11 @@ public class PlayerOverworld : BasePlayer
         if (Globals.keyb.IsKeyDown(Keys.Left) || Globals.keyb.IsKeyDown(Keys.A))
         {
             flipper = SpriteEffects.None;
-            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);            
-            if(state!=PlayerState.Freefall)
-                state = PlayerState.Walking;
+            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+            Position = new(rectangle.X, rectangle.Y);
+            
+            //if(state!=PlayerState.Freefall)
+            //    state = PlayerState.Walking;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Left;
         }
@@ -262,8 +267,9 @@ public class PlayerOverworld : BasePlayer
         {
             flipper = SpriteEffects.FlipHorizontally;
             rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            if(state!=PlayerState.Freefall)
-                state = PlayerState.Walking;
+            Position = new(rectangle.X, rectangle.Y);
+            //if(state!=PlayerState.Freefall)
+            //    state = PlayerState.Walking;
             playerDirection = Direction.Right;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
@@ -271,16 +277,18 @@ public class PlayerOverworld : BasePlayer
         if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
         {
             rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            if(state!=PlayerState.Freefall)
-                state = PlayerState.Walking;
-            playerDirection = Direction.Up;
+            Position = new(rectangle.X, rectangle.Y);
+            //if(state!=PlayerState.Freefall)
+            //    state = PlayerState.Walking;
+            //playerDirection = Direction.Up;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
         if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
         {
             rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            if(state!=PlayerState.Freefall)
+            Position = new(rectangle.X, rectangle.Y);
+            if (state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Down;
@@ -290,13 +298,13 @@ public class PlayerOverworld : BasePlayer
             state = PlayerState.Waiting;
         }
 
-        if (Globals.keyb.WasKeyPressed(Keys.Space))
-        {
-            //texture = Globals.gameTilePrototypeAtlas[6]; //yellow
-            playerAltitude = new Vector3(playerAltitude.X, playerAltitude.Y, playerAltitude.Z + 50);
-            state = PlayerState.Freefall;
-            return;
-        }
+        //if (Globals.keyb.WasKeyPressed(Keys.Space))
+        //{
+        //    //texture = Globals.gameTilePrototypeAtlas[6]; //yellow
+        //    playerAltitude = new Vector3(playerAltitude.X, playerAltitude.Y, playerAltitude.Z + 50);
+        //    state = PlayerState.Freefall;
+        //    return;
+        //}
         
     }
     
@@ -304,55 +312,61 @@ public class PlayerOverworld : BasePlayer
     {
         var precheck = rectangle;
 
-        if (Globals.keyb.IsKeyDown(Keys.Left) || Globals.keyb.IsKeyDown(Keys.A))
+        if (Globals.keyb.WasKeyPressed(Keys.Left) || Globals.keyb.WasKeyPressed(Keys.A))
         {
             flipper = SpriteEffects.None;
-            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);            
+            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+            Position = new Vector2(rectangle.X, rectangle.Y);
+
             if(state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Left;
         }
-        else if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
+        else if (Globals.keyb.WasKeyPressed(Keys.Right) || Globals.keyb.WasKeyPressed(Keys.D))
         {
             flipper = SpriteEffects.FlipHorizontally;
             rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            if(state!=PlayerState.Freefall)
+            Position = new Vector2(rectangle.X, rectangle.Y);
+            if (state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             playerDirection = Direction.Right;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
-        else if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
+        else if (Globals.keyb.WasKeyPressed(Keys.Up) || Globals.keyb.WasKeyPressed(Keys.W))
         {
             rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            if(state!=PlayerState.Freefall)
+            Position = new Vector2(rectangle.X, rectangle.Y); 
+            if (state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             playerDirection = Direction.Up;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
 
         }
-        else if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
+        else if (Globals.keyb.WasKeyPressed(Keys.Down) || Globals.keyb.WasKeyPressed(Keys.S))
         {
             rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            if(state!=PlayerState.Freefall)
+            Position = new Vector2(rectangle.X, rectangle.Y);
+            if (state!=PlayerState.Freefall)
                 state = PlayerState.Walking;
             //texture = Globals.gameTilePrototypeAtlas[1]; //blue
             playerDirection = Direction.Down;
         }
-        else if (!Globals.keyb.WasAnyKeyJustDown() && state != PlayerState.Freefall)
-        {
-            state = PlayerState.Waiting;
-        }
+        //else if (!Globals.keyb.WasAnyKeyJustDown() && state != PlayerState.Freefall)
+        //{
+        //    //Position = new Vector2(rectangle.X, rectangle.Y);
+        //    state = PlayerState.Waiting;
+        //}
 
-        if (Globals.keyb.WasKeyPressed(Keys.Space))
-        {
-            //texture = Globals.gameTilePrototypeAtlas[6]; //yellow
-            playerAltitude = new Vector3(playerAltitude.X, playerAltitude.Y, playerAltitude.Z + 50);
-            state = PlayerState.Freefall;
-            return;
-        }
-        
+        //if (Globals.keyb.WasKeyPressed(Keys.Space))
+        //{
+        //    //texture = Globals.gameTilePrototypeAtlas[6]; //yellow
+        //    playerAltitude = new Vector3(playerAltitude.X, playerAltitude.Y, playerAltitude.Z + 50);
+        //    state = PlayerState.Freefall;
+        //    return;
+        //}
+
     }
 
     public void CheckStateForColor()
@@ -434,22 +448,25 @@ public class PlayerOverworld : BasePlayer
 
                 //this makes the player not allowed to get onto a platform if they miss a jump
                 if (space.rectangle.Intersects(rectangle) 
-                    && true //space.spaceType == TileSpaceType.Walkable
-                    && playerAltitude.Z < space.altitude.Z)
+                    && space.csvValue !=6)
                 {
                     switch (playerDirection)
                     {
                         case Direction.Left:
                             rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                            Position = new Vector2(rectangle.X, rectangle.Y);
                             return;
                         case Direction.Right:
                             rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                            Position = new Vector2(rectangle.X, rectangle.Y);
                             return;
                         case Direction.Up:
                             rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                            Position = new Vector2(rectangle.X, rectangle.Y);
                             return;
                         case Direction.Down:
                             rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                            Position = new Vector2(rectangle.X, rectangle.Y);
                             return;
                     }
                 }
