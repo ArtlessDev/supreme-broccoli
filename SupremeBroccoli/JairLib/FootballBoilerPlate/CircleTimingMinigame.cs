@@ -78,7 +78,7 @@ namespace JairLib.FootballBoilerPlate
     {
         public CircleTimingMinigameObject()
         {
-            texture = Globals.gameTilePrototypeAtlas[12];
+            texture = Atlases.gameTilePrototypeAtlas[12];
             rectangle = new Rectangle(Globals.mouseRect.X, Globals.mouseRect.Y, 64, 64);
             color = Color.White;
         }

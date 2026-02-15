@@ -12,7 +12,7 @@ namespace JairLib
         public TileTextures()
         {
             rectangle = new Rectangle(0, 0, 64, 64);
-            region = new Texture2DRegion(Globals.gameTilePrototypeSet, 0, 0, 64, 64);
+            region = new Texture2DRegion(Atlases.gameTilePrototypeSet, 0, 0, 64, 64);
             color = Color.White;
         }
         public TileTextures(Texture2DRegion txtregion)

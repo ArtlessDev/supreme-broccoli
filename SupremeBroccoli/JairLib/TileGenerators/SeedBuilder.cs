@@ -109,7 +109,7 @@ namespace JairLib.TileGenerators
 
                         var what = digit - '0';
 
-                        tileSpace.texture = Globals.gameTilePrototypeAtlas[what];
+                        tileSpace.texture = Atlases.gameTilePrototypeAtlas[what];
 
                         _spriteBatch.Draw(tileSpace.texture, new Vector2(xValue, height), Color.White);
                     }
@@ -145,7 +145,7 @@ namespace JairLib.TileGenerators
                 {
                     if (tileSpace.texture == null)
                     {
-                        tileSpace.texture = Globals.gameTilePrototypeAtlas[1 - '0'];
+                        tileSpace.texture = Atlases.gameTilePrototypeAtlas[1 - '0'];
                     }
                 }
             }
@@ -163,7 +163,7 @@ namespace JairLib.TileGenerators
                         var xValue = (64 * (Array.IndexOf(item.ToCharArray(), digit) + 1));
 
                         TileSpace tileSpace = new TileSpace();
-                        tileSpace.texture = Globals.beastiaryDexAtlas[digit - '0'];
+                        tileSpace.texture = Atlases.beastiaryDexAtlas[digit - '0'];
 
                         Globals.tileSpaces.Add(tileSpace);
                     }

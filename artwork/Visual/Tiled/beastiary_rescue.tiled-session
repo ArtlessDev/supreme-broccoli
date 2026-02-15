@@ -5,25 +5,45 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "beastiary_map.tmx": {
+            "scale": 0.10539062499999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2561.897702001483,
+                "y": 3838.102297998518
+            }
+        },
         "beastiary_tileset.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.5,
             "scaleInEditor": 1
+        },
+        "otherMAp.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -362,
+                "y": -51
+            }
         }
     },
-    "last.exportedFilePath": "C:/Code/supreme-broccoli/SupremeBroccoli/SupremeBroccoli/Content",
-    "last.imagePath": "C:/Code/supreme-broccoli/artwork/Visual",
+    "last.exportedFilePath": "C:/Code/supreme-broccoli/SupremeBroccoli/SupremeBroccoli/Content/tilemaps/town_1",
+    "last.imagePath": "C:/Code/supreme-broccoli/SupremeBroccoli/SupremeBroccoli/Content/tilemaps",
+    "map.fixedSize": false,
     "map.height": 60,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
-    "map.tileHeight": 64,
-    "map.tileWidth": 64,
+    "map.tileHeight": 128,
+    "map.tileWidth": 128,
     "map.width": 40,
     "openFiles": [
     ],
     "project": "beastiary_rescue.tiled-project",
     "recentFiles": [
+        "beastiary_map.tmx",
+        "otherMAp.tmx",
         "beastiary_tileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

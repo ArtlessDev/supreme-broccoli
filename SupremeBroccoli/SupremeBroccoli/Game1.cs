@@ -15,12 +15,13 @@ namespace SupremeBroccoli
         public GraphicsDevice _device;
         public SpriteBatch _spriteBatch;
         private readonly ScreenManager screenManager;
+        public BoxingViewportAdapter viewportAdapter;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            //_graphics.PreferredBackBufferWidth = Globals.ViewportWidth;
-            //_graphics.PreferredBackBufferHeight = Globals.ViewportHeight;
+            _graphics.PreferredBackBufferWidth = Globals.WindowWidth;
+            _graphics.PreferredBackBufferHeight = Globals.WindowHeight;
             Content.RootDirectory = "Content";
             Globals.GlobalContent = Content;
             IsMouseVisible = true;
@@ -38,7 +39,7 @@ namespace SupremeBroccoli
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
 
-            screenManager.ShowScreen(new ActualGame(this));
+            screenManager.ShowScreen(new Town_1(this));
         }
 
         protected override void LoadContent()

@@ -17,21 +17,21 @@ namespace JairLib
         public TileSpace()
         {
             isCollidable = false;
-            texture = Globals.gameTilePrototypeAtlas[0];
+            texture = Atlases.gameTilePrototypeAtlas[0];
             rectangle = new Rectangle();
             color = Color.White;
         }
         public TileSpace(int value)
         {
-            csvValue = value;
+            csvValue = (value != -1 ) ? value : 3;
             isCollidable = setCollision();
             
             //isPit = setPit();
 
-            altitude = setAltitude();
+            //altitude = setAltitude();
             spaceType = TileBeast.nameless;
             //spaceType = setSpaceType();
-            texture = Globals.beastiaryAtlas[value];
+            texture = Atlases.WorldMapAtlas[csvValue];
             rectangle = new Rectangle();
             color = Color.White;
         }

@@ -9,7 +9,7 @@ namespace JairLib
     public class KeyObjective //: ITileObject
     {
         public KeyObjective() {
-            texture = Globals.gameTilePrototypeAtlas[textureValue];
+            texture = Atlases.gameTilePrototypeAtlas[textureValue];
             color = Color.White;
         }
         public KeyObjective(Texture2DAtlas specifiedAtlas) {

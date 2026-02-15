@@ -24,12 +24,12 @@ public class BasePlayer : AnyObject
         //could make methods to handle animations in this sort of way
         if (deltaTime < 500)
         {
-            texture = Globals.beastiaryAtlas[0];
+            texture = Atlases.tilesetAtlas[0];
             Debug.WriteLine($"{deltaTime}");
         }
         else
         {
-            texture = Globals.beastiaryAtlas[1];
+            texture = Atlases.tilesetAtlas[1];
             Debug.WriteLine($"{deltaTime}");
         }
     }
@@ -37,7 +37,7 @@ public class BasePlayer : AnyObject
 
     public void AnimatePlayerMoving(GameTime gameTime)
     {
-        texture = Globals.beastiaryAtlas[0];
+        texture = Atlases.tilesetAtlas[0];
 
         var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
 
@@ -71,7 +71,7 @@ public class PlayerPlatformer : BasePlayer
     {
         identifier = "player";
 
-        texture = Globals.beastiaryAtlas[0]; //blue
+        texture = Atlases.tilesetAtlas[0]; //blue
         rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
         frameStartRectangle = rectangle;
         color = Color.White;
@@ -129,7 +129,7 @@ public class PlayerPlatformer : BasePlayer
         if (BasicInputs.HandleKeyDown(Keys.Left, Keys.A))
         {
             //flipper = SpriteEffects.None;
-            texture = Globals.beastiaryAtlas[0]; //blue
+            texture = Atlases.tilesetAtlas[0]; //blue
             playerDirection = Direction.Left;
             var adjustedX = (int)(rectangle.X - playerCurrentSpeed);
             
@@ -139,7 +139,7 @@ public class PlayerPlatformer : BasePlayer
         {
             //flipper = SpriteEffects.FlipHorizontally;
             playerDirection = Direction.Right;
-            texture = Globals.beastiaryAtlas[0]; //blue
+            texture = Atlases.tilesetAtlas[0]; //blue
             var adjustedX = (int)(rectangle.X + playerCurrentSpeed);
 
             rectangle = new Rectangle(adjustedX, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
@@ -204,9 +204,9 @@ public class PlayerOverworld : BasePlayer
     {
         identifier = "player";
         //texture = Globals.atlas[2 - '0'];
-        texture = Globals.beastiaryAtlas[3]; //blue
-        int startposx = Globals.TileSize * (Globals.mapWidth / 2);
-        int startposy = Globals.TileSize * (int)(Globals.mapHeight * .95);
+        texture = Atlases.tilesetAtlas[3]; //blue
+        int startposx = 0;//Globals.TileSize * (Globals.mapWidth / 2);
+        int startposy = 0;// Globals.TileSize * (int)(Globals.mapHeight * .95);
         rectangle = new Rectangle(startposx, startposy, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
         Position = new(startposx, startposy);
 
@@ -218,24 +218,18 @@ public class PlayerOverworld : BasePlayer
     }
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
-        if (state == PlayerState.Dead)
-        {
-            PlayerReset();
-        }
-        else
-        {
-            GridMovement(mapBuilder);
+        GridMovement(mapBuilder);
             //DiagonalMovement(mapBuilder);
-            DetectCollision(mapBuilder);
+            //DetectCollision(mapBuilder);
             //HandleGravity(gameTime, mapBuilder);
             //CheckStateForColor();
-        }
+        
         
     }
 
     public void PlayerReset()
     {
-        texture = Globals.beastiaryAtlas[3]; //idk lol
+        texture = Atlases.tilesetAtlas[3]; //idk lol
 
         if (Globals.keyb.WasKeyPressed(Keys.R))
         {
@@ -374,16 +368,16 @@ public class PlayerOverworld : BasePlayer
         switch (state)
         {
             case PlayerState.Walking: 
-                texture = Globals.beastiaryAtlas[1]; //white
+                texture = Atlases.tilesetAtlas[1]; //white
                 break;
             case PlayerState.Jumping: 
-                texture = Globals.beastiaryAtlas[6]; //yellow
+                texture = Atlases.tilesetAtlas[6]; //yellow
                 break;
             case PlayerState.Freefall: 
-                texture = Globals.beastiaryAtlas[7]; //red
+                texture = Atlases.tilesetAtlas[7]; //red
                 break;
             case PlayerState.Waiting:
-                texture = Globals.beastiaryAtlas[8]; //orange
+                texture = Atlases.tilesetAtlas[8]; //orange
                 break;
         }
     }

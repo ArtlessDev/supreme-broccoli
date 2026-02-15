@@ -59,6 +59,50 @@ namespace JairLib.TileGenerators
             }
         }
 
+        public MapBuilder(string path, int _height, int _width)
+        {
+            filePath = path;
+            Spaces = new List<TileSpace>();
+            HighlightSpaces = new List<TileSpace>();
+
+            /// imports the csv, and fills the Spaces List to  
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+            };
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, config))
+            {
+                var numberOfRows = 0;
+                while (csv.Read())
+                {
+                    var indexer = 0;
+
+                    for (int i = 0; i < _width; i++)
+                    {
+                        var csvSpaceValue = int.Parse(csv.GetField(indexer));
+
+                        Spaces.Add(
+                            new TileSpace(csvSpaceValue)
+                            {
+                                rectangle = new Rectangle(i * Globals.TileSize, numberOfRows * Globals.TileSize, Globals.TileSize, Globals.TileSize),
+                                Position = new Vector2(i * Globals.TileSize, numberOfRows * Globals.TileSize)
+                                //absolutePosition = new Vector3(i * 128, numberOfRows*128,0),
+                            }
+                        );
+
+                        indexer++;
+                    }
+                    ///column needs to be the height value which is 40 in this case
+                    /// rows need to be the width value, which in this case is 30
+                    numberOfRows++;
+                    columns = csv.ColumnCount;
+                }
+                rows = numberOfRows;
+
+            }
+        }
+
         public string filePath{ get; set; }
         public List<TileSpace> Spaces { get; set; }
         public List<TileSpace> HighlightSpaces { get; set; }
@@ -68,40 +112,41 @@ namespace JairLib.TileGenerators
 
         public void DrawMapFromList(SpriteBatch _spriteBatch)
         {
-            if (Spaces != null)
-            {
-                var indexer = 0;
+            if (Spaces == null)
+                return;
 
-                ///currently will make a square and does not fill out the entire map, the map is however coming in correctly and has 1200 values
-                for (int down = 0; down < rows; down++)
+            var indexer = 0;
+
+            ///currently will make a square and does not fill out the entire map, the map is however coming in correctly and has 1200 values
+            for (int down = 0; down < rows; down++)
+            {
+                for (int left = 0; left < columns; left++)
                 {
-                    for (int left = 0; left < columns; left++)
-                    {
-                        TileSpace t = Spaces[indexer];
-                        _spriteBatch.Draw(Spaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
-                        //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
-                        indexer++;
-                    }
+                    TileSpace t = Spaces[indexer];
+                    _spriteBatch.Draw(Spaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
+                    //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
+                    indexer++;
                 }
             }
+            
         }
 
         public void DrawHighlightMapFromList(SpriteBatch _spriteBatch)
         {
-            if (Spaces != null)
-            {
-                var indexer = 0;
+            if (Spaces == null)
+                return;
 
-                ///currently will make a square and does not fill out the entire map, the map is however coming in correctly and has 1200 values
-                for (int down = 0; down < rows; down++)
+            var indexer = 0;
+
+            ///currently will make a square and does not fill out the entire map, the map is however coming in correctly and has 1200 values
+            for (int down = 0; down < rows; down++)
+            {
+                for (int left = 0; left < columns; left++)
                 {
-                    for (int left = 0; left < columns; left++)
-                    {
-                        TileSpace t = HighlightSpaces[indexer];
-                        _spriteBatch.Draw(HighlightSpaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
-                        //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
-                        indexer++;
-                    }
+                    TileSpace t = HighlightSpaces[indexer];
+                    _spriteBatch.Draw(HighlightSpaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
+                    //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
+                    indexer++;
                 }
             }
         }

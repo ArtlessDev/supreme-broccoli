@@ -15,9 +15,9 @@ namespace SupremeBroccoli.Screens
     public class ActualGame : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
+        private PlayerOverworld playerOverworld;
         private SpriteFont _font;
         private Vector2 _titlePosition;
-        private PlayerOverworld playerOverworld;
         private List<TileSpace> roomMysterySpaces;
 
         public ActualGame(Game game) : base(game)
@@ -30,6 +30,7 @@ namespace SupremeBroccoli.Screens
             _font = Content.Load<SpriteFont>("coolvetica");
             _titlePosition = new Vector2(100, 50);
             Globals.Load();
+            Atlases.Load();
             Globals.map = new JairLib.TileGenerators.MapBuilder();
             playerOverworld = new PlayerOverworld();
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
@@ -57,7 +58,6 @@ namespace SupremeBroccoli.Screens
 
             Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
 
-
             Globals.map.DrawMapFromList(Game._spriteBatch);
             playerOverworld.Draw(Game._spriteBatch);
 
@@ -75,6 +75,7 @@ namespace SupremeBroccoli.Screens
             //Globals.CamMove(playerOverworld.rectangle);
 
             Globals.Update(gameTime);
+            int index = 0;
 
             //if (Globals.mouseState.WasButtonPressed(MouseButton.Left))
             //    Debug.WriteLine("pressed mb");
@@ -121,11 +122,11 @@ namespace SupremeBroccoli.Screens
             if (!newBeastFlag)
             {
                 //Debug.WriteLine("non-dex: " + value);
-                return tile.texture = Globals.beastiaryAtlas[value];
+                return tile.texture = Atlases.tilesetAtlas[value];
             }
 
             Debug.WriteLine("dex: " + value);
-            return tile.texture = Globals.beastiaryDexAtlas[value];
+            return tile.texture = Atlases.beastiaryDexAtlas[value];
         }
 
         private int RollForBeast(TileSpace tile)

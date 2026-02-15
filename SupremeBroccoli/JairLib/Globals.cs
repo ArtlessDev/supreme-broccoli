@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Input;
+using MonoGame.Extended.ViewportAdapters;
+using System.Diagnostics;
 
 namespace JairLib
 {
@@ -18,8 +20,6 @@ namespace JairLib
         public static int mapHeight = 29;
         public static int TileSize = 128;
 
-        public static Texture2D gameTilePrototypeSet, beastiary_tileset, beastiaryDex;
-        public static Texture2DAtlas gameTilePrototypeAtlas, beastiaryAtlas, beastiaryDexAtlas;
         public static int PUZZLE_SIZE = 25;
         public static int PUZZLE_SIZE_ADJUSTED = (int)(2 + Math.Sqrt(PUZZLE_SIZE)) * (int)(2 + Math.Sqrt(PUZZLE_SIZE));
         public static SpriteSheet spriteSheet, gameObjectSheet;
@@ -36,8 +36,12 @@ namespace JairLib
         public static int currentLevel = 1;
         public static int CountOfTiles = 8;
 
-        public static int ViewportHeight = 720;//480;
-        public static int ViewportWidth = 1280;//800;
+        public static int ViewportHeight = 1080;//480;
+        public static int ViewportWidth = 1920;//800;
+
+        public static int WindowHeight = 720;//480;
+        public static int WindowWidth = 1280;//800;
+        
         public static OrthographicCamera MainCamera;
 
         public static Vector2 STARTING_POSITION = new Vector2(128,128);
@@ -46,15 +50,6 @@ namespace JairLib
 
         public static void Load()
         {
-            //gameTilePrototypeSet = GlobalContent.Load<Texture2D>("game_tileset_prototype");
-            //gameTilePrototypeAtlas = Texture2DAtlas.Create("gameTileMapPrototype", gameTilePrototypeSet, TileSize, TileSize);
-            
-            beastiaryDex = GlobalContent.Load<Texture2D>("beastiary_dex");
-            beastiaryDexAtlas = Texture2DAtlas.Create("beastTileMapPrototype", beastiaryDex, TileSize, TileSize);
-            
-            beastiary_tileset = GlobalContent.Load<Texture2D>("beastiary_tileset");
-            beastiaryAtlas = Texture2DAtlas.Create("playerTileMapPrototype", beastiary_tileset, TileSize, TileSize);
-
             font = GlobalContent.Load<SpriteFont>("coolvetica");
             tileSpaces = new List<TileSpace>();
         }
@@ -82,9 +77,10 @@ namespace JairLib
 
         public static void CamMove(Rectangle player)
         {
-            var playerFocusX = player.X - (ViewportWidth / 2) + 16;
-            var playerFocusY = player.Y - (ViewportHeight / 2) + 16;
-            MainCamera.Position = new(playerFocusX, playerFocusY);
+            MainCamera.LookAt(new (player.X, player.Y));
+            //var playerFocusX = player.X - (ViewportWidth / 2) + 16;
+            //var playerFocusY = player.Y - (ViewportHeight / 2) + 16;
+            //MainCamera.Position = new(playerFocusX, playerFocusY);
         }
 
         /// <summary>
@@ -117,8 +113,9 @@ namespace JairLib
 
             _spriteBatch.DrawString(font, "press enter to generate a new seed", new Vector2(0, 32), Color.White);
 
-            SeedBuilder.DrawtheSeedGrid(_spriteBatch, gridSeed);
-            SeedBuilder.DrawSeedGridFromList(_spriteBatch, map);
+
+            //SeedBuilder.DrawtheSeedGrid(_spriteBatch, gridSeed);
+            map.DrawMapFromList(_spriteBatch);
         }
 
         public static bool CheckMouseIntersection(AnyObject obj)
@@ -152,5 +149,6 @@ namespace JairLib
                 obj.color = Color.White;//obj.reservedColor;
             }
         }
+
     }
 }

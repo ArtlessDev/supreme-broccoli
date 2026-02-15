@@ -69,7 +69,7 @@ namespace JairLib.FootballBoilerPlate
             ThrowingSpeed = 50;
             ThrowingStrength = 50;
             ThrowingAccuracy = 50;
-            texture = Globals.gameTilePrototypeAtlas[6]; //blue
+            texture = Atlases.gameTilePrototypeAtlas[6]; //blue
         }
         public Quarterback(Vector2 vec)
         {
@@ -78,7 +78,7 @@ namespace JairLib.FootballBoilerPlate
             reservedColor = color;
             rectangle = new Rectangle((int)vec.X, (int)Globals.MainCamera.Position.Y, Globals.TileSize, Globals.TileSize); //Globals.TileSize * i, )
             absolutePosition = new Vector3((int)vec.X, 64, 1);
-            texture = Globals.gameTilePrototypeAtlas[6]; //blue
+            texture = Atlases.gameTilePrototypeAtlas[6]; //blue
         }
 
         public void ThrowBall()
@@ -98,7 +98,7 @@ namespace JairLib.FootballBoilerPlate
             reservedColor = color;
             rectangle = new Rectangle((int)vec.X, (int)Globals.MainCamera.Position.Y, Globals.TileSize, Globals.TileSize); //Globals.TileSize * i, )
             absolutePosition = new Vector3((int)vec.X, 64, 1);
-            texture = Globals.gameTilePrototypeAtlas[7];
+            texture = Atlases.gameTilePrototypeAtlas[7];
         }
     }
         
