@@ -18,24 +18,32 @@ namespace JairLib
         public bool QuestComplete {  get; set; }
     }
 
-    public static class QuestSystem
+    public class QuestSystem
     {
-        public static Quest? CurrentQuest;
-        public static bool InitiatedFirstQuest = false;
-        //public static string FirstQuest = "C:\\Code\\Jamsepticeye-submission\\JamSepticEyeGame\\JamSepticEyeGame\\Content\\JsonFiles\\FirstQuest.json";
+        public Quest? CurrentQuest;
+        public bool InitiatedFirstQuest = false;
+        //public  string FirstQuest = "C:\\Code\\Jamsepticeye-submission\\JamSepticEyeGame\\JamSepticEyeGame\\Content\\JsonFiles\\FirstQuest.json";
         //NEED TO DOUBLE CHECK THIS IN THE RELEASE BUILD TO MAKE SURE IT WORKS
-        public static string FirstQuest = ".\\Content\\FirstQuest.json";
-        public static string FirstQuestMod = "FirstQuest.json";
+        public string QuestString = ".\\Content\\FirstQuest.json";
+        public string FirstQuestMod = "FirstQuest.json";
 
-        public static void SetFirstQuestAsCurrent()
+
+
+        public QuestSystem(string jsonString)
         {
-            using Stream stream = TitleContainer.OpenStream(FirstQuest);
-            string jsonString = File.ReadAllText(FirstQuest);
+            QuestString = jsonString;
+            SetFirstQuestAsCurrent();
+        }
+
+        public void SetFirstQuestAsCurrent()
+        {
+            using Stream stream = TitleContainer.OpenStream(QuestString);
+            string jsonString = File.ReadAllText(QuestString);
             CurrentQuest = JsonSerializer.Deserialize<Quest>(jsonString);
             CurrentQuest.QuestComplete = false;
         }
 
-        public static void DrawCurrentQuestObjective(SpriteBatch _spriteBatch, PlayerOverworld player)
+        public void DrawCurrentQuestObjective(SpriteBatch _spriteBatch, PlayerOverworld player)
         {
             KeyObjective[] objectives =
             {
@@ -76,70 +84,60 @@ namespace JairLib
 
         }
 
-        public static void Update(GameTime gameTime, PlayerOverworld player)
+        public void Update(GameTime gameTime, PlayerOverworld player)
         {
-            if (CurrentQuest.SideObjectives != null) {
-
-                foreach (var obj in CurrentQuest.SideObjectives)
-                {
-                    //Debug.WriteLine(obj.texture);
-                    if (player.rectangle.Intersects(obj.rectangle)
-                        && Globals.keyb.WasKeyPressed(Keys.E))
-                    {
-                        Debug.WriteLine(obj.objectiveTitle);
-                        obj.IsCompletedFlag = true;
-                    }
-                }
-
-                if (CurrentQuest.SideObjectives[2].IsCompletedFlag && Globals.keyb.WasKeyPressed(Keys.E) 
-                    && CurrentQuest.SideObjectives[2].rectangle.Intersects(player.rectangle)
-                    && CurrentQuest.SideObjectives.Count<3)
-                {
-                    CurrentQuest.SideObjectives.RemoveAt(4);
-                    CurrentQuest.SideObjectives.RemoveAt(3);
-                    return;
-                }
+            if (CurrentQuest.SideObjectives != null)
+            {
+                HandleSideQuest(player);
             }
 
-            if (CurrentQuest.StartingObjective.IsCompletedFlag == true 
-                && CurrentQuest.MiddleObjective.IsCompletedFlag == true 
+            if (CurrentQuest.StartingObjective.IsCompletedFlag == true
+                && CurrentQuest.MiddleObjective.IsCompletedFlag == true
                 && CurrentQuest.EndingObjective.IsCompletedFlag == true)
             {
                 CurrentQuest.QuestComplete = true;
             }
 
-            if (CurrentQuest.StartingObjective.IsCompletedFlag == false)
+            IsSingleObjectiveComplete(player, CurrentQuest.StartingObjective);
+            IsSingleObjectiveComplete(player, CurrentQuest.MiddleObjective);
+            IsSingleObjectiveComplete(player, CurrentQuest.EndingObjective);
+        }
+
+        void HandleSideQuest(PlayerOverworld player)
+        {
+            foreach (var obj in CurrentQuest.SideObjectives)
             {
-                if (player.rectangle.Intersects(CurrentQuest.StartingObjective.rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
+                //Debug.WriteLine(obj.texture);
+                if (player.rectangle.Intersects(obj.rectangle)
+                    && Globals.keyb.WasKeyPressed(Keys.E))
+                {
+                    Debug.WriteLine(obj.objectiveTitle);
+                    obj.IsCompletedFlag = true;
+                }
+            }
+
+            if (CurrentQuest.SideObjectives[2].IsCompletedFlag && Globals.keyb.WasKeyPressed(Keys.E)
+                && CurrentQuest.SideObjectives[2].rectangle.Intersects(player.rectangle)
+                && CurrentQuest.SideObjectives.Count < 3)
+            {
+                CurrentQuest.SideObjectives.RemoveAt(4);
+                CurrentQuest.SideObjectives.RemoveAt(3);
+                return;
+            }
+        }
+
+        void IsSingleObjectiveComplete(PlayerOverworld player, KeyObjective objective)
+        {
+            if (objective.IsCompletedFlag == false)
+            {
+                if (player.rectangle.Intersects(objective.rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
                 {
                     CurrentQuest.StartingObjective.IsCompletedFlag = true;
                     InitiatedFirstQuest = true;
                     return;
                 }
             }
-            if (CurrentQuest.MiddleObjective.IsCompletedFlag == false)
-            {
-                if (player.rectangle.Intersects(CurrentQuest.MiddleObjective.rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
-                {
-                    CurrentQuest.MiddleObjective.IsCompletedFlag = true;
-                    InitiatedFirstQuest = true;
-
-                    return;
-                }
-            }
-            if (CurrentQuest.EndingObjective.IsCompletedFlag == false)
-            {
-                if (player.rectangle.Intersects(CurrentQuest.EndingObjective.rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
-                {
-                    if (CurrentQuest.MiddleObjective.IsCompletedFlag && CurrentQuest.StartingObjective.IsCompletedFlag)
-                    {
-                        CurrentQuest.EndingObjective.IsCompletedFlag = true;
-                        InitiatedFirstQuest = true;
-                    }
-                    return;
-                }
-            }
-
         }
+        
     }
 }

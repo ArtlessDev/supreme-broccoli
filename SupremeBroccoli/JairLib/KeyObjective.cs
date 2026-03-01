@@ -19,8 +19,8 @@ namespace JairLib
         public string objectiveTitle { get; set; }
         public string objectiveDescription { get; set; }
         public string identifier { get; set; }
-        public int x {get; set;}
-        public int y {get; set;}
+        public int x {get; set { value = value * Globals.TileSize; } }
+        public int y {get; set { value = value * Globals.TileSize; } }
         public int width {get; set;}
         public int height {get; set;}
         public Rectangle rectangle => new Rectangle(x,y,width,height);

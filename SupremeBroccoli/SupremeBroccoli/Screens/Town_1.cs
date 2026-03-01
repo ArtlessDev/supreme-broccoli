@@ -20,6 +20,7 @@ namespace SupremeBroccoli.Screens
         private new Game1 Game => (Game1)base.Game;
         private PlayerOverworld playerOverworld;
         MapBuilder mapTopLayer, mapBottomLayer;
+        QuestSystem town_1_quest;
 
         public Town_1(Game game) : base(game)
         {
