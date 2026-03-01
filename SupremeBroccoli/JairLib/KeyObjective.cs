@@ -9,7 +9,8 @@ namespace JairLib
     public class KeyObjective //: ITileObject
     {
         public KeyObjective() {
-            texture = Atlases.gameTilePrototypeAtlas[textureValue];
+            //TODO: make the json read the 2nd constructor, not this one
+            texture = Atlases.beastiaryDexAtlas[textureValue];
             color = Color.White;
         }
         public KeyObjective(Texture2DAtlas specifiedAtlas) {
@@ -19,13 +20,14 @@ namespace JairLib
         public string objectiveTitle { get; set; }
         public string objectiveDescription { get; set; }
         public string identifier { get; set; }
-        public int x {get; set { value = value * Globals.TileSize; } }
-        public int y {get; set { value = value * Globals.TileSize; } }
+        public int X { get; set; }
+        public int Y { get; set; }
         public int width {get; set;}
         public int height {get; set;}
-        public Rectangle rectangle => new Rectangle(x,y,width,height);
+        public Rectangle rectangle => new Rectangle(X,Y,width,height);
         public int textureValue {  get; set; }
         public Texture2DRegion texture { get; set; }
+        public Texture2DAtlas textureAtlas { get; set; }
         public Color color { get; set; }
         public bool IsCompletedFlag { get; set; }
         public bool IsMainQuest { get; set; }

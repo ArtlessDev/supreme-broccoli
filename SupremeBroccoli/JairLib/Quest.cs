@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Text.Json;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Graphics;
 
 namespace JairLib
 {
@@ -27,12 +28,18 @@ namespace JairLib
         public string QuestString = ".\\Content\\FirstQuest.json";
         public string FirstQuestMod = "FirstQuest.json";
 
-
+        Texture2DAtlas questAtlas;
 
         public QuestSystem(string jsonString)
         {
             QuestString = jsonString;
             SetFirstQuestAsCurrent();
+        }
+        public QuestSystem(string jsonString, Texture2DAtlas _atlas)
+        {
+            QuestString = jsonString;
+            SetFirstQuestAsCurrent();
+            questAtlas = _atlas;
         }
 
         public void SetFirstQuestAsCurrent()
@@ -52,19 +59,10 @@ namespace JairLib
                 CurrentQuest.EndingObjective,
             };
 
-            foreach (var obj in CurrentQuest.SideObjectives)
-            {
-                obj.DrawNoCheck(_spriteBatch, player);
-                obj.texture = Atlases.gameTilePrototypeAtlas[obj.textureValue];
-            }
+            if (CurrentQuest.SideObjectives != null)
+                DrawSideObjectives(_spriteBatch, player);
 
-            if (CurrentQuest.QuestComplete)
-            {
-                if (CurrentQuest.SideObjectives[2].IsCompletedFlag)
-                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2) - 32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2) - 32), Color.White);
-                else 
-                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2) - 32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2) - 32), Color.Red);
-            }
+            //WasQuestCompletedGoodOrBad(_spriteBatch);
 
             foreach (var objective in objectives)
             {
@@ -72,16 +70,36 @@ namespace JairLib
                 if (!objective.IsCompletedFlag)
                 {
                     objective.Draw(_spriteBatch);
-                    objective.texture = Atlases.gameTilePrototypeAtlas[objective.textureValue];
+                    objective.texture = questAtlas[objective.textureValue];
                     return;
                 }
-                
+
                 if (objective.IsCompletedFlag)
                 {
                     objective.Draw(_spriteBatch);
                 }
             }
 
+        }
+
+        private void WasQuestCompletedGoodOrBad(SpriteBatch _spriteBatch)
+        {
+            if (CurrentQuest.QuestComplete)
+            {
+                if (CurrentQuest.SideObjectives[2].IsCompletedFlag)
+                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2) - 32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2) - 32), Color.White);
+                else
+                    _spriteBatch.DrawString(Globals.font, "GameOver", new(Globals.MainCamera.Position.X + (Globals.ViewportWidth / 2) - 32, Globals.MainCamera.Position.Y + (Globals.ViewportHeight / 2) - 32), Color.Red);
+            }
+        }
+
+        private void DrawSideObjectives(SpriteBatch _spriteBatch, PlayerOverworld player)
+        {
+            foreach (var obj in CurrentQuest.SideObjectives)
+            {
+                obj.DrawNoCheck(_spriteBatch, player);
+                obj.texture = Atlases.gameTilePrototypeAtlas[obj.textureValue];
+            }
         }
 
         public void Update(GameTime gameTime, PlayerOverworld player)

@@ -47,6 +47,9 @@
 /processorParam:TextureFormat=Compressed
 /build:coolvetica.spritefont
 
+#begin Quests/quest_1.json
+/copy:Quests/quest_1.json
+
 #begin tilemaps/tileset_original - Copy.png
 /importer:TextureImporter
 /processor:TextureProcessor

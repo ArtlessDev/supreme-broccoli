@@ -28,7 +28,8 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\" />
+    <Folder Include="Content\Quests\" />
+    <Folder Include="Core\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JairLib\JairLib.csproj" />

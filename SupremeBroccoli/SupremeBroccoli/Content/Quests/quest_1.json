@@ -1,0 +1,42 @@
+{
+  "QuestIdentifier": "FirstQuest",
+  "StartingObjective": {
+    "objectiveTitle": "Getting the Trash",
+    "objectiveDescription": "I should take out the trash...\nbut whats the point",
+    "identifier": "part one",
+    "x": 5,
+    "y": 5,
+    "width": 128,
+    "height": 128,
+    "textureValue": 0,
+    "IsCompletedFlag": false,
+    "IsMainQuest": true,
+    "IsAutoTrigger": false
+  },
+  "MiddleObjective": {
+    "objectiveTitle": "Taking out da trash",
+    "objectiveDescription": "ok, i should get back,\n but theres no point",
+    "identifier": "",
+    "x": 7,
+    "y": 7,
+    "width": 128,
+    "height": 128,
+    "textureValue": 1,
+    "IsCompletedFlag": false,
+    "IsMainQuest": true,
+    "IsAutoTrigger": false
+  },
+  "EndingObjective": {
+    "objectiveTitle": "I am gonna go to sleep",
+    "objectiveDescription": " ",
+    "identifier": "final",
+    "x": 9,
+    "y": 9,
+    "width": 128,
+    "height": 128,
+    "textureValue": 2,
+    "IsCompletedFlag": false,
+    "IsMainQuest": true,
+    "IsAutoTrigger": false
+  }
+}

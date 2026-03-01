@@ -40,6 +40,8 @@ namespace SupremeBroccoli.Screens
 
             mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv",20, 20);
             mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+            //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
 
             playerOverworld.Position = new Vector2(mapTopLayer.Spaces[0].rectangle.X, mapTopLayer.Spaces[0].rectangle.Y);
 
@@ -53,7 +55,7 @@ namespace SupremeBroccoli.Screens
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
 
-
+            town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, playerOverworld);
 
             playerOverworld.Draw(Game._spriteBatch);
 
@@ -68,6 +70,8 @@ namespace SupremeBroccoli.Screens
             Globals.Update(gameTime);
 
             playerOverworld.Update(gameTime, mapTopLayer);
+
+            town_1_quest.Update(gameTime, playerOverworld);
 
             Globals.MainCamera.LookAt(playerOverworld.Position);
             //throw new NotImplementedException();
