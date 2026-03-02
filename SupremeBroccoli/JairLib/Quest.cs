@@ -71,7 +71,7 @@ namespace JairLib
                 {
                     objective.Draw(_spriteBatch);
                     objective.texture = questAtlas[objective.textureValue];
-                    return;
+                    //return;
                 }
 
                 if (objective.IsCompletedFlag)
@@ -150,9 +150,9 @@ namespace JairLib
             {
                 if (player.rectangle.Intersects(objective.rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
                 {
-                    CurrentQuest.StartingObjective.IsCompletedFlag = true;
+                    objective.IsCompletedFlag = true;
                     InitiatedFirstQuest = true;
-                    return;
+                    //return;
                 }
             }
         }

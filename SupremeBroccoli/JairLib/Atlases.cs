@@ -37,5 +37,20 @@ namespace JairLib
             tilesetAtlas = Texture2DAtlas.Create("playerTileMapPrototype", beastiary_tileset, Globals.TileSize, Globals.TileSize);
 
         }
+
+        public static Texture2DAtlas SetAtlas(int value)
+        {
+            switch (value)
+            {
+                case 0:
+                    return WorldMapAtlas;
+                case 1:
+                    return beastiaryDexAtlas;
+                case 2:
+                    return tilesetAtlas;
+                default:
+                    return gameTilePrototypeAtlas;
+            }
+        }
     }
 }
