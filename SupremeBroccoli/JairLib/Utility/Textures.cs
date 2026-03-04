@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 
-namespace JairLib
+namespace JairLib.Utility
 {
     public class TileTextures : AnyObject
     {

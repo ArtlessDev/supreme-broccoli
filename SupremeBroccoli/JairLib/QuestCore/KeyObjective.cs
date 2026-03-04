@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JairLib.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
 
-namespace JairLib
+namespace JairLib.QuestCore
 {
     public class KeyObjective //: ITileObject
     {
@@ -25,11 +26,11 @@ namespace JairLib
         private int _y;
         public int X
         {
-            get { return (int)_x; }
+            get { return _x; }
             set { _x = value * Globals.TileSize; }
         }
         public int Y {
-            get { return (int)_y; }
+            get { return _y; }
             set { _y = value * Globals.TileSize; }
         }
         public int width {get; set;}
@@ -47,7 +48,7 @@ namespace JairLib
     
         public void Update(GameTime gameTime, PlayerOverworld player)
         {
-            if (player.rectangle.Intersects(this.rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
+            if (player.rectangle.Intersects(rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
             {
                 //Debug.WriteLine(this.objectiveTitle);
                 IsCompletedFlag = true;
@@ -74,7 +75,7 @@ namespace JairLib
 
         public void DrawNoCheck(SpriteBatch _spriteBatch, PlayerOverworld player)
         {
-            if (this.IsAutoTrigger && player.rectangle.Intersects(this.rectangle))
+            if (IsAutoTrigger && player.rectangle.Intersects(rectangle))
             {
                 _spriteBatch.DrawString(Globals.font, objectiveDescription, new(player.rectangle.X, player.rectangle.Y+32), Color.White);
             }

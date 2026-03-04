@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JairLib
+namespace JairLib.Utility
 {
     public class AnyObject : ITileObject
     {
@@ -17,7 +17,5 @@ namespace JairLib
         public Color color { get; set; }
         public Vector3 absolutePosition { get; set; }
         public Vector2 Position { get; set; }
-        public float mass {  get; set; }
-        public float acceleration { get; set; }
     }
 }

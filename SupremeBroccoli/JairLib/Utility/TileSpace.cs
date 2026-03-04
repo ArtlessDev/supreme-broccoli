@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JairLib.BeastiaryCore;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
 
-namespace JairLib
+namespace JairLib.Utility
 {
     public class TileSpace : AnyObject
     {
@@ -23,7 +24,7 @@ namespace JairLib
         }
         public TileSpace(int value)
         {
-            csvValue = (value != -1 ) ? value : 3;
+            csvValue = value != -1  ? value : 3;
             isCollidable = setCollision();
             
             //isPit = setPit();

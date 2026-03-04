@@ -9,6 +9,9 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using MonoGame.Extended.Input;
 using MonoGame.Extended.Graphics;
+using JairLib.Utility;
+using JairLib.BeastiaryCore;
+using MonoGame.Extended.Screens.Transitions;
 
 namespace SupremeBroccoli.Screens
 {
@@ -22,6 +25,8 @@ namespace SupremeBroccoli.Screens
 
         public ActualGame(Game game) : base(game)
         {
+            UpdateWhenInactive = false;
+            DrawWhenInactive = false;
         }
 
         public override void LoadContent()
@@ -115,6 +120,8 @@ namespace SupremeBroccoli.Screens
                 }
             }
 
+            ScreenManager.ShowScreen(new Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+            
         }
 
         public Texture2DRegion AtlasPicker(TileSpace tile, int value, bool newBeastFlag)

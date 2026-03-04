@@ -10,7 +10,7 @@ using MonoGame.Extended.Input;
 using MonoGame.Extended.ViewportAdapters;
 using System.Diagnostics;
 
-namespace JairLib
+namespace JairLib.Utility
 {
     public static class Globals
     {
@@ -61,7 +61,7 @@ namespace JairLib
             MouseExtended.Update();
             mouseState = MouseExtended.GetState();
 
-            Globals.mouseRect = new(Globals.mouseState.Position.X + (int)Globals.MainCamera.Position.X, Globals.mouseState.Position.Y + (int)Globals.MainCamera.Position.Y, 8, 8);
+            mouseRect = new(mouseState.Position.X + (int)MainCamera.Position.X, mouseState.Position.Y + (int)MainCamera.Position.Y, 8, 8);
 
         }
 
@@ -90,7 +90,7 @@ namespace JairLib
         {
             if (keyb.WasKeyPressed(Keys.Enter))
             {
-                Globals.tileSpaces.Clear();
+                tileSpaces.Clear();
                 seed = SeedBuilder.TheSeedGetsSomeOnes(seed);
                 SeedBuilder.MaketheSeedGrid(gridSeed);
                 SeedBuilder.MakeSeedGridFromList();
@@ -125,7 +125,7 @@ namespace JairLib
         
         public static bool CheckMouseIntersectionRect(AnyObject obj)
         {
-            return mouseRect.Intersects(new Rectangle((int)obj.rectangle.X, (int)obj.rectangle.Y, TileSize, TileSize));
+            return mouseRect.Intersects(new Rectangle(obj.rectangle.X, obj.rectangle.Y, TileSize, TileSize));
         }
 
         public static void MouseHovering(TileSpace obj, PlayerOverworld player)

@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using JairLib.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace JairLib
+namespace JairLib.BeastiaryCore
 {
     public class Beastiary
     {

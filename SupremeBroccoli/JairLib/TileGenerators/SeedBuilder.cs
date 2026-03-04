@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.Graphics;
+using JairLib.Utility;
 
 namespace JairLib.TileGenerators
 {

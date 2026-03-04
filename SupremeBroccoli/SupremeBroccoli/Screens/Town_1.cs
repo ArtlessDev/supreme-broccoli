@@ -1,6 +1,8 @@
 ﻿using Assimp;
 using JairLib;
+using JairLib.QuestCore;
 using JairLib.TileGenerators;
+using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -15,7 +17,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SupremeBroccoli.Screens
 {
-    internal class Town_1 : GameScreen
+    public class Town_1 : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
         private PlayerOverworld playerOverworld;
@@ -24,6 +26,8 @@ namespace SupremeBroccoli.Screens
 
         public Town_1(Game game) : base(game)
         {
+            UpdateWhenInactive = false;
+            DrawWhenInactive = false;
         }
 
         public override void LoadContent()
@@ -74,7 +78,6 @@ namespace SupremeBroccoli.Screens
             town_1_quest.Update(gameTime, playerOverworld);
 
             Globals.MainCamera.LookAt(playerOverworld.Position);
-            //throw new NotImplementedException();
         }
     }
 }
