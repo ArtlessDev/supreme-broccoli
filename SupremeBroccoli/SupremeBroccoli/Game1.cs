@@ -39,7 +39,8 @@ namespace SupremeBroccoli
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
 
-            screenManager.ShowScreen(new Town_1(this));
+            //screenManager.ShowScreen(new Screens.Towns.Town_1(this));
+            screenManager.ShowScreen(new Screens.MainMenu(this));
         }
 
         protected override void LoadContent()

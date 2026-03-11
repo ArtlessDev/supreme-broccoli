@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SupremeBroccoli.Screens.Routes
+namespace SupremeBroccoli.Screens.Mountain
 {
-    internal class MtDragoon
+    internal class MtDragoon_1
     {
     }
 }

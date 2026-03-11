@@ -8,5 +8,6 @@ namespace SupremeBroccoli.Screens.Towns
 {
     internal class Town_4
     {
+        //town connected by the Mt. Dragoon 2 and Route_4
     }
 }

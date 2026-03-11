@@ -120,7 +120,7 @@ namespace SupremeBroccoli.Screens
                 }
             }
 
-            ScreenManager.ShowScreen(new Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+            ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             
         }
 
