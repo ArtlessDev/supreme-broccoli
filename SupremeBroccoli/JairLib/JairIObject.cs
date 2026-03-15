@@ -78,3 +78,10 @@ public enum DominantHand
     Left,
     Right,
 }
+
+public enum Element
+{
+    None,
+    Ice,
+    Fire
+}

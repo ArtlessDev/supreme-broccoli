@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace JairLib.QuestCore
 {
-    public class KeyObjective //: ITileObject
+    public class KeyObjective : AnyObject//: ITileObject
     {
         public KeyObjective() {
             //TODO: make the json read the 2nd constructor, not this one
