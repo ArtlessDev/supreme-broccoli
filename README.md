@@ -1,2 +1,3 @@
-# supreme-broccoli
-Pirate Jam 18 submission
+# SideQuests: Dragon's Terror
+once supreme-broccoli
+working title. but this is my first steam release
