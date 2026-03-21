@@ -3,11 +3,14 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "worldMap.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "C:/Code/shiny-octo-umbrella/Tiled/doodl_plat.tsx": {
+            "scaleInDock": 1
+        },
         "beastiary_map.tmx": {
             "scale": 0.10539062499999999,
             "selectedLayer": 0,
@@ -27,6 +30,17 @@
                 "x": -362,
                 "y": -51
             }
+        },
+        "tileset_original.tsx": {
+            "scaleInDock": 0.25
+        },
+        "worldMap.tmx": {
+            "scale": 0.015625,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": -1152,
+                "y": -1632
+            }
         }
     },
     "last.exportedFilePath": "C:/Code/supreme-broccoli/SupremeBroccoli/SupremeBroccoli/Content/tilemaps/town_1",
@@ -39,9 +53,11 @@
     "map.tileWidth": 128,
     "map.width": 40,
     "openFiles": [
+        "worldMap.tmx"
     ],
     "project": "beastiary_rescue.tiled-project",
     "recentFiles": [
+        "worldMap.tmx",
         "beastiary_map.tmx",
         "otherMAp.tmx",
         "beastiary_tileset.tsx"

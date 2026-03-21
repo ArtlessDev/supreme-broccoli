@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //A GOOD START TO BE ABLE TO WORK WITH BUT NEED TO CLEAN UP AND DECOUPLE
+
 public class BattleFunctions{
     //decides the turn order
     public static int TurnDecider(Monster mon1, Monster mon2){
