@@ -43,15 +43,6 @@ namespace SupremeBroccoli.Screens
             roomMysterySpaces = new List<TileSpace>();
 
             Debug.WriteLine(Globals.MainCamera.Position);
-            //foreach (var tile in Globals.map.Spaces)
-            //{
-            //    if (tile.csvValue == 1)
-            //    {
-            //        roomMysterySpaces.Add(tile);
-            //    }
-
-            //}
-
         }
         public override void Draw(GameTime gameTime)
         {
@@ -59,15 +50,11 @@ namespace SupremeBroccoli.Screens
 
             // TODO: Add your drawing code here
 
-            //var transformMatrix = Globals.MainCamera.GetViewMatrix();
-
             Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
 
             Globals.map.DrawMapFromList(Game._spriteBatch);
             playerOverworld.Draw(Game._spriteBatch);
 
-            //Game._spriteBatch.DrawString(_font, "Main Menu", _titlePosition, Color.White);
-            //Game._spriteBatch.DrawString(_font, "Press Enter To Play", new Vector2(100, 100), Color.White);
             Game._spriteBatch.End();
             
         }

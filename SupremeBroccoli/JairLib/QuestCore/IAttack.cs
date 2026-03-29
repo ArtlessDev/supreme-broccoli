@@ -18,7 +18,7 @@ namespace JairLib.QuestCore
         public byte KindOfAttack;
         public byte Type;
 
-        public delegate void GameUpgradeDelegate(Player _player);
+        //public delegate void GameUpgradeDelegate(Player _player);
 
 
     }

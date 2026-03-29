@@ -25,7 +25,7 @@ namespace JairLib.Utility
         public static void Load()
         {
 
-            //gameTilePrototypeSet = Globals.GlobalContent.Load<Texture2D>("game_tileset_prototype");
+            //gameTilePrototypeSet = Globals.GlobalContent.Load<Texture2D>("GrayboxTileSet");
             //gameTilePrototypeAtlas = Texture2DAtlas.Create("gameTileMapPrototype", gameTilePrototypeSet, Globals.TileSize, Globals.TileSize);
             WorldMapSet = Globals.GlobalContent.Load<Texture2D>("tilemaps\\tileset_original");
             WorldMapAtlas = Texture2DAtlas.Create("worldMapAtlas", WorldMapSet, Globals.TileSize, Globals.TileSize);

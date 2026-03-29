@@ -118,6 +118,17 @@ namespace JairLib.Utility
             map.DrawMapFromList(_spriteBatch);
         }
 
+        public static byte generator_256()
+        {
+            byte[] b = new byte[32];
+
+            Random random = new Random();
+            
+            random.NextBytes(b);
+
+            return b[0];
+        }
+
         public static bool CheckMouseIntersection(AnyObject obj)
         {
             return mouseRect.Intersects(new Rectangle((int)obj.absolutePosition.X, (int)obj.absolutePosition.Y, TileSize, TileSize));

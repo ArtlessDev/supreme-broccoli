@@ -7,6 +7,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 using SupremeBroccoli.Screens;
+using SupremeBroccoli.Screens.Towns;
 
 namespace SupremeBroccoli
 {
@@ -41,7 +42,7 @@ namespace SupremeBroccoli
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
 
             //screenManager.ShowScreen(new Screens.Towns.Town_1(this));
-            screenManager.ShowScreen(new Screens.MainMenu(this));
+            screenManager.ShowScreen(new Town_1(this));
         }
 
         protected override void LoadContent()
