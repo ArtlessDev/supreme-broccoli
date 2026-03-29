@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace JairLib.QuestCore
 {
-    public interface IAttack
+    public partial class Attack
     {
         /// <summary>
         /// TODO: FINISH THIS ACCORDING TO EXCEL
         /// </summary>
-        public int Power
-        public int Accuracy
-        public int Effect
-        public int KindOfAttack
-        public int Type
+        public byte Power;
+        public byte Accuracy;
+        public byte Effect;
+        public byte KindOfAttack;
+        public byte Type;
+
+        public delegate void GameUpgradeDelegate(Player _player);
+
 
     }
 }
