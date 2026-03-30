@@ -37,17 +37,14 @@ namespace SupremeBroccoli.Screens.Towns
             base.LoadContent();
             //_font = Content.Load<SpriteFont>("coolvetica");
             //_titlePosition = new Vector2(100, 50);
-            Globals.Load();
-            Atlases.Load();
+
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
-            Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
+            //RpgPlayer.PlayerOverworld.Position = Game.startingPosition;
 
             mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
             mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
             town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
             //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
-
-            RpgPlayer.PlayerOverworld.Position = new Vector2(mapTopLayer.Spaces[0].rectangle.X, mapTopLayer.Spaces[0].rectangle.Y);
 
         }
         public override void Draw(GameTime gameTime)
@@ -65,8 +62,6 @@ namespace SupremeBroccoli.Screens.Towns
 
             Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Route_1, Color.White);
 
-            //Game._spriteBatch.DrawString(_font, "Main Menu", _titlePosition, Color.White);
-            //Game._spriteBatch.DrawString(_font, "Press Enter To Play", new Vector2(100, 100), Color.White);
             Game._spriteBatch.End();
 
         }
@@ -90,11 +85,18 @@ namespace SupremeBroccoli.Screens.Towns
         public void GoToRoute_1()
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Route_1))
+            {
+                int x = 4 * Globals.TileSize, 
+                    y = 2 * Globals.TileSize;
+                RpgPlayer.PlayerOverworld.Position = new(x, y);
+                RpgPlayer.PlayerOverworld.rectangle = new(x, y, Globals.TileSize, Globals.TileSize);
                 ScreenManager.ShowScreen(new Routes.Route_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+            }
         }
 
         public void GoToRoute_3()
         {
+            //TODO set correct position 
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Route_1))
                 ScreenManager.ShowScreen(new Routes.Route_3(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
         }

@@ -18,6 +18,7 @@ namespace SupremeBroccoli
         public SpriteBatch _spriteBatch;
         private readonly ScreenManager screenManager;
         public BoxingViewportAdapter viewportAdapter;
+        public Vector2 startingPosition = new Vector2(3*Globals.TileSize, 3 * Globals.TileSize);
 
         public Game1()
         {
@@ -41,14 +42,20 @@ namespace SupremeBroccoli
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
 
-            //screenManager.ShowScreen(new Screens.Towns.Town_1(this));
+            /// SETS STARTING POSITION OF PLAYER IN GAME
+            RpgPlayer.PlayerOverworld.Position = startingPosition;
+            RpgPlayer.PlayerOverworld.rectangle = new((int)RpgPlayer.PlayerOverworld.Position.X, (int)RpgPlayer.PlayerOverworld.Position.Y, RpgPlayer.PlayerOverworld.rectangle.Width, RpgPlayer.PlayerOverworld.rectangle.Height);
+            Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
+            Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
+            
             screenManager.ShowScreen(new Town_1(this));
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            Globals.Load();
+            Atlases.Load();
             // TODO: use this.Content to load your game content here
         }
 
@@ -56,10 +63,6 @@ namespace SupremeBroccoli
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            //Globals.Update(gameTime);
-
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }

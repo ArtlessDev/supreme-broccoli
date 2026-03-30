@@ -224,12 +224,12 @@ public class PlayerOverworld : BasePlayer
         color = Color.White;
         flipper = SpriteEffects.None;
         state = PlayerState.Waiting;
-        playerSpeed = Globals.TileSize;
+        playerSpeed = 8;
     }
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
-        GridMovement(mapBuilder);
-            //DiagonalMovement(mapBuilder);
+        //GridMovement(mapBuilder);
+        DiagonalMovement(mapBuilder);
             //DetectCollision(mapBuilder);
             //HandleGravity(gameTime, mapBuilder);
             //CheckStateForColor();
