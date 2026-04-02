@@ -8,6 +8,9 @@
         "."
     ],
     "fileStates": {
+        "C:/Code/Snippets_1/TiledProjects/blockers.tsx": {
+            "scaleInDock": 1
+        },
         "C:/Code/shiny-octo-umbrella/Tiled/doodl_plat.tsx": {
             "scaleInDock": 1
         },
@@ -35,15 +38,19 @@
             "scaleInDock": 0.25
         },
         "worldMap.tmx": {
-            "scale": 0.015625,
-            "selectedLayer": 2,
+            "expandedGroupLayers": [
+                4,
+                9
+            ],
+            "scale": 0.0625,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": -1152,
-                "y": -1632
+                "x": -6512,
+                "y": -920
             }
         }
     },
-    "last.exportedFilePath": "C:/Code/supreme-broccoli/SupremeBroccoli/SupremeBroccoli/Content/tilemaps/town_1",
+    "last.exportedFilePath": "C:/Code/supreme-broccoli/artwork/Visual/Tiled/town_1",
     "last.imagePath": "C:/Code/supreme-broccoli/SupremeBroccoli/SupremeBroccoli/Content/tilemaps",
     "map.fixedSize": false,
     "map.height": 60,
