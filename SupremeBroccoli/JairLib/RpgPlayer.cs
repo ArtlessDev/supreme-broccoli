@@ -11,6 +11,7 @@ namespace JairLib
     {
         public static PlayerOverworld PlayerOverworld = new();
         public static InCombatPlayer InCombatPlayer = new();
+        public static int PLAYER_TILESIZE_IN_WORLD = 100;
     }
     public class InCombatPlayer
     {

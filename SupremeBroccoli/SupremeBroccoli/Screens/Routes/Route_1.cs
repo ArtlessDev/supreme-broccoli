@@ -86,7 +86,7 @@ namespace SupremeBroccoli.Screens.Routes
             {
                 int x = 12 * Globals.TileSize,
                     y = (18 * Globals.TileSize) - Globals.TileSize;
-                RpgPlayer.PlayerOverworld.rectangle = new Rectangle(x, y, Globals.TileSize, Globals.TileSize);
+                RpgPlayer.PlayerOverworld.rectangle = new Rectangle(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }

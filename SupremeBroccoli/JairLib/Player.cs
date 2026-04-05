@@ -63,12 +63,11 @@ public class BasePlayer : AnyObject, QuestCore.IStats
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        //spriteBatch.Draw(texture, rectangle, color);
         var rotation = 0f;
         var origin = new Vector2(0, 0);
         var position = new Vector2(rectangle.X, rectangle.Y);
         var scale = new Vector2(1f, 1f);
-
+        //the size of the sprite will always match the size of the tile splitter 
         spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, 1f);
 
     }
@@ -85,7 +84,7 @@ public class PlayerPlatformer : BasePlayer
         identifier = "player";
 
         texture = Atlases.tilesetAtlas[0]; //blue
-        rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+        rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         frameStartRectangle = rectangle;
         color = Color.White;
         flipper = SpriteEffects.None;
@@ -216,9 +215,9 @@ public class PlayerOverworld : BasePlayer
     {
         identifier = "player";
         texture = Atlases.tilesetAtlas[3]; //blue
-        int startposx = 0;//Globals.TileSize * (Globals.mapWidth / 2);
-        int startposy = 0;// Globals.TileSize * (int)(Globals.mapHeight * .95);
-        rectangle = new Rectangle(startposx, startposy, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+        int startposx = 0;
+        int startposy = 0;
+        rectangle = new Rectangle(startposx, startposy, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         Position = new(startposx, startposy);
 
         color = Color.White;
@@ -228,9 +227,9 @@ public class PlayerOverworld : BasePlayer
     }
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
-        //GridMovement(mapBuilder);
-        DiagonalMovement(mapBuilder);
-            //DetectCollision(mapBuilder);
+        GridMovement(mapBuilder);
+        //DiagonalMovement(mapBuilder);
+
             //HandleGravity(gameTime, mapBuilder);
             //CheckStateForColor();
         
@@ -289,36 +288,41 @@ public class PlayerOverworld : BasePlayer
     {
         var precheck = rectangle;
 
-        if (Globals.keyb.WasKeyPressed(Keys.Left) || Globals.keyb.WasKeyPressed(Keys.A))
+        if (Globals.keyb.IsKeyDown(Keys.Left) || Globals.keyb.IsKeyDown(Keys.A))
         {
             flipper = SpriteEffects.None;
-            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
             Position = new Vector2(rectangle.X, rectangle.Y);
-
+            state = PlayerState.Walking;
             playerDirection = Direction.Left;
         }
-        else if (Globals.keyb.WasKeyPressed(Keys.Right) || Globals.keyb.WasKeyPressed(Keys.D))
+        else if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
         {
             flipper = SpriteEffects.FlipHorizontally;
-            rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+            rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
             Position = new Vector2(rectangle.X, rectangle.Y);
-            
+            state = PlayerState.Walking;
+
             playerDirection = Direction.Right;
         }
-        else if (Globals.keyb.WasKeyPressed(Keys.Up) || Globals.keyb.WasKeyPressed(Keys.W))
+        else if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
         {
-            rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            Position = new Vector2(rectangle.X, rectangle.Y); 
-         
+            rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+            Position = new Vector2(rectangle.X, rectangle.Y);
+            state = PlayerState.Walking;
+
             playerDirection = Direction.Up;
         }
-        else if (Globals.keyb.WasKeyPressed(Keys.Down) || Globals.keyb.WasKeyPressed(Keys.S))
+        else if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
         {
-            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
             Position = new Vector2(rectangle.X, rectangle.Y);
-         
+            state = PlayerState.Walking;
+
             playerDirection = Direction.Down;
         }
+        else
+            state = PlayerState.Waiting;
     }
 
     public void CheckStateForColor()
@@ -342,57 +346,38 @@ public class PlayerOverworld : BasePlayer
 
     public void DetectCollision(MapBuilder mapBuilder)
     {
-        if (state == PlayerState.Walking && mapBuilder != null)
+        if (mapBuilder == null)
+            return;
+
+        if (state != PlayerState.Walking)
+            return;
+
+        foreach (var space in mapBuilder.Spaces)
         {
-            foreach (var space in mapBuilder.Spaces)
+
+            //this makes the player not allowed to get onto a platform if they miss a jump
+            if (rectangle.Intersects(space.rectangle) 
+                && space.csvValue == 6)
             {
-
-                //this makes the player not allowed to get onto a platform if they miss a jump
-                if (space.rectangle.Intersects(rectangle) 
-                    && space.csvValue !=6)
+                switch (playerDirection)
                 {
-                    switch (playerDirection)
-                    {
-                        case Direction.Left:
-                            rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            Position = new Vector2(rectangle.X, rectangle.Y);
-                            return;
-                        case Direction.Right:
-                            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            Position = new Vector2(rectangle.X, rectangle.Y);
-                            return;
-                        case Direction.Up:
-                            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            Position = new Vector2(rectangle.X, rectangle.Y);
-                            return;
-                        case Direction.Down:
-                            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            Position = new Vector2(rectangle.X, rectangle.Y);
-                            return;
-                    }
+                    case Direction.Left:
+                        rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        return;
+                    case Direction.Right:
+                        rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        return;
+                    case Direction.Up:
+                        rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        return;
+                    case Direction.Down:
+                        rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        return;
                 }
-
-                //this is for walls
-                if (space.rectangle.Intersects(rectangle) && space.isCollidable)
-                {
-                    switch (playerDirection)
-                    {
-                        case Direction.Left:
-                            rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            return;
-                        case Direction.Right:
-                            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            return;
-                        case Direction.Up:
-                            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            return;
-                        case Direction.Down:
-                            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                            return;
-                    }
-                }
-
-                
             }
         }
     }

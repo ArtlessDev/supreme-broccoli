@@ -18,7 +18,7 @@ namespace SupremeBroccoli
         public SpriteBatch _spriteBatch;
         private readonly ScreenManager screenManager;
         public BoxingViewportAdapter viewportAdapter;
-        public Vector2 startingPosition = new Vector2(3*Globals.TileSize, 3 * Globals.TileSize);
+        public Vector2 startingPosition = new Vector2(4*Globals.TileSize, 3 * Globals.TileSize);
 
         public Game1()
         {

@@ -22,7 +22,7 @@ namespace SupremeBroccoli.Screens.Towns
     public class Town_1 : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
-        MapBuilder mapTopLayer, mapBottomLayer;
+        MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer;
         QuestSystem town_1_quest;
 
         public Town_1(Game game) : base(game)
@@ -41,6 +41,7 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
             //RpgPlayer.PlayerOverworld.Position = Game.startingPosition;
 
+            mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
             mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
             mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
             town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
@@ -55,6 +56,7 @@ namespace SupremeBroccoli.Screens.Towns
 
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
+            //mapBlockerLayer.DrawMapFromList(Game._spriteBatch);
 
             town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
@@ -69,11 +71,11 @@ namespace SupremeBroccoli.Screens.Towns
         public override void Update(GameTime gameTime)
         {
             Globals.Update(gameTime);
-
+            
+            RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
-
             town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
-
+            
             GoToRoute_1();
 
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
@@ -89,7 +91,7 @@ namespace SupremeBroccoli.Screens.Towns
                 int x = 4 * Globals.TileSize, 
                     y = 2 * Globals.TileSize;
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
-                RpgPlayer.PlayerOverworld.rectangle = new(x, y, Globals.TileSize, Globals.TileSize);
+                RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
                 ScreenManager.ShowScreen(new Routes.Route_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
         }
