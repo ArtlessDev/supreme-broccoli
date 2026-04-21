@@ -41,12 +41,16 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
             //RpgPlayer.PlayerOverworld.Position = Game.startingPosition;
 
+            
             mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
             mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
             mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
-            town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
             //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
 
+            mapBlockerLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
+            mapBottomLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
+            mapTopLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
         }
         public override void Draw(GameTime gameTime)
         {
