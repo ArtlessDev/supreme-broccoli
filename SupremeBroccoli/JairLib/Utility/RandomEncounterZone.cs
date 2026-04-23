@@ -8,6 +8,11 @@ namespace JairLib.Utility
     public class RandomEncounterZone: AnyObject
     {
         public bool isPlayerInZone = false;
+        public byte areWeEncounteringWithThis;
+        public int seconds;
+        public bool runEncounterFlag = true;
+        public bool generateNewEncounterLock = false;
+
         public RandomEncounterZone()
         {
             rectangle = new();
@@ -33,46 +38,56 @@ namespace JairLib.Utility
             sb.Draw(texture.Texture, rectangle, Color.Aqua);//position, Color.Aqua, rotation, origin, scale, SpriteEffects.None, 1f);
 
         }
-        public byte areWeEncounteringWithThis;
-        public int seconds;
         public void Update(GameTime gameTime)
         {
             isPlayerInZone = checkPlayerInZone();
 
-            if (!isPlayerInZone && gameTime.ElapsedGameTime.Milliseconds != 0 )
+            if (!isPlayerInZone && !hasSecondPassed(gameTime) && !runEncounterFlag )
                 return;
 
-            areWeEncounteringWithThis = RollForByte();
+            if (generateNewEncounterLock)
+                areWeEncounteringWithThis = RollForByte();
 
         }
 
         public bool tryForEncounter(GameTime gameTime)
         {
-            
-            if (areWeEncounteringWithThis % 16 == 0
-                && RpgPlayer.PlayerOverworld.state == PlayerState.Walking
-                && hasSecondPassed(gameTime)
-                )
+            if (seconds+3 >= gameTime.TotalGameTime.Seconds 
+                || generateNewEncounterLock
+                || RpgPlayer.PlayerOverworld.state != PlayerState.Walking)
             {
-                Debug.WriteLine($"{areWeEncounteringWithThis} : byte.");
+                return false;
+            }
+
+            if (areWeEncounteringWithThis % 16 == 0 && hasSecondPassed(gameTime))
+            {
                 seconds = gameTime.TotalGameTime.Seconds;
+                runEncounterFlag = true;
+                generateNewEncounterLock = false;
 
                 return true;
             }
+
+
             return false;
         }
 
         public bool hasSecondPassed(GameTime gameTime)
         {
-            if (seconds != gameTime.TotalGameTime.Seconds)
+            if (seconds+3 != gameTime.TotalGameTime.Seconds)
                 return true;
             return false;
         }
 
         private byte RollForByte()
         {
+            if (generateNewEncounterLock) //true = on
+                return 1;
+
             byte toReturn = (byte)Random.Shared.Next(255);
-            
+
+            generateNewEncounterLock = true;
+
             return Byte.Clamp(toReturn, 0, 255);
         }
 

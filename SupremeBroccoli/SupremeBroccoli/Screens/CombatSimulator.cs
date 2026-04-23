@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JairLib.Utility;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Screens.Transitions;
 
 namespace SupremeBroccoli.Screens
 {
@@ -23,12 +26,19 @@ namespace SupremeBroccoli.Screens
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            Globals.Update(gameTime);
+
+
+            if (Globals.keyb.WasKeyPressed(Keys.Enter))
+                ScreenManager.ShowScreen(new Routes.Route_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+
+
+            //throw new NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
