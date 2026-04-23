@@ -41,16 +41,24 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
             //RpgPlayer.PlayerOverworld.Position = Game.startingPosition;
 
-            
-            mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
-            mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
-            mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            //non-work-pc
+            //mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
+            //mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
+            //mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
             //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
 
-            mapBlockerLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
-            mapBottomLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
-            mapTopLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
-            town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+            //work pc
+            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            //town_1_quest = new QuestSystem(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+            //town_1_quest = new QuestSystem(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+            //town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+
+            //mapBlockerLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
+            //mapBottomLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
+            //mapTopLayer = new MapBuilder(@".\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            //town_1_quest = new QuestSystem(SupremeBroccoli.Core.ConfigStrings.town1quest, Atlases.beastiaryDexAtlas);
         }
         public override void Draw(GameTime gameTime)
         {
@@ -62,7 +70,7 @@ namespace SupremeBroccoli.Screens.Towns
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
             //mapBlockerLayer.DrawMapFromList(Game._spriteBatch);
 
-            town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            //town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
 
@@ -78,8 +86,10 @@ namespace SupremeBroccoli.Screens.Towns
             
             RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
-            town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
+            //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
             
+
+
             GoToRoute_1();
 
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);

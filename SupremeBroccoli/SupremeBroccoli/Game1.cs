@@ -7,6 +7,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 using SupremeBroccoli.Screens;
+using SupremeBroccoli.Screens.Routes;
 using SupremeBroccoli.Screens.Towns;
 
 namespace SupremeBroccoli
@@ -48,7 +49,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
-            screenManager.ShowScreen(new MainMenu(this));
+            screenManager.ShowScreen(new Route_1(this));
         }
 
         protected override void LoadContent()

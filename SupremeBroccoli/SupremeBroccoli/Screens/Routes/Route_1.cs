@@ -22,6 +22,7 @@ namespace SupremeBroccoli.Screens.Routes
         private Vector2 _titlePosition;
         private List<TileSpace> roomMysterySpaces;
         MapBuilder mapTopLayer, mapBottomLayer;
+        RandomEncounterZone encounterZone;
 
         public Route_1(Game game) : base(game)
         {
@@ -36,11 +37,13 @@ namespace SupremeBroccoli.Screens.Routes
             //_titlePosition = new Vector2(100, 50);
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
-            mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
-            mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            //mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
+            //mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
             //town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
             //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
-
+            encounterZone = new(3, 5, 10, 10);
         }
         public override void Draw(GameTime gameTime)
         {
@@ -51,6 +54,7 @@ namespace SupremeBroccoli.Screens.Routes
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
 
+            encounterZone.Draw(Game._spriteBatch);
             //route_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
@@ -71,7 +75,7 @@ namespace SupremeBroccoli.Screens.Routes
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
 
             //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
-
+            encounterZone.Update(gameTime);
             //GoToRoute_1();
             GoToTown_1();
             GoToTown_2();
