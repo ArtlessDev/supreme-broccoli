@@ -19,7 +19,7 @@ namespace SupremeBroccoli.Screens.Routes
         private SpriteFont _font;
         private Vector2 _titlePosition;
         private List<TileSpace> roomMysterySpaces;
-        MapBuilder mapTopLayer, mapBottomLayer;
+        MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer; // <<<< need to add these to a singular object so that theyre easier to track
         RandomEncounterZone encounterZone;
 
         public Route_1(Game game) : base(game)
@@ -35,13 +35,14 @@ namespace SupremeBroccoli.Screens.Routes
             //_titlePosition = new Vector2(100, 50);
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
-            //mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
-            //mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
-            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
-            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 60, 50);
+            mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
+            mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
+            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
             //town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
             //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
-            encounterZone = new(3, 5, 10, 10);
+            encounterZone = new(2, 6, 40, 40);
         }
         public override void Draw(GameTime gameTime)
         {
@@ -49,10 +50,12 @@ namespace SupremeBroccoli.Screens.Routes
 
             Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
 
+            mapBlockerLayer.DrawMapFromList(Game._spriteBatch);
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
 
-            encounterZone.Draw(Game._spriteBatch);
+            if (switcher)
+                encounterZone.Draw(Game._spriteBatch);
             //route_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
@@ -64,13 +67,22 @@ namespace SupremeBroccoli.Screens.Routes
             Game._spriteBatch.End();
 
         }
-
+        bool switcher = false;
         public override void Update(GameTime gameTime)
         {
             CheckForEncounter(gameTime);
 
             Globals.Update(gameTime);
 
+            if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
+            {
+                if (switcher)
+                    switcher = false;
+                else
+                    switcher = true;
+            }
+
+            RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
 
             //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
@@ -98,7 +110,7 @@ namespace SupremeBroccoli.Screens.Routes
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_1))
             {
-                int x = 12 * Globals.TileSize,
+                int x = 15 * Globals.TileSize,
                     y = (18 * Globals.TileSize) - Globals.TileSize;
                 RpgPlayer.PlayerOverworld.rectangle = new Rectangle(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
