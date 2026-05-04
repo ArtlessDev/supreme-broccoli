@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+namespace JairLib.CombatSimulator;
 
 //A GOOD START TO BE ABLE TO WORK WITH BUT NEED TO CLEAN UP AND DECOUPLE
 

@@ -8,11 +8,58 @@
         "."
     ],
     "fileStates": {
+        "C:/../Snippets_1/TiledProjects/blockers.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/../shiny-octo-umbrella/Tiled/doodl_plat.tsx": {
+            "scaleInDock": 1
+        },
         "C:/Code/Snippets_1/TiledProjects/blockers.tsx": {
             "scaleInDock": 1
         },
         "C:/Code/shiny-octo-umbrella/Tiled/doodl_plat.tsx": {
             "scaleInDock": 1
+        },
+        "C:/Users/jayan/Downloads/beastiary_tileset.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jayan/Downloads/otherMAp.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 8,
+                "y": -580
+            }
+        },
+        "C:/Users/jayan/Downloads/tileset_original.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jayan/Downloads/worldMap(1).tmx": {
+            "scale": 0.03125,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": -2368,
+                "y": 336
+            }
+        },
+        "C:/Users/jayan/Downloads/worldMap(2).tmx": {
+            "expandedGroupLayers": [
+                4
+            ],
+            "scale": 0.025419921874999998,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 1022.8198232808318,
+                "y": 1042.4894352669999
+            }
+        },
+        "C:/Users/jayan/Downloads/worldMap.tmx": {
+            "scale": 0.0625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -3856,
+                "y": -88
+            }
         },
         "beastiary_map.tmx": {
             "scale": 0.10539062499999999,
@@ -38,14 +85,11 @@
             "scaleInDock": 0.25
         },
         "worldMap.tmx": {
-            "expandedGroupLayers": [
-                9
-            ],
-            "scale": 0.33,
-            "selectedLayer": 5,
+            "scale": 0.0625,
+            "selectedLayer": 13,
             "viewCenter": {
-                "x": 45.454545454545496,
-                "y": 4540.909090909091
+                "x": -1952,
+                "y": -2008
             }
         }
     },
@@ -63,6 +107,10 @@
     ],
     "project": "beastiary_rescue.tiled-project",
     "recentFiles": [
+        "C:/Users/jayan/Downloads/worldMap(2).tmx",
+        "C:/Users/jayan/Downloads/worldMap(1).tmx",
+        "C:/Users/jayan/Downloads/otherMAp.tmx",
+        "C:/Users/jayan/Downloads/worldMap.tmx",
         "worldMap.tmx",
         "beastiary_map.tmx",
         "otherMAp.tmx",

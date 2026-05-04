@@ -49,7 +49,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
-            screenManager.ShowScreen(new Route_1(this));
+            screenManager.ShowScreen(new CombatSimulator(this));
         }
 
         protected override void LoadContent()

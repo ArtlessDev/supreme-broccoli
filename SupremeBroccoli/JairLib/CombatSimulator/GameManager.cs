@@ -2,6 +2,7 @@ using JairLib.QuestCore;
 using System.Collections;
 using System.Collections.Generic;
 
+namespace JairLib.CombatSimulator;
 
 public class GameManager 
 {

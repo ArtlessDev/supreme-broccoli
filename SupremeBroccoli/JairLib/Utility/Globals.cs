@@ -33,6 +33,7 @@ namespace JairLib.Utility
         public static string seed;
         public static string[] gridSeed;
         public static SpriteFont font;
+        public static int fontSize = 24;
         public static int currentLevel = 1;
         public static int CountOfTiles = 8;
 

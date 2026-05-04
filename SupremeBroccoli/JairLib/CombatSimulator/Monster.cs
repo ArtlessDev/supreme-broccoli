@@ -1,3 +1,5 @@
+namespace JairLib.CombatSimulator;
+
 public class Monster{
     int speed, attack, health, specialAttack, defense;
     string name, typeOne;
