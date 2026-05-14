@@ -1,9 +1,11 @@
 ﻿using JairLib.InputHandler;
+using JairLib.QuestCore;
 using JairLib.TileGenerators;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
 using System.Timers;
@@ -16,6 +18,8 @@ public class BasePlayer : AnyObject, QuestCore.IStats
     public SpriteEffects flipper { get; set; }
     public Direction playerDirection { get; set; }
     public PlayerState state { get; set; }
+    public Rectangle interactionBox;
+
 
     #region Stats
     public int HealthPoints { get; set; }
@@ -69,6 +73,9 @@ public class BasePlayer : AnyObject, QuestCore.IStats
         var scale = new Vector2(1f, 1f);
         //the size of the sprite will always match the size of the tile splitter 
         spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, 1f);
+        
+        if(interactionBox != null)
+            spriteBatch.DrawRectangle(interactionBox, color);
 
     }
 }
@@ -227,13 +234,23 @@ public class PlayerOverworld : BasePlayer
     }
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
-        GridMovement(mapBuilder);
-        //DiagonalMovement(mapBuilder);
+        //interactWithBox();
 
-            //HandleGravity(gameTime, mapBuilder);
-            //CheckStateForColor();
+        GridMovement(mapBuilder);
+
+        ///TODO: need to add an 'interaction box' just an object that is ALWAYS in front of the player
+        ///     regardless of where they are. the point of it is to be able to interact with objects and NPCs 
+        ///     it essentially acts as an arm for the player
+                
+    }
+
+    public void interactWithBox()
+    {
+        if (!Globals.keyb.WasKeyPressed(Keys.E))
+            return;
+        ///NEED TO FINISH THE PLAYER INTERACTING WITH NPC AND THEN THE GUI APPEARING WITH THE TXT DIALOGUE FROM THE KEYOBJECTIVE OBJECT
         
-        
+
     }
 
     public void PlayerReset()
@@ -288,13 +305,18 @@ public class PlayerOverworld : BasePlayer
     {
         var precheck = rectangle;
 
+        if (state == PlayerState.InCommunication)
+            return;
+
         if (Globals.keyb.IsKeyDown(Keys.Left) || Globals.keyb.IsKeyDown(Keys.A))
         {
             flipper = SpriteEffects.None;
             rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
             Position = new Vector2(rectangle.X, rectangle.Y);
             state = PlayerState.Walking;
+
             playerDirection = Direction.Left;
+            interactionBox = new Rectangle(rectangle.X - 64, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         }
         else if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
         {
@@ -304,6 +326,7 @@ public class PlayerOverworld : BasePlayer
             state = PlayerState.Walking;
 
             playerDirection = Direction.Right;
+            interactionBox = new Rectangle(rectangle.X + 64, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         }
         else if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
         {
@@ -312,6 +335,7 @@ public class PlayerOverworld : BasePlayer
             state = PlayerState.Walking;
 
             playerDirection = Direction.Up;
+            interactionBox = new Rectangle(rectangle.X, rectangle.Y-64, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         }
         else if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
         {
@@ -320,6 +344,8 @@ public class PlayerOverworld : BasePlayer
             state = PlayerState.Walking;
 
             playerDirection = Direction.Down;
+            interactionBox = new Rectangle(rectangle.X, rectangle.Y + 64, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+
         }
         else
             state = PlayerState.Waiting;

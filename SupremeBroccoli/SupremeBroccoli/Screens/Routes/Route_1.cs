@@ -4,6 +4,7 @@ using JairLib.TileGenerators;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
@@ -74,7 +75,7 @@ namespace SupremeBroccoli.Screens.Routes
 
             Globals.Update(gameTime);
 
-            if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
+            if (Globals.keyb.WasKeyPressed(Keys.E))
             {
                 if (switcher)
                     switcher = false;

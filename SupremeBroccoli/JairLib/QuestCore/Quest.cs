@@ -28,7 +28,7 @@ namespace JairLib.QuestCore
         //NEED TO DOUBLE CHECK THIS IN THE RELEASE BUILD TO MAKE SURE IT WORKS
         public string QuestString = ".\\Content\\FirstQuest.json";
         public string FirstQuestMod = "FirstQuest.json";
-
+        public KeyObjective[] objectives;
         Texture2DAtlas questAtlas;
 
         public QuestSystem(string jsonString)
@@ -41,6 +41,12 @@ namespace JairLib.QuestCore
             QuestString = jsonString;
             SetFirstQuestAsCurrent();
             questAtlas = _atlas;
+            objectives =
+            [
+                CurrentQuest.StartingObjective,
+                CurrentQuest.MiddleObjective,
+                CurrentQuest.EndingObjective,
+            ];
         }
 
         public void SetFirstQuestAsCurrent()
@@ -53,12 +59,7 @@ namespace JairLib.QuestCore
 
         public void DrawCurrentQuestObjective(SpriteBatch _spriteBatch, PlayerOverworld player)
         {
-            KeyObjective[] objectives =
-            {
-                CurrentQuest.StartingObjective,
-                CurrentQuest.MiddleObjective,
-                CurrentQuest.EndingObjective,
-            };
+
 
             if (CurrentQuest.SideObjectives != null)
                 DrawSideObjectives(_spriteBatch, player);

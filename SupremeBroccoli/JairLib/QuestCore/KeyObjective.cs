@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace JairLib.QuestCore
 {
@@ -55,9 +56,29 @@ namespace JairLib.QuestCore
             }
         }
 
-        public void isPlayerInteracting()
+        public CustomGUI isPlayerInteracting(CustomGUI gui)
         {
+            if (!Globals.keyb.WasKeyPressed(Keys.E))
+                return gui;
 
+
+            var playerctx = RpgPlayer.PlayerOverworld;
+            var playerIntersectFlag = playerctx.interactionBox.Intersects(rectangle);
+
+            if (!playerIntersectFlag)
+                return gui;
+
+
+            if(playerctx.state == PlayerState.InCommunication)
+                playerctx.state = PlayerState.Waiting;
+            else
+                playerctx.state = PlayerState.InCommunication;
+
+            gui.isGuiEnabled = !gui.isGuiEnabled;
+
+            gui.currentText = objectiveDescription;
+
+            return gui;
         }
 
         public void Draw(SpriteBatch _spriteBatch)

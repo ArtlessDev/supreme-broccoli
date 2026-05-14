@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens.Transitions;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace SupremeBroccoli.Screens
 {
@@ -36,6 +37,10 @@ namespace SupremeBroccoli.Screens
                 ScreenManager.ShowScreen(new Routes.Route_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
 
+            CombatGUI.Update();
+            //CombatGUI.fleeButton.update();
+            //CombatGUI.bagButton.update();
+
             //throw new NotImplementedException();
         }
 
@@ -51,30 +56,50 @@ namespace SupremeBroccoli.Screens
             CombatGUI.bagButton.draw(Game._spriteBatch);
 
             Game._spriteBatch.End();
-            //throw new NotImplementedException();
         }       
     }
 
     public static class CombatGUI
     {
-        public static Rectangle PrimaryContainer  = new(Globals.fontSize, Globals.TileSize, (int)(Globals.TileSize * 1.5f), Globals.TileSize * 2);
+        public static Rectangle PrimaryContainer = new(Globals.fontSize, Globals.TileSize, (int)(Globals.TileSize * 1.5f), Globals.TileSize * 2);
 
         public static CombatButton fightButton, fleeButton, bagButton;
+        internal static int indexer = 0;
+        public static CombatButton[] buttons;
 
         public static void Load()
         {
             fightButton = new CombatButton("Fight", 1);
             fleeButton = new CombatButton("Flee", 2);
             bagButton = new CombatButton("Bag", 3);
+            buttons = [fightButton, fleeButton, bagButton];
+        }
+
+        public static void Update()
+        {
+            if (Globals.keyb.WasKeyPressed(Keys.S) || Globals.keyb.WasKeyPressed(Keys.Down))
+                indexer++;
+            if (Globals.keyb.WasKeyPressed(Keys.W) || Globals.keyb.WasKeyPressed(Keys.Up))
+                indexer--;
+
+                foreach (CombatButton button in buttons)
+                {
+                    if (button == null)
+                        return;
+
+                    if (indexer == Array.IndexOf(buttons, button))
+                        button.color = Color.Red;
+                    else 
+                        button.color = Color.White;
+                }
         }
         //{ get; set; }
 
     }
 
-    public class CombatButton
+    public class CombatButton : AnyObject
     {
-        public Color color;
-        public Rectangle Container { get; set; }
+        //public Rectangle Container { get; set; }
         public string Text { get; set; }
 
         public CombatButton()
@@ -86,10 +111,15 @@ namespace SupremeBroccoli.Screens
         {
             color = Color.White;
             Text = _text;
-            Container = new Rectangle(CombatGUI.PrimaryContainer.X + Globals.fontSize, 
-                CombatGUI.PrimaryContainer.Y + (Globals.fontSize * position * 2), 
-                5 * Globals.fontSize,
-                Globals.fontSize * 2);
+            rectangle = new Rectangle
+            {
+                X = CombatGUI.PrimaryContainer.X + Globals.fontSize,
+                Y = CombatGUI.PrimaryContainer.Y + (Globals.fontSize * position * 2),
+                Width = 5 * Globals.fontSize,
+                Height = Globals.fontSize * 2
+            };
+
+            absolutePosition = new((int)rectangle.X, (int)rectangle.Y, 0);
         }
 
         public void update()
@@ -99,8 +129,9 @@ namespace SupremeBroccoli.Screens
 
         public void draw(SpriteBatch sb)
         {
-            sb.DrawRectangle(Container, color);
-            sb.DrawString(Globals.font, Text, new(Container.X+Globals.fontSize, Container.Y), color);
+            //sb.DrawRectangle()
+            sb.DrawRectangle(rectangle, color);
+            sb.DrawString(Globals.font, Text, new(rectangle.X+Globals.fontSize, rectangle.Y), color);
         }
     }
 }

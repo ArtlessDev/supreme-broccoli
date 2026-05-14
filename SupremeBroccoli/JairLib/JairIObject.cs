@@ -34,6 +34,7 @@ public enum PlayerState
     Jumping,
     Freefall,
     Dead,
+    InCommunication
 }
 
 public enum Direction

@@ -12,6 +12,8 @@ namespace JairLib.Utility
         public int seconds;
         public bool runEncounterFlag = true;
         public bool generateNewEncounterLock = false;
+        public int encounterCooldown = 5;
+
 
         public RandomEncounterZone()
         {
@@ -52,7 +54,7 @@ namespace JairLib.Utility
 
         public bool tryForEncounter(GameTime gameTime)
         {
-            if (seconds+3 >= gameTime.TotalGameTime.Seconds 
+            if (seconds + encounterCooldown >= gameTime.TotalGameTime.Seconds 
                 || generateNewEncounterLock
                 || RpgPlayer.PlayerOverworld.state != PlayerState.Walking)
             {
@@ -74,7 +76,7 @@ namespace JairLib.Utility
 
         public bool hasSecondPassed(GameTime gameTime)
         {
-            if (seconds+3 != gameTime.TotalGameTime.Seconds)
+            if (seconds + encounterCooldown != gameTime.TotalGameTime.Seconds)
                 return true;
             return false;
         }

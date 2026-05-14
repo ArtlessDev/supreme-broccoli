@@ -12,12 +12,13 @@ namespace JairLib
         public static PlayerOverworld PlayerOverworld = new();
         public static InCombatPlayer InCombatPlayer = new();
         public static int PLAYER_TILESIZE_IN_WORLD = 100;
+        public static List<Quest> Quests = new();
     }
     public class InCombatPlayer
     {
         public InCombatPlayer() { }
 
         List<Type> Affinities { get; set; }
-        List<Attack> Attacks { get; set; }
+        List<Attack> Actions { get; set; }
     }
 }
