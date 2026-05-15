@@ -12,7 +12,8 @@
     "textureAtlasId": 0,
     "IsCompletedFlag": false,
     "IsMainQuest": true,
-    "IsAutoTrigger": false
+    "IsAutoTrigger": false,
+    "DemandsPlayerResponse": true
   },
   "MiddleObjective": {
     "objectiveTitle": "Taking out da trash",

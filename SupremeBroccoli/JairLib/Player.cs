@@ -244,12 +244,17 @@ public class PlayerOverworld : BasePlayer
                 
     }
 
+
+
     public void interactWithBox()
     {
         if (!Globals.keyb.WasKeyPressed(Keys.E))
             return;
         ///NEED TO FINISH THE PLAYER INTERACTING WITH NPC AND THEN THE GUI APPEARING WITH THE TXT DIALOGUE FROM THE KEYOBJECTIVE OBJECT
-        
+        if (state == PlayerState.InCommunication)
+            state = PlayerState.Waiting;
+        else
+            state = PlayerState.InCommunication;
 
     }
 

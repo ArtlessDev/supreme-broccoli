@@ -25,7 +25,7 @@ namespace SupremeBroccoli.Screens.Towns
         private new Game1 Game => (Game1)base.Game;
         MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer;
         QuestSystem town_1_quest;
-        CustomGUI town_1_gui;
+        CustomGuiGroup town_1_gui;
 
         public Town_1(Game game) : base(game)
         {
@@ -84,18 +84,17 @@ namespace SupremeBroccoli.Screens.Towns
             RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
             //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
-            town_1_gui.update(gameTime);
 
-            ///NEED TO FINISH THE PLAYER INTERACTING WITH NPC AND THEN THE GUI APPEARING WITH THE TXT DIALOGUE FROM THE KEYOBJECTIVE OBJECT
+            town_1_gui.update(gameTime);
             foreach(var t in town_1_quest.objectives)
             {
                 t.isPlayerInteracting(town_1_gui);
-
             }
 
             GoToRoute_1();
 
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
+            Globals.LockEKey = false;
         }
 
         Rectangle To_Route_1 = new Rectangle(12 * Globals.TileSize, 18 * Globals.TileSize, 4 * Globals.TileSize, 2*Globals.TileSize);

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Graphics;
+using System;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 
@@ -45,6 +46,7 @@ namespace JairLib.QuestCore
         public bool IsCompletedFlag { get; set; }
         public bool IsMainQuest { get; set; }
         public bool IsAutoTrigger { get; set; }
+        public bool DemandsPlayerResponse { get; set; }
         
     
         public void Update(GameTime gameTime, PlayerOverworld player)
@@ -56,27 +58,27 @@ namespace JairLib.QuestCore
             }
         }
 
-        public CustomGUI isPlayerInteracting(CustomGUI gui)
+        public CustomGuiGroup isPlayerInteracting(CustomGuiGroup gui)
         {
-            if (!Globals.keyb.WasKeyPressed(Keys.E))
-                return gui;
-
-
+            bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
             var playerctx = RpgPlayer.PlayerOverworld;
             var playerIntersectFlag = playerctx.interactionBox.Intersects(rectangle);
 
+            if (gui.selectionGui.isGuiEnabled)
+                return gui.selectionGui.ChooseDialogueOption(gui);
+            if (!Globals.keyb.WasKeyPressed(Keys.E))
+                return gui;
             if (!playerIntersectFlag)
                 return gui;
 
+            Globals.LockEKey = true;
+            playerctx.interactWithBox();
+            gui.baseGui.currentText = objectiveDescription;
+            gui.baseGui.DemandsPlayerResponse = this.DemandsPlayerResponse;
+            gui.baseGui.isGuiEnabled = !gui.baseGui.isGuiEnabled;
 
-            if(playerctx.state == PlayerState.InCommunication)
-                playerctx.state = PlayerState.Waiting;
-            else
-                playerctx.state = PlayerState.InCommunication;
-
-            gui.isGuiEnabled = !gui.isGuiEnabled;
-
-            gui.currentText = objectiveDescription;
+            if (gui.baseGui.DemandsPlayerResponse)
+                gui.selectionGui.isGuiEnabled = !gui.selectionGui.isGuiEnabled;
 
             return gui;
         }

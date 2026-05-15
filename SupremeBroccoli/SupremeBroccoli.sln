@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupremeBroccoli", "SupremeB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JairLib", "JairLib\JairLib.csproj", "{B295BD96-7795-473F-9CAB-151F025C8C0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestSuite", "UnitTestSuite\UnitTestSuite.csproj", "{A6506689-5A1B-4419-A455-CA480FDDCF56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{B295BD96-7795-473F-9CAB-151F025C8C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B295BD96-7795-473F-9CAB-151F025C8C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B295BD96-7795-473F-9CAB-151F025C8C0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6506689-5A1B-4419-A455-CA480FDDCF56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6506689-5A1B-4419-A455-CA480FDDCF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6506689-5A1B-4419-A455-CA480FDDCF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6506689-5A1B-4419-A455-CA480FDDCF56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8023C824-CC4B-405E-9F2C-F79DECC53DAC}
 	EndGlobalSection
 EndGlobal

@@ -29,6 +29,7 @@ namespace JairLib.Utility
         public static KeyboardStateExtended keyb;
         public static Rectangle mouseRect;
         public static MouseStateExtended mouseState;
+        public static bool LockEKey;
 
         public static string seed;
         public static string[] gridSeed;
