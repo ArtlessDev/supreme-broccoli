@@ -15,40 +15,36 @@ namespace JairLib.Utility
     public static class Globals
     {
         public static ContentManager GlobalContent;
-
-        public static int mapWidth = 40;
-        public static int mapHeight = 29;
-        public static int TileSize = 128;
-
-        public static int PUZZLE_SIZE = 25;
-        public static int PUZZLE_SIZE_ADJUSTED = (int)(2 + Math.Sqrt(PUZZLE_SIZE)) * (int)(2 + Math.Sqrt(PUZZLE_SIZE));
-        public static SpriteSheet spriteSheet, gameObjectSheet;
-        public static List<TileSpace> tileSpaces;
-
-
+        public static OrthographicCamera MainCamera;
+        public static Vector2 STARTING_POSITION = new Vector2(128,128);
         public static KeyboardStateExtended keyb;
         public static Rectangle mouseRect;
         public static MouseStateExtended mouseState;
         public static bool LockEKey;
 
+        public static int TileSize = 128;
+        public static SpriteSheet spriteSheet, gameObjectSheet;
+        public static List<TileSpace> tileSpaces;
+        public static SpriteFont font;
+
+        //what the camera sees
+        public static int ViewportHeight = 1080;//480;
+        public static int ViewportWidth = 1920;//800;
+        //window size
+        public static int WindowHeight = 720;//480;
+        public static int WindowWidth = 1280;//800;
+
+        public static MapBuilder map;
+        public static int mapWidth = 40;
+        public static int mapHeight = 29;
+        public static int PUZZLE_SIZE = 25;
+        public static int PUZZLE_SIZE_ADJUSTED = (int)(2 + Math.Sqrt(PUZZLE_SIZE)) * (int)(2 + Math.Sqrt(PUZZLE_SIZE));
+
         public static string seed;
         public static string[] gridSeed;
-        public static SpriteFont font;
         public static int fontSize = 24;
         public static int currentLevel = 1;
         public static int CountOfTiles = 8;
-
-        public static int ViewportHeight = 1080;//480;
-        public static int ViewportWidth = 1920;//800;
-
-        public static int WindowHeight = 720;//480;
-        public static int WindowWidth = 1280;//800;
-        
-        public static OrthographicCamera MainCamera;
-
-        public static Vector2 STARTING_POSITION = new Vector2(128,128);
-
-        public static MapBuilder map { get; set; }
 
         public static void Load()
         {
@@ -64,9 +60,31 @@ namespace JairLib.Utility
             mouseState = MouseExtended.GetState();
 
             mouseRect = new(mouseState.Position.X + (int)MainCamera.Position.X, mouseState.Position.Y + (int)MainCamera.Position.Y, 8, 8);
-
         }
 
+        public static void MouseHovering(TileSpace obj, PlayerOverworld player)
+        {
+            if (CheckMouseIntersectionRect(obj))
+            {
+
+                if (obj.csvValue == 1
+                    && obj.Position.X == player.Position.X
+                    && obj.Position.Y == player.Position.Y - 128)
+                {
+                    obj.color = Color.DarkGreen;//obj.reservedColor;
+                }
+                else
+                {
+                    obj.color = Color.Red;
+                }
+            }
+            else
+            {
+                obj.color = Color.White;//obj.reservedColor;
+            }
+        }
+
+        #region not used in this game
         /// <summary>
         /// from space invaders game
         /// NOT USED IN THIS GAME
@@ -80,9 +98,6 @@ namespace JairLib.Utility
         public static void CamMove(Rectangle player)
         {
             MainCamera.LookAt(new (player.X, player.Y));
-            //var playerFocusX = player.X - (ViewportWidth / 2) + 16;
-            //var playerFocusY = player.Y - (ViewportHeight / 2) + 16;
-            //MainCamera.Position = new(playerFocusX, playerFocusY);
         }
 
         /// <summary>
@@ -120,17 +135,6 @@ namespace JairLib.Utility
             map.DrawMapFromList(_spriteBatch);
         }
 
-        public static byte generator_256()
-        {
-            byte[] b = new byte[32];
-
-            Random random = new Random();
-            
-            random.NextBytes(b);
-
-            return b[0];
-        }
-
         public static bool CheckMouseIntersection(AnyObject obj)
         {
             return mouseRect.Intersects(new Rectangle((int)obj.absolutePosition.X, (int)obj.absolutePosition.Y, TileSize, TileSize));
@@ -140,28 +144,6 @@ namespace JairLib.Utility
         {
             return mouseRect.Intersects(new Rectangle(obj.rectangle.X, obj.rectangle.Y, TileSize, TileSize));
         }
-
-        public static void MouseHovering(TileSpace obj, PlayerOverworld player)
-        {
-            if (CheckMouseIntersectionRect(obj))
-            {
-
-                if (obj.csvValue == 1
-                    && obj.Position.X == player.Position.X
-                    && obj.Position.Y == player.Position.Y-128)
-                {
-                    obj.color = Color.DarkGreen;//obj.reservedColor;
-                }
-                else //if (obj.csvValue != 1)
-                {
-                    obj.color = Color.Red;
-                }
-            }
-            else 
-            {
-                obj.color = Color.White;//obj.reservedColor;
-            }
-        }
-
+        #endregion
     }
 }

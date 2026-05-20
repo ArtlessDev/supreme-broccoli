@@ -14,6 +14,7 @@ namespace SupremeBroccoli
 {
     public class Game1 : Game
     {
+        #region variables and game constructor
         public GraphicsDeviceManager _graphics;
         public GraphicsDevice _device;
         public SpriteBatch _spriteBatch;
@@ -29,15 +30,15 @@ namespace SupremeBroccoli
             Content.RootDirectory = "Content";
             Globals.GlobalContent = Content;
             IsMouseVisible = true;
-            
+
             screenManager = new ScreenManager();
             Components.Add( screenManager );
         }
+        #endregion
 
+        #region init/load/draw/update
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
 
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
@@ -51,7 +52,6 @@ namespace SupremeBroccoli
             
             screenManager.ShowScreen(new Town_1(this));
         }
-
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -59,7 +59,6 @@ namespace SupremeBroccoli
             Atlases.Load();
             // TODO: use this.Content to load your game content here
         }
-
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -67,14 +66,12 @@ namespace SupremeBroccoli
 
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
+        #endregion
     }
 }

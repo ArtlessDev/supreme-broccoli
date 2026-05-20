@@ -1,20 +1,25 @@
-﻿using Assimp;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
 using System.Diagnostics;
+using System.Threading;
+using System.Timers;
 
 namespace JairLib.Utility
 {
     public class RandomEncounterZone: AnyObject
     {
+        #region variables and constructor
         public bool isPlayerInZone = false;
         public byte areWeEncounteringWithThis;
         public int seconds;
-        public bool runEncounterFlag = true;
+        public bool runEncounterFlag = false;
         public bool generateNewEncounterLock = false;
         public int encounterCooldown = 5;
+        public System.Timers.Timer encounterTimer;
 
-
+        
         public RandomEncounterZone()
         {
             rectangle = new();
@@ -29,6 +34,15 @@ namespace JairLib.Utility
                 width * Globals.TileSize, 
                 height * Globals.TileSize);
         }
+        #endregion
+
+        #region load/draw/update
+        public void Load()
+        {
+            encounterTimer = new System.Timers.Timer(3000f);
+            //encounterTimer.Elapsed += DisableTimer;
+            encounterTimer.AutoReset = true;
+        }
 
         public void Draw(SpriteBatch sb)
         {
@@ -40,51 +54,64 @@ namespace JairLib.Utility
             sb.Draw(texture.Texture, rectangle, Color.Aqua);//position, Color.Aqua, rotation, origin, scale, SpriteEffects.None, 1f);
 
         }
+        
         public void Update(GameTime gameTime)
         {
             isPlayerInZone = checkPlayerInZone();
 
-            if (!isPlayerInZone && !hasSecondPassed(gameTime) && !runEncounterFlag )
+            if (!isPlayerInZone)
+            {
+                encounterTimer.Enabled = false;
+                encounterTimer.Stop();
                 return;
-
-            if (generateNewEncounterLock)
-                areWeEncounteringWithThis = RollForByte();
-
-        }
-
-        public bool tryForEncounter(GameTime gameTime)
-        {
-            if (seconds + encounterCooldown >= gameTime.TotalGameTime.Seconds 
-                || generateNewEncounterLock
-                || RpgPlayer.PlayerOverworld.state != PlayerState.Walking)
-            {
-                return false;
             }
 
-            if (areWeEncounteringWithThis % 16 == 0 && hasSecondPassed(gameTime))
+            if (isPlayerInZone && !encounterTimer.Enabled)
             {
-                seconds = gameTime.TotalGameTime.Seconds;
-                runEncounterFlag = true;
+                encounterTimer.Start();
+                encounterTimer.Enabled = true;
+            }
+        }
+        #endregion
+
+        #region timer handling
+        private void DisableTimer(object? sender, ElapsedEventArgs e)
+        {
+            if (!isPlayerInZone)
+            {
+                encounterTimer.Enabled = false;
+                return;
+            }
+
+            areWeEncounteringWithThis = RollForByte();
+            Debug.WriteLine("timer elapsed");
+        }
+
+        public bool TryForEncounter(GameTime gameTime)
+        {
+            //if (seconds + encounterCooldown >= gameTime.TotalGameTime.Seconds
+            //    || generateNewEncounterLock
+            //    || RpgPlayer.PlayerOverworld.state != PlayerState.Walking)
+            //{
+            //    return false;
+            //}
+            Debug.WriteLine("trying for encounter: " + areWeEncounteringWithThis);
+            if (areWeEncounteringWithThis % 2 == 0 && generateNewEncounterLock)
+            {
+                //seconds = gameTime.TotalGameTime.Seconds;
+                //runEncounterFlag = true;
                 generateNewEncounterLock = false;
-
+                
                 return true;
             }
 
-
             return false;
         }
 
-        public bool hasSecondPassed(GameTime gameTime)
+        public byte RollForByte()
         {
-            if (seconds + encounterCooldown != gameTime.TotalGameTime.Seconds)
-                return true;
-            return false;
-        }
-
-        private byte RollForByte()
-        {
-            if (generateNewEncounterLock) //true = on
-                return 1;
+            //if (generateNewEncounterLock) //true = on
+            //    return 1;
 
             byte toReturn = (byte)Random.Shared.Next(255);
 
@@ -92,6 +119,7 @@ namespace JairLib.Utility
 
             return Byte.Clamp(toReturn, 0, 255);
         }
+        #endregion 
 
         private bool checkPlayerInZone()
         {

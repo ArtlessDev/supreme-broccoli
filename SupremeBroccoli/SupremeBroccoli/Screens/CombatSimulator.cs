@@ -41,7 +41,6 @@ namespace SupremeBroccoli.Screens
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
 
-            //throw new NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime)
@@ -59,10 +58,10 @@ namespace SupremeBroccoli.Screens
         }       
     }
 
+    #region combat gui
     public static class CombatGUI
     {
         public static Rectangle PrimaryContainer = new(Globals.fontSize, Globals.TileSize, (int)(Globals.TileSize * 1.5f), Globals.TileSize * 2);
-
         public static CombatButton fightButton, fleeButton, bagButton;
         internal static int indexer = 0;
         public static CombatButton[] buttons;
@@ -93,13 +92,13 @@ namespace SupremeBroccoli.Screens
                         button.color = Color.White;
                 }
         }
-        //{ get; set; }
 
     }
+    #endregion
 
+    #region singular button
     public class CombatButton : AnyObject
     {
-        //public Rectangle Container { get; set; }
         public string Text { get; set; }
 
         public CombatButton()
@@ -134,4 +133,5 @@ namespace SupremeBroccoli.Screens
             sb.DrawString(Globals.font, Text, new(rectangle.X+Globals.fontSize, rectangle.Y), color);
         }
     }
+    #endregion
 }

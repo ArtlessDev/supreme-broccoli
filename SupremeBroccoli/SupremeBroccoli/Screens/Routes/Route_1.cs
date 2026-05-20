@@ -11,29 +11,32 @@ using MonoGame.Extended.Screens.Transitions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Timers;
 
 namespace SupremeBroccoli.Screens.Routes
 {
     internal class Route_1 : GameScreen
     {
+        #region local variables and screen constructor
         private new Game1 Game => (Game1)base.Game;
-        private SpriteFont _font;
-        private Vector2 _titlePosition;
-        private List<TileSpace> roomMysterySpaces;
-        MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer; // <<<< need to add these to a singular object so that theyre easier to track
+        MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer; 
         RandomEncounterZone encounterZone;
+        GameTime gameTimeLocal;
+        bool switcher = false;
+        Rectangle To_Town_1 = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
 
         public Route_1(Game game) : base(game)
         {
             UpdateWhenInactive = false;
             DrawWhenInactive = false;
         }
+        #endregion
+
+        #region load/draw/update
         public override void LoadContent()
         {
-
+            gameTimeLocal = new GameTime();
             base.LoadContent();
-            //_font = Content.Load<SpriteFont>("coolvetica");
-            //_titlePosition = new Vector2(100, 50);
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 60, 50);
@@ -43,7 +46,9 @@ namespace SupremeBroccoli.Screens.Routes
             //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
             //town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
             //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
-            encounterZone = new(2, 6, 40, 40);
+            encounterZone = new(2, 4, 50, 50);
+            encounterZone.Load();
+            encounterZone.encounterTimer.Elapsed += CheckForEncounter;
         }
         public override void Draw(GameTime gameTime)
         {
@@ -63,15 +68,13 @@ namespace SupremeBroccoli.Screens.Routes
 
             Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Town_1, Color.White);
 
-            //Game._spriteBatch.DrawString(_font, "Main Menu", _titlePosition, Color.White);
-            //Game._spriteBatch.DrawString(_font, "Press Enter To Play", new Vector2(100, 100), Color.White);
             Game._spriteBatch.End();
 
         }
-        bool switcher = false;
         public override void Update(GameTime gameTime)
         {
-            CheckForEncounter(gameTime);
+            gameTimeLocal = gameTime;
+            //CheckForEncounter();
 
             Globals.Update(gameTime);
 
@@ -95,37 +98,38 @@ namespace SupremeBroccoli.Screens.Routes
 
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
         }
+        #endregion
 
-        private void CheckForEncounter(GameTime gameTime)
-        {
-            if (encounterZone.tryForEncounter(gameTime) && encounterZone.runEncounterFlag)
-            {
-                encounterZone.runEncounterFlag = false;
-                ScreenManager.ShowScreen(new CombatSimulator(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
-            }
-        }
-
-        Rectangle To_Town_1 = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
-
+        #region teleporters to other areas
         public void GoToTown_1()
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_1))
             {
                 int x = 15 * Globals.TileSize,
                     y = (18 * Globals.TileSize) - Globals.TileSize;
-                RpgPlayer.PlayerOverworld.rectangle = new Rectangle(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+                
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
+                RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+                ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
         }
-
         public void GoToTown_2()
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_1))
             {
+                ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_2(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
-
             }
+        }
+        #endregion 
+
+        private void CheckForEncounter(object? sender, ElapsedEventArgs e)
+        {
+            encounterZone.areWeEncounteringWithThis = encounterZone.RollForByte();
+
+            if (encounterZone.areWeEncounteringWithThis % 4 == 0 && encounterZone.isPlayerInZone)
+                ScreenManager.ShowScreen(new CombatSimulator(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
         }
     }
 }

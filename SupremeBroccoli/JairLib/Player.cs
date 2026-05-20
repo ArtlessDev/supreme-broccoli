@@ -13,15 +13,13 @@ using System.Timers;
 namespace JairLib;
 public class BasePlayer : AnyObject, QuestCore.IStats
 {
+    #region variables and stats
     public static Rectangle frameStartRectangle;
     public static int PLAYER_TILESIZE_IN_WORLD = 128;
     public SpriteEffects flipper { get; set; }
     public Direction playerDirection { get; set; }
     public PlayerState state { get; set; }
     public Rectangle interactionBox;
-
-
-    #region Stats
     public int HealthPoints { get; set; }
     public int BaseAttack { get; set; }
     public int BaseDefense { get; set; }
@@ -32,8 +30,9 @@ public class BasePlayer : AnyObject, QuestCore.IStats
     public int DefensePips { get; set; }
     public int SpeedPips { get; set; }
     public int MagicPips { get; set; }
-    #endregion Stats
+    #endregion
 
+    #region dumb animators
     public void AnimatePlayerIdle(GameTime gameTime)
     {
 
@@ -50,8 +49,6 @@ public class BasePlayer : AnyObject, QuestCore.IStats
             Debug.WriteLine($"{deltaTime}");
         }
     }
-
-
     public void AnimatePlayerMoving(GameTime gameTime)
     {
         texture = Atlases.tilesetAtlas[0];
@@ -64,6 +61,7 @@ public class BasePlayer : AnyObject, QuestCore.IStats
 
         }
     }
+    #endregion
 
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -80,6 +78,7 @@ public class BasePlayer : AnyObject, QuestCore.IStats
     }
 }
 
+#region platformer controller
 public class PlayerPlatformer : BasePlayer
 {
     public static System.Timers.Timer timer = new System.Timers.Timer(200f);
@@ -213,6 +212,7 @@ public class PlayerPlatformer : BasePlayer
     }
 
 }
+#endregion
 
 public class PlayerOverworld : BasePlayer
 {
@@ -234,78 +234,20 @@ public class PlayerOverworld : BasePlayer
     }
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
-        //interactWithBox();
-
         GridMovement(mapBuilder);
-
-        ///TODO: need to add an 'interaction box' just an object that is ALWAYS in front of the player
-        ///     regardless of where they are. the point of it is to be able to interact with objects and NPCs 
-        ///     it essentially acts as an arm for the player
-                
     }
-
-
 
     public void interactWithBox()
     {
         if (!Globals.keyb.WasKeyPressed(Keys.E))
             return;
-        ///NEED TO FINISH THE PLAYER INTERACTING WITH NPC AND THEN THE GUI APPEARING WITH THE TXT DIALOGUE FROM THE KEYOBJECTIVE OBJECT
+
         if (state == PlayerState.InCommunication)
             state = PlayerState.Waiting;
         else
             state = PlayerState.InCommunication;
-
     }
 
-    public void PlayerReset()
-    {
-        texture = Atlases.tilesetAtlas[3]; //idk lol
-
-        if (Globals.keyb.WasKeyPressed(Keys.R))
-        {
-            rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            state = PlayerState.Waiting;
-
-        }
-
-        return;
-    }
-
-    public void DiagonalMovement(MapBuilder mapBuilder)
-    {
-        var precheck = rectangle;
-
-        if (Globals.keyb.IsKeyDown(Keys.Left) || Globals.keyb.IsKeyDown(Keys.A))
-        {
-            flipper = SpriteEffects.None;
-            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            Position = new(rectangle.X, rectangle.Y);
-            
-            playerDirection = Direction.Left;
-        }
-        if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
-        {
-            flipper = SpriteEffects.FlipHorizontally;
-            rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            Position = new(rectangle.X, rectangle.Y);
-            playerDirection = Direction.Right;
-
-        }
-        if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
-        {
-            rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            Position = new(rectangle.X, rectangle.Y);
-
-        }
-        if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
-        {
-            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-            Position = new(rectangle.X, rectangle.Y);
-            playerDirection = Direction.Down;
-        }
-    }
-    
     public void GridMovement(MapBuilder mapBuilder)
     {
         var precheck = rectangle;
@@ -356,24 +298,6 @@ public class PlayerOverworld : BasePlayer
             state = PlayerState.Waiting;
     }
 
-    public void CheckStateForColor()
-    {
-        switch (state)
-        {
-            case PlayerState.Walking: 
-                texture = Atlases.tilesetAtlas[1]; //white
-                break;
-            case PlayerState.Jumping: 
-                texture = Atlases.tilesetAtlas[6]; //yellow
-                break;
-            case PlayerState.Freefall: 
-                texture = Atlases.tilesetAtlas[7]; //red
-                break;
-            case PlayerState.Waiting:
-                texture = Atlases.tilesetAtlas[8]; //orange
-                break;
-        }
-    }
 
     public void DetectCollision(MapBuilder mapBuilder)
     {
