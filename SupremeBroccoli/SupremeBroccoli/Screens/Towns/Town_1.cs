@@ -10,6 +10,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 using MonoGame.Extended.Tiled;
+using SupremeBroccoli.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace SupremeBroccoli.Screens.Towns
         MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer;
         QuestSystem town_1_quest;
         CustomGuiGroup town_1_gui;
-        Rectangle To_Route_1 = new Rectangle(12 * Globals.TileSize, 18 * Globals.TileSize, 4 * Globals.TileSize, 2*Globals.TileSize);
+        Rectangle To_Route_1 = new Rectangle(14 * Globals.TileSize, 18 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
 
 
@@ -44,19 +45,18 @@ namespace SupremeBroccoli.Screens.Towns
             base.LoadContent();
             Globals.Load();
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
-            //RpgPlayer.PlayerOverworld.Position = Game.startingPosition;
 
             //non-work-pc
-            mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
-            mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
-            mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 20, 20);
+            mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 20, 20);
+            mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 20, 20);
 
             //work pc
             //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
             //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
             //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
 
-            town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+            town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.beastiaryDexAtlas);
             town_1_gui = new();
         }
         public override void Draw(GameTime gameTime)
@@ -91,6 +91,10 @@ namespace SupremeBroccoli.Screens.Towns
 
             town_1_gui.update(gameTime);
             foreach(var t in town_1_quest.objectives)
+            {
+                t.isPlayerInteracting(town_1_gui);
+            }
+            foreach(var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
                 t.isPlayerInteracting(town_1_gui);
             }

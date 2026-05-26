@@ -24,7 +24,7 @@ namespace JairLib.Utility
         }
         public TileSpace(int value)
         {
-            csvValue = value != -1  ? value : 80;
+            csvValue = value != -1  ? value : 31;
             isCollidable = setCollision();
             
             //isPit = setPit();

@@ -8,6 +8,11 @@ using JairLib.Utility;
 
 namespace JairLib.QuestCore
 {
+    public enum QuestList
+    {
+        None,
+        Town_1_Quest,
+    }
     public class Quest
     {
         public Quest() { }
@@ -17,11 +22,13 @@ namespace JairLib.QuestCore
         public KeyObjective MiddleObjective { get; set; }
         public KeyObjective EndingObjective { get; set; }
         public List<KeyObjective> SideObjectives { get; set; }
+        public Dictionary<QuestList, KeyObjective> KvpQuests { get; set; }
         public bool QuestComplete {  get; set; }
     }
 
     public class QuestSystem
     {
+        #region constructor and variables
         public Quest? CurrentQuest;
         public bool InitiatedFirstQuest = false;
         //public  string FirstQuest = "C:\\Code\\Jamsepticeye-submission\\JamSepticEyeGame\\JamSepticEyeGame\\Content\\JsonFiles\\FirstQuest.json";
@@ -48,6 +55,7 @@ namespace JairLib.QuestCore
                 CurrentQuest.EndingObjective,
             ];
         }
+        #endregion constructor and variables
 
         public void SetFirstQuestAsCurrent()
         {
@@ -60,9 +68,14 @@ namespace JairLib.QuestCore
         public void DrawCurrentQuestObjective(SpriteBatch _spriteBatch, PlayerOverworld player)
         {
 
-
             if (CurrentQuest.SideObjectives != null)
                 DrawSideObjectives(_spriteBatch, player);
+
+            foreach (KeyObjective obj in CurrentQuest.KvpQuests.Values)
+            {
+                obj.texture = Atlases.beastiaryDexAtlas[3];
+                obj.Draw(_spriteBatch);
+            }
 
             //WasQuestCompletedGoodOrBad(_spriteBatch);
 
@@ -111,6 +124,14 @@ namespace JairLib.QuestCore
                 HandleSideQuest(player);
             }
 
+            if(CurrentQuest.KvpQuests != null)
+            {
+                foreach (KeyObjective obj in CurrentQuest.KvpQuests.Values)
+                {
+                    HandleQuest(obj, player);
+                }
+            }
+
             if (CurrentQuest.StartingObjective.IsCompletedFlag == true
                 && CurrentQuest.MiddleObjective.IsCompletedFlag == true
                 && CurrentQuest.EndingObjective.IsCompletedFlag == true)
@@ -121,6 +142,19 @@ namespace JairLib.QuestCore
             IsSingleObjectiveComplete(player, CurrentQuest.StartingObjective);
             IsSingleObjectiveComplete(player, CurrentQuest.MiddleObjective);
             IsSingleObjectiveComplete(player, CurrentQuest.EndingObjective);
+        }
+
+        void HandleQuest(KeyObjective obj, PlayerOverworld player)
+        {
+            if (player.rectangle.Intersects(obj.rectangle)
+                    && Globals.keyb.WasKeyPressed(Keys.E))
+            {
+                //Debug.WriteLine(obj.objectiveTitle);
+                obj.IsCompletedFlag = true;
+
+                
+            }
+
         }
 
         void HandleSideQuest(PlayerOverworld player)

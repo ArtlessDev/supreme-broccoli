@@ -11,6 +11,7 @@ namespace JairLib.QuestCore
 {
     public class KeyObjective : AnyObject//: ITileObject
     {
+        #region constuctor and variables
         public KeyObjective() {
             //TODO: make the json read the 2nd constructor, not this one
             textureAtlas = Atlases.SetAtlas(textureAtlasId);
@@ -24,8 +25,8 @@ namespace JairLib.QuestCore
         public string objectiveTitle { get; set; }
         public string objectiveDescription { get; set; }
         public string identifier { get; set; }
-        private int _x;
-        private int _y;
+        private int _x, _width;
+        private int _y, _height;
         public int X
         {
             get { return _x; }
@@ -35,8 +36,15 @@ namespace JairLib.QuestCore
             get { return _y; }
             set { _y = value * Globals.TileSize; }
         }
-        public int width {get; set;}
-        public int height {get; set;}
+        public int width { 
+            get { return _width; }
+            set { _width = Globals.TileSize; }
+        }
+        public int height
+        {
+            get { return _height; }
+            set { _height = Globals.TileSize; }
+        }
         public Rectangle rectangle => new Rectangle(X,Y,width,height);
         public int textureValue {  get; set; }
         public Texture2DRegion texture { get; set; }
@@ -47,18 +55,21 @@ namespace JairLib.QuestCore
         public bool IsMainQuest { get; set; }
         public bool IsAutoTrigger { get; set; }
         public bool DemandsPlayerResponse { get; set; }
-        
-    
+        public QuestList PrerequisiteObjective { get; set; }
+        #endregion constructor and variables
+
         public void Update(GameTime gameTime, PlayerOverworld player)
         {
-            if (player.rectangle.Intersects(rectangle) && Globals.keyb.WasKeyPressed(Keys.E))
+            if (player.rectangle.Intersects(rectangle) 
+                && Globals.keyb.WasKeyPressed(Keys.E) 
+                && PrerequisiteObjective == QuestList.None)
             {
                 //Debug.WriteLine(this.objectiveTitle);
                 IsCompletedFlag = true;
             }
         }
 
-        public CustomGuiGroup isPlayerInteracting(CustomGuiGroup gui)
+        public CustomGuiGroup isPlayerInteracting(CustomGuiGroup gui, GameTime gameTime)
         {
             bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
             var playerctx = RpgPlayer.PlayerOverworld;
@@ -78,7 +89,10 @@ namespace JairLib.QuestCore
             gui.baseGui.isGuiEnabled = !gui.baseGui.isGuiEnabled;
 
             if (gui.baseGui.DemandsPlayerResponse)
+            {
+                this.Update(gameTime, playerctx);
                 gui.selectionGui.isGuiEnabled = !gui.selectionGui.isGuiEnabled;
+            }
 
             return gui;
         }

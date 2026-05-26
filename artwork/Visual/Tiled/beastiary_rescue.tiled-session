@@ -15,9 +15,11 @@
             "scaleInDock": 1
         },
         "C:/Code/Snippets_1/TiledProjects/blockers.tsx": {
+            "dynamicWrapping": true,
             "scaleInDock": 1
         },
         "C:/Code/shiny-octo-umbrella/Tiled/doodl_plat.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1
         },
         "C:/Users/jayan/Downloads/beastiary_tileset.tsx": {
@@ -62,34 +64,39 @@
             }
         },
         "beastiary_map.tmx": {
-            "scale": 0.10539062499999999,
+            "scale": 0.125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 2561.897702001483,
-                "y": 3838.102297998518
+                "x": 2072,
+                "y": 3508
             }
         },
         "beastiary_tileset.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 0.5,
             "scaleInEditor": 1
         },
         "otherMAp.tmx": {
-            "scale": 0.5,
+            "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -362,
-                "y": -51
+                "x": 164,
+                "y": 386
             }
         },
         "tileset_original.tsx": {
             "scaleInDock": 0.25
         },
         "worldMap.tmx": {
-            "scale": 0.0625,
-            "selectedLayer": 13,
+            "expandedGroupLayers": [
+                9,
+                4
+            ],
+            "scale": 0.25,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": -1952,
-                "y": -2008
+                "x": -6452,
+                "y": -6306
             }
         }
     },
@@ -103,17 +110,19 @@
     "map.tileWidth": 128,
     "map.width": 40,
     "openFiles": [
-        "worldMap.tmx"
+        "worldMap.tmx",
+        "otherMAp.tmx",
+        "beastiary_map.tmx"
     ],
     "project": "beastiary_rescue.tiled-project",
     "recentFiles": [
+        "beastiary_map.tmx",
+        "otherMAp.tmx",
+        "worldMap.tmx",
         "C:/Users/jayan/Downloads/worldMap(2).tmx",
         "C:/Users/jayan/Downloads/worldMap(1).tmx",
         "C:/Users/jayan/Downloads/otherMAp.tmx",
         "C:/Users/jayan/Downloads/worldMap.tmx",
-        "worldMap.tmx",
-        "beastiary_map.tmx",
-        "otherMAp.tmx",
         "beastiary_tileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

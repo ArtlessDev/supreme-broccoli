@@ -42,5 +42,22 @@
     "IsCompletedFlag": false,
     "IsMainQuest": true,
     "IsAutoTrigger": false
+  },
+
+  "KvpQuests": {
+    "Town_1_Quest": {
+        "objectiveTitle": "n/a",
+        "objectiveDescription": "what is this, a dictionary?",
+        "identifier": "final",
+        "X": 5,
+        "Y": 10,
+        "width": 128,
+        "height": 128,
+        "textureValue": 3,
+        "textureAtlasId": 0,
+        "IsCompletedFlag": false,
+        "IsMainQuest": false,
+        "IsAutoTrigger": false
+    }
   }
 }
