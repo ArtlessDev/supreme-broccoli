@@ -5,18 +5,10 @@ using JairLib.TileGenerators;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
-using MonoGame.Extended.Tiled;
 using SupremeBroccoli.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SupremeBroccoli.Screens.Towns
 {
@@ -92,11 +84,11 @@ namespace SupremeBroccoli.Screens.Towns
             town_1_gui.update(gameTime);
             foreach(var t in town_1_quest.objectives)
             {
-                t.isPlayerInteracting(town_1_gui);
-            }
+                t.isPlayerInteracting(town_1_gui, gameTime);
+            };
             foreach(var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
-                t.isPlayerInteracting(town_1_gui);
+                t.isPlayerInteracting(town_1_gui, gameTime);
             }
 
             GoToRoute_1();

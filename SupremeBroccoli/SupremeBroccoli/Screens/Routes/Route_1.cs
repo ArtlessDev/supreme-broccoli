@@ -24,6 +24,8 @@ namespace SupremeBroccoli.Screens.Routes
         GameTime gameTimeLocal;
         bool switcher = false;
         Rectangle To_Town_1 = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
+        //Rectangle To_Town_2 = new Rectangle(2 * Globals.TileSize, 10* Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Town_2 = new Rectangle(40 * Globals.TileSize, 60 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
 
         public Route_1(Game game) : base(game)
         {
@@ -66,7 +68,7 @@ namespace SupremeBroccoli.Screens.Routes
 
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
 
-            Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Town_1, Color.White);
+            Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Town_2, Color.White);
 
             Game._spriteBatch.End();
 
@@ -116,8 +118,13 @@ namespace SupremeBroccoli.Screens.Routes
         }
         public void GoToTown_2()
         {
-            if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_1))
+            if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_2))
             {
+                int x = 16 * Globals.TileSize,
+                    y = (3 * Globals.TileSize) - Globals.TileSize;
+
+                RpgPlayer.PlayerOverworld.Position = new(x, y);
+                RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
                 ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_2(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
@@ -129,7 +136,13 @@ namespace SupremeBroccoli.Screens.Routes
             encounterZone.areWeEncounteringWithThis = encounterZone.RollForByte();
 
             if (encounterZone.areWeEncounteringWithThis % 4 == 0 && encounterZone.isPlayerInZone)
+            {
+                encounterZone.encounterTimer.Enabled = false;
+                encounterZone.encounterTimer.Stop();
+                ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new CombatSimulator(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+
+            }
         }
     }
 }
