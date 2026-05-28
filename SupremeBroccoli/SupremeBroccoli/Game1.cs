@@ -50,7 +50,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
-            screenManager.ShowScreen(new Town_1(this));
+            screenManager.ShowScreen(new Town_2(this));
         }
         protected override void LoadContent()
         {
@@ -73,5 +73,20 @@ namespace SupremeBroccoli
             base.Draw(gameTime);
         }
         #endregion
+        public void CameraZoom()
+        {
+            if (Globals.MainCamera == null)
+                return;
+
+            if(Globals.keyb.WasKeyPressed(Keys.U))
+            {
+                Globals.MainCamera.Zoom += .1f;
+            }
+
+            if (Globals.keyb.WasKeyPressed(Keys.I))
+            {
+                Globals.MainCamera.Zoom -= .1f;
+            }
+        }
     }
 }

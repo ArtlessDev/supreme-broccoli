@@ -102,8 +102,8 @@ namespace JairLib.Utility
         {
             int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 566;
             int tempy = (int)RpgPlayer.PlayerOverworld.rectangle.Y + 128;
-            int tempW = (int)(Globals.WindowWidth * .85f);
-            int tempH = (int)(Globals.WindowHeight * .3f);
+            int tempW = (int)(Globals.WindowWidth * .2f);
+            int tempH = (int)(Globals.WindowHeight * .1f);
 
             currentText = "null";
 
@@ -115,8 +115,8 @@ namespace JairLib.Utility
 
             int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 566;
             int tempy = (int)RpgPlayer.PlayerOverworld.rectangle.Y;
-            int tempW = (int)(Globals.WindowWidth * .4f);
-            int tempH = (int)(Globals.WindowHeight * .3f);
+            int tempW = (int)(Globals.WindowWidth * .2f);
+            int tempH = (int)(Globals.WindowHeight * .1f);
 
             PrimaryContainer = new(tempx, tempy, tempW, tempH);
             currentText = tempSelectionFlag.ToString();

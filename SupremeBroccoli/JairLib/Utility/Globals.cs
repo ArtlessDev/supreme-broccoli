@@ -31,8 +31,8 @@ namespace JairLib.Utility
         public static int ViewportHeight = 1080;//480;
         public static int ViewportWidth = 1920;//800;
         //window size
-        public static int WindowHeight = 720;//480;
-        public static int WindowWidth = 1280;//800;
+        public static int WindowHeight = 900;//720;//480;
+        public static int WindowWidth = 1600;//1280;//800;
 
         public static MapBuilder map;
         public static int mapWidth = 40;

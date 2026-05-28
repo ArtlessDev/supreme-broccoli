@@ -22,6 +22,7 @@ namespace JairLib.QuestCore
         public KeyObjective MiddleObjective { get; set; }
         public KeyObjective EndingObjective { get; set; }
         public List<KeyObjective> SideObjectives { get; set; }
+        //shoutout dean for the dictionary idea
         public Dictionary<QuestList, KeyObjective> KvpQuests { get; set; }
         public bool QuestComplete {  get; set; }
     }

@@ -39,14 +39,14 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
-            mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 20, 20);
-            mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 20, 20);
-            mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 20, 20);
+            //mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 20, 20);
+            //mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 20, 20);
+            //mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 20, 20);
 
             //work pc
-            //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
-            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
-            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
 
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.beastiaryDexAtlas);
             town_1_gui = new();
@@ -54,6 +54,7 @@ namespace SupremeBroccoli.Screens.Towns
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            Game.CameraZoom();
 
             Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
 
@@ -76,7 +77,7 @@ namespace SupremeBroccoli.Screens.Towns
         public override void Update(GameTime gameTime)
         {
             Globals.Update(gameTime);
-            
+            Game.CameraZoom();
             RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
             //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);

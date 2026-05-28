@@ -41,13 +41,16 @@ namespace SupremeBroccoli.Screens.Routes
             base.LoadContent();
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
-            mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 60, 50);
-            mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
-            mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
-            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
-            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
-            //town_1_quest = new QuestSystem(@".\Content\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
-            //town_1_quest = new QuestSystem(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Core\Quests\quest_1.json", Atlases.beastiaryDexAtlas);
+            ///pc
+            //mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 60, 50);
+            //mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
+            //mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            
+            ///work
+            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 60, 50);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            
             encounterZone = new(2, 4, 50, 50);
             encounterZone.Load();
             encounterZone.encounterTimer.Elapsed += CheckForEncounter;
@@ -77,6 +80,8 @@ namespace SupremeBroccoli.Screens.Routes
         {
             gameTimeLocal = gameTime;
             //CheckForEncounter();
+            Game.CameraZoom();
+
 
             Globals.Update(gameTime);
 
@@ -133,7 +138,11 @@ namespace SupremeBroccoli.Screens.Routes
 
         private void CheckForEncounter(object? sender, ElapsedEventArgs e)
         {
+            if (RpgPlayer.PlayerOverworld.state != PlayerState.Walking)
+                return;
+
             encounterZone.areWeEncounteringWithThis = encounterZone.RollForByte();
+            Debug.WriteLine("Rolled Byte" + encounterZone.areWeEncounteringWithThis);
 
             if (encounterZone.areWeEncounteringWithThis % 4 == 0 && encounterZone.isPlayerInZone)
             {
