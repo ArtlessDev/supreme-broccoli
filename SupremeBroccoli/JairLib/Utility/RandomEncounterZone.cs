@@ -87,6 +87,8 @@ namespace JairLib.Utility
             Debug.WriteLine("timer elapsed");
         }
 
+        public int encounterThreshold = 8;
+
         public bool TryForEncounter(GameTime gameTime)
         {
             //if (seconds + encounterCooldown >= gameTime.TotalGameTime.Seconds
@@ -95,14 +97,22 @@ namespace JairLib.Utility
             //{
             //    return false;
             //}
-            Debug.WriteLine("trying for encounter: " + areWeEncounteringWithThis);
-            if (areWeEncounteringWithThis % 2 == 0 && generateNewEncounterLock)
+
+
+            //Debug.WriteLine(@"trying for encounter: " + areWeEncounteringWithThis);
+            Debug.WriteLine($"threshhold: {encounterThreshold}| rolled: {areWeEncounteringWithThis}");
+            if (areWeEncounteringWithThis % encounterThreshold == 0 && generateNewEncounterLock)
             {
                 //seconds = gameTime.TotalGameTime.Seconds;
                 //runEncounterFlag = true;
                 generateNewEncounterLock = false;
+                encounterThreshold = 2;
                 
                 return true;
+            }
+            else
+            {
+                encounterThreshold += 2;
             }
 
             return false;

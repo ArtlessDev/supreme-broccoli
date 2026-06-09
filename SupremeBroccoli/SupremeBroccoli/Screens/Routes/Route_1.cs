@@ -142,15 +142,22 @@ namespace SupremeBroccoli.Screens.Routes
                 return;
 
             encounterZone.areWeEncounteringWithThis = encounterZone.RollForByte();
-            Debug.WriteLine("Rolled Byte" + encounterZone.areWeEncounteringWithThis);
 
-            if (encounterZone.areWeEncounteringWithThis % 4 == 0 && encounterZone.isPlayerInZone)
+            Debug.WriteLine($"threshhold: {encounterZone.encounterThreshold}| rolled: {encounterZone.areWeEncounteringWithThis}");
+
+            if (encounterZone.areWeEncounteringWithThis % encounterZone.encounterThreshold == 0 && encounterZone.isPlayerInZone)
             {
+                encounterZone.encounterThreshold = 2;
                 encounterZone.encounterTimer.Enabled = false;
                 encounterZone.encounterTimer.Stop();
                 ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new CombatSimulator(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
+            }
+            else
+            {
+                if (encounterZone.encounterThreshold>=4)
+                    encounterZone.encounterThreshold -= 2;
             }
         }
     }
