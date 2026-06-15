@@ -154,10 +154,9 @@ namespace SupremeBroccoli.Screens.Routes
                 ScreenManager.ShowScreen(new CombatSimulator(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
             }
-            else
+            else if (encounterZone.encounterThreshold>=4)
             {
-                if (encounterZone.encounterThreshold>=4)
-                    encounterZone.encounterThreshold -= 2;
+                encounterZone.encounterThreshold -= 2;
             }
         }
     }

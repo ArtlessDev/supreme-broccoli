@@ -10,12 +10,16 @@ using MonoGame.Extended.Screens.Transitions;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using JairLib.CombatSimulator;
 
 namespace SupremeBroccoli.Screens
 {
     public class CombatSimulator : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
+        public static List<CombatActors> PlayerParty = new List<CombatActors>();
+        public static List<CombatActors> FoeParty = new List<CombatActors>();
 
         public CombatSimulator(Game game) : base(game)
         {
@@ -56,6 +60,12 @@ namespace SupremeBroccoli.Screens
 
             Game._spriteBatch.End();
         }       
+
+        public static void SetCombatants(List<CombatActors> _playerParty, List<CombatActors> _foeParty)
+        {
+            PlayerParty = _playerParty;
+            FoeParty = _foeParty;
+        }
     }
 
     #region combat gui
