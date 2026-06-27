@@ -50,14 +50,14 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
-            //mapBlockerLayer = new MapBuilder(ConfigStrings.town_2_blocker, 60, 40);
-            //mapBottomLayer = new MapBuilder(ConfigStrings.town_2_bottom, 60, 40);
-            //mapTopLayer = new MapBuilder(ConfigStrings.town_2_top, 60, 40);
+            mapBlockerLayer = new MapBuilder(ConfigStrings.town_2_blocker, 60, 40);
+            mapBottomLayer = new MapBuilder(ConfigStrings.town_2_bottom, 60, 40);
+            mapTopLayer = new MapBuilder(ConfigStrings.town_2_top, 60, 40);
 
             //work pc
-            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_blockers.csv", 60, 40);
-            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_bottom.csv", 60, 40);
-            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_top.csv", 60, 40);
+            //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_blockers.csv", 60, 40);
+            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_bottom.csv", 60, 40);
+            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_top.csv", 60, 40);
 
         }
         public override void Draw(GameTime gameTime)
