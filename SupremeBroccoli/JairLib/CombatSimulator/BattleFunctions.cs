@@ -62,11 +62,14 @@ public class BattleFunctions{
         switch (actionDecision){
             case 1:
                 if (rndAcc < monster.MoveOne.Accuracy){
+                    
                     int damage = Convert.ToInt32(monster.Attack * monster.MoveOne.Power);
+                    
                     if(monster.TypeOne.Equals(monster.MoveOne.Type)){
                         System.Console.WriteLine("STAB Applied!");
                         damage = Convert.ToInt32(damage*1.5);
                     }
+                    
                     return damage;
                 }
                 else{

@@ -1,4 +1,5 @@
-﻿using JairLib.InputHandler;
+﻿using JairLib.CombatSimulator;
+using JairLib.InputHandler;
 using JairLib.QuestCore;
 using JairLib.TileGenerators;
 using JairLib.Utility;
@@ -336,4 +337,9 @@ public class PlayerOverworld : BasePlayer
             }
         }
     }
+}
+
+public class PlayerCombatActor : CombatActors
+{
+
 }

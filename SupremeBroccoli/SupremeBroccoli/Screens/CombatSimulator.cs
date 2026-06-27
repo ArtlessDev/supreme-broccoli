@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using JairLib.CombatSimulator;
+using Gum.Forms.Controls;
 
 namespace SupremeBroccoli.Screens
 {
@@ -65,6 +66,17 @@ namespace SupremeBroccoli.Screens
         {
             PlayerParty = _playerParty;
             FoeParty = _foeParty;
+        }
+    }
+
+    public static class GumCombatGui
+    {
+        public static Panel PrimaryPanel;
+        
+        public static void Load()
+        {
+            PrimaryPanel = new Panel();
+            PrimaryPanel.AddToRoot();
         }
     }
 
