@@ -84,5 +84,8 @@ public enum Element
 {
     None,
     Ice,
-    Fire
+    Fire,
+    Lightning,
+    Physical,
+    RangedPhysical,
 }
