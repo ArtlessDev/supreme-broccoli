@@ -32,6 +32,11 @@ namespace JairLib.CombatSimulator
             get { return health; }
             set { this.health = value; }
         }
+        public int MaximumHealth
+        {
+            get { return health; }
+            set { this.health = value; }
+        }
         public string Name
         {
             get { return name; }
