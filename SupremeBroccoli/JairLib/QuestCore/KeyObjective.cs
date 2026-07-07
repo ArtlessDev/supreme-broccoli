@@ -24,6 +24,7 @@ namespace JairLib.QuestCore
         }
         public string objectiveTitle { get; set; }
         public string objectiveDescription { get; set; }
+        public List<string> objectiveDialogue { get; set; }
         public string identifier { get; set; }
         private int _x, _width;
         private int _y, _height;
@@ -60,12 +61,20 @@ namespace JairLib.QuestCore
 
         public void Update(GameTime gameTime, PlayerOverworld player)
         {
-            if (player.rectangle.Intersects(rectangle) 
-                && Globals.keyb.WasKeyPressed(Keys.E) 
-                && PrerequisiteObjective == QuestList.None)
+            //shoutout dean ritter, using a dictionary makes this possible in the easiest way
+            if (PrerequisiteObjective == QuestList.None) 
             {
-                //Debug.WriteLine(this.objectiveTitle);
-                IsCompletedFlag = true;
+
+            }
+            else 
+            {
+                if (player.rectangle.Intersects(rectangle)
+                && Globals.keyb.WasKeyPressed(Keys.E)
+                )
+                {
+                    //Debug.WriteLine(this.objectiveTitle);
+                    IsCompletedFlag = true;
+                }
             }
         }
 

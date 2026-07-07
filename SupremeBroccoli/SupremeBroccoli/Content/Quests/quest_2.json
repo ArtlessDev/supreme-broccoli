@@ -1,0 +1,77 @@
+{
+  "QuestIdentifier": "FirstQuest",
+  "StartingObjective": {
+    "objectiveTitle": "Getting the Trash",
+    "objectiveDescription": "hi im gronko. im playing hide and seek",
+    "identifier": "part one",
+    "X": 5,
+    "Y": 5,
+    "width": 128,
+    "height": 128,
+    "textureValue": 0,
+    "textureAtlasId": 0,
+    "IsCompletedFlag": false,
+    "IsMainQuest": true,
+    "IsAutoTrigger": false,
+    "DemandsPlayerResponse": true
+  },
+  "MiddleObjective": {
+    "objectiveTitle": "Taking out da trash",
+    "objectiveDescription": "1.. 2.. 3.. uh... *honk mimimi*",
+    "identifier": "",
+    "X": 16,
+    "Y": 5,
+    "width": 128,
+    "height": 128,
+    "textureValue": 1,
+    "textureAtlasId": 0,
+    "IsCompletedFlag": false,
+    "IsMainQuest": true,
+    "IsAutoTrigger": false
+  },
+  "EndingObjective": {
+    "objectiveTitle": "I am gonna go to sleep",
+    "objectiveDescription": "those idiots will never catch me",
+    "identifier": "final",
+    "X": 14,
+    "Y": 14,
+    "width": 128,
+    "height": 128,
+    "textureValue": 2,
+    "textureAtlasId": 0,
+    "IsCompletedFlag": false,
+    "IsMainQuest": true,
+    "IsAutoTrigger": false
+  },
+
+  "KvpQuests": {
+    "Town_1_Quest": {
+        "objectiveTitle": "n/a",
+        "objectiveDescription": "what is this, a dictionary?",
+        "identifier": "final",
+        "X": 5,
+        "Y": 10,
+        "width": 128,
+        "height": 128,
+        "textureValue": 3,
+        "textureAtlasId": 0,
+        "IsCompletedFlag": false,
+        "IsMainQuest": false,
+        "IsAutoTrigger": false
+    },
+    "Town_1_Quest_2": {
+        "objectiveTitle": "n/a",
+        "objectiveDescription": "what is this, a dictionary?",
+        "identifier": "final",
+        "X": 5,
+        "Y": 10,
+        "width": 128,
+        "height": 128,
+        "textureValue": 3,
+        "textureAtlasId": 0,
+        "IsCompletedFlag": false,
+        "IsMainQuest": false,
+        "IsAutoTrigger": false
+    }
+  }
+}

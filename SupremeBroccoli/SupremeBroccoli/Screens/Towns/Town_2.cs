@@ -65,7 +65,7 @@ namespace SupremeBroccoli.Screens.Towns
             GraphicsDevice.Clear(Color.Black);
 
             Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
-
+            
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
             //mapBlockerLayer.DrawMapFromList(Game._spriteBatch);

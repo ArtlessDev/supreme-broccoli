@@ -1,0 +1,47 @@
+Quests
+
+Town 1
+------
+
+-Kids playing hide and seek
+    --hi will you help me with hide and seek?
+        -Yes
+        -No
+    --Ok, there's only 3 of them, they shouldnt be too hard to find.
+    -What!? You're helping? No way that's gotta be against the rules. ok well i guess im out.
+    -Huh? ok, i wanted lunch anyway.
+    -OKAY. IS IT OVER THEN?
+    --Thanks for your help!
+        -no problem
+        -you didn't do anything
+    --hah, yeah
+
+-delivering packages
+    --hey bud, i'm down a mailperson right now. think you could lend a hand? If you help me out, then I can give you a reward.
+        -Only because theres a reward!
+        -uh, i uh-
+    --great, here, go hand these out.
+    -oh sweet this my new X-Station 3
+    -I have been waiting for my candles. thank you so much
+    -sweet. these are the keys to my car. can you believe they're sold separately nowadays?
+    --hey thanks bud. heres 5 bucks
+        -yippee!
+        -only 5 bucks?
+    --... *grumble*
+
+-getting signatures
+-picking seeds and meet pitter pot
+    --*clay pot sounds*
+        -seeds?
+        -seeds?
+    --*more intense clay pot sounds*
+    >find seeds
+    --*curious clay pot sounds* ??
+        -these look like what you want?
+        -here ya go!
+    --*elated clay pot sounds* !!
+    
+-help unpack store
+-buy fruit from market for someone
+-
+

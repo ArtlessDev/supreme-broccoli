@@ -67,8 +67,8 @@
             "scale": 0.125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 2072,
-                "y": 3508
+                "x": 2560,
+                "y": 3844
             }
         },
         "beastiary_tileset.tsx": {
@@ -80,8 +80,8 @@
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 164,
-                "y": 386
+                "x": 0,
+                "y": -2
             }
         },
         "tileset_original.tsx": {
@@ -89,14 +89,14 @@
         },
         "worldMap.tmx": {
             "expandedGroupLayers": [
-                9,
-                4
+                4,
+                9
             ],
             "scale": 0.25,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": -6452,
-                "y": -6306
+                "x": -4768,
+                "y": -6174
             }
         }
     },
