@@ -1,4 +1,7 @@
-﻿using JairLib;
+﻿using Gum;
+using Gum.Forms;
+using Gum.Forms.Controls;
+using JairLib;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,7 +24,7 @@ namespace SupremeBroccoli
         private readonly ScreenManager screenManager;
         public BoxingViewportAdapter viewportAdapter;
         public Vector2 startingPosition = new Vector2(4*Globals.TileSize, 3 * Globals.TileSize);
-
+        public GumService GumUI => GumService.Default;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -40,6 +43,7 @@ namespace SupremeBroccoli
         protected override void Initialize()
         {
             base.Initialize();
+            GumUI.Initialize(this, DefaultVisualsVersion.V3);
 
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
@@ -50,7 +54,8 @@ namespace SupremeBroccoli
             Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
-            screenManager.ShowScreen(new Town_1(this));
+            
+            screenManager.ShowScreen(new MainMenu(this));
         }
         protected override void LoadContent()
         {

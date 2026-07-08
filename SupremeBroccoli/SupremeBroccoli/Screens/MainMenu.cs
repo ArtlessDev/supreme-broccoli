@@ -3,11 +3,10 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using JairLib.Utility;
 using Microsoft.Xna.Framework.Graphics;
-using JairLib.QuestCore;
-using JairLib.TileGenerators;
-using JairLib;
-using Microsoft.Xna.Framework.Input;
+using Gum;
 using System;
+using Gum.Forms.Controls;
+using System.ComponentModel;
 
 namespace SupremeBroccoli.Screens
 {
@@ -44,17 +43,55 @@ namespace SupremeBroccoli.Screens
             Atlases.Load();
 
             circle = new CircleF(new(500,500), 64);
-        }
 
+            mainMenuPanel = new StackPanel();
+            mainMenuPanel.Width = 400;
+            
+            mainMenuPanel.IsVisible = true;
+            mainMenuPanel.AddToRoot();
+            
+
+            Button startButton = new Button();
+            startButton.X = 100;
+            startButton.Y = 100;
+            startButton.Text = "Start Game";
+            TextBox nameInput = new TextBox();
+            mainMenuPanel.AddChild(nameInput);
+            Label nameLabel = new Label();
+            nameLabel.Text = "Enter your name:";
+            nameLabel.X = 200;
+            nameLabel.Y = 200;
+            nameLabel.Width = 200;
+            nameLabel.Height = 500;
+            
+            mainMenuPanel.AddChild(nameLabel);
+            mainMenuPanel.AddChild(startButton);
+        }
+        GumService GumUI => GumService.Default;
+        StackPanel mainMenuPanel;
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
 
-            Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
+            Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
 
             Game._spriteBatch.DrawCircle(circle, 12, color);
             Game._spriteBatch.DrawString(Globals.font, slider.ToString(), circle.Center, color);
             Game._spriteBatch.DrawString(Globals.font, goalToHit.ToString(), new(0,0), color);
+
+            GumUI.Draw();
+
+            if (mainMenuPanel.IsVisible)
+                {
+                    // Begin the sprite batch to prepare for rendering.
+
+                    // The color to use for the drop shadow text.
+                    Color dropShadowColor = Color.Black * 0.5f;
+
+
+                    // Always end the sprite batch when finished.
+                    // Game._spriteBatch.End();
+                }
 
             Game._spriteBatch.End();
 
@@ -76,48 +113,52 @@ namespace SupremeBroccoli.Screens
         public override void Update(GameTime gameTime)
         {
             Globals.Update(gameTime);
+            GumUI.Update(gameTime);
 
-            if (slider == 0)
-                goingUpFlag = true;
-            else if (slider == 200)
-                goingUpFlag = false;
+            // if (slider == 0)
+            //     goingUpFlag = true;
+            // else if (slider == 200)
+            //     goingUpFlag = false;
 
 
-            if (goingUpFlag)
-                slider++;
-            else slider--;
+            // if (goingUpFlag)
+            //     slider++;
+            // else slider--;
 
-            UpdatePosition();
+            // UpdatePosition();
 
             
             //this some bullshit to handle the player inpu for the minigame
-            if (Globals.keyb.WasKeyPressed(Keys.Space))
-            {
-                if (slider == goalToHit)
-                {
-                    color = Color.Green;
-                    return;
-                }
+            // if (Globals.keyb.WasKeyPressed(Keys.Space))
+            // {
+            //     if (slider == goalToHit)
+            //     {
+            //         color = Color.Green;
+            //         return;
+            //     }
 
-                for (int i = 1; i < 5; i++)
-                {
-                    if (slider == goalToHit + i || slider == goalToHit - i)
-                    {
-                        color = Color.Yellow;
-                        return;
-                    }
-                }
+            //     for (int i = 1; i < 5; i++)
+            //     {
+            //         if (slider == goalToHit + i || slider == goalToHit - i)
+            //         {
+            //             color = Color.Yellow;
+            //             return;
+            //         }
+            //     }
 
 
-                for (int i = 5; i < 10; i++)
-                {
-                    if (slider == goalToHit + i || slider == goalToHit - i)
-                    {
-                        color = Color.Red;
-                        return;
-                    }
-                }
-            }
+            //     for (int i = 5; i < 10; i++)
+            //     {
+            //         if (slider == goalToHit + i || slider == goalToHit - i)
+            //         {
+            //             color = Color.Red;
+            //             return;
+            //         }
+            //     }
+            // }
+
+            
+
         }
     }
 }
