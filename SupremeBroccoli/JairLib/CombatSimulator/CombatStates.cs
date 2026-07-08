@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gum.Forms.Input;
+using JairLib.Utility;
 
 namespace JairLib.CombatSimulator
 {
@@ -17,7 +19,10 @@ namespace JairLib.CombatSimulator
         GameOverLost,
         GameOverWon
     }
-
+    public static bool pressedKey(Keys key)
+    {
+        return 
+    }
     public static class CombatStates
     {
         public static void HandleCombatStates()
@@ -41,7 +46,10 @@ namespace JairLib.CombatSimulator
 
         public static void SelectMove()
         {
-
+            if(Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.D1))
+            {
+                //move up in the list
+            }
         }
 
         public static void ResolveActions()

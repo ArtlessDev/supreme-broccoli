@@ -55,7 +55,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
             
-            screenManager.ShowScreen(new MainMenu(this));
+            screenManager.ShowScreen(new Town_1(this));
         }
         protected override void LoadContent()
         {
