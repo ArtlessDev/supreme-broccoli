@@ -1,18 +1,19 @@
-﻿using JairLib.QuestCore;
-using JairLib.TileGenerators;
+﻿using Gum.Forms.Controls;
 using JairLib;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended.Screens;
-using MonoGame.Extended;
+using JairLib.CombatSimulator;
+using JairLib.QuestCore;
+using JairLib.TileGenerators;
 using JairLib.Utility;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Screens.Transitions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
 using System;
 using System.Collections.Generic;
-using JairLib.CombatSimulator;
-using Gum.Forms.Controls;
+using System.Net.Sockets;
 
 namespace SupremeBroccoli.Screens
 {
@@ -21,6 +22,7 @@ namespace SupremeBroccoli.Screens
         private new Game1 Game => (Game1)base.Game;
         public static List<CombatActors> PlayerParty = new List<CombatActors>();
         public static List<CombatActors> FoeParty = new List<CombatActors>();
+        CombatStates currentState;
 
         public CombatSimulator(Game game) : base(game)
         {
@@ -31,6 +33,7 @@ namespace SupremeBroccoli.Screens
         public override void LoadContent()
         {
             CombatGUI.Load();
+            currentState = CombatStates.VerifyActors;
         }
 
         public override void Update(GameTime gameTime)
@@ -41,7 +44,35 @@ namespace SupremeBroccoli.Screens
             if (Globals.keyb.WasKeyPressed(Keys.Enter))
                 ScreenManager.ShowScreen(new Routes.Route_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
+            switch (currentState)
+            {
+                case (CombatStates.none):
+                    break;
+                case (CombatStates.VerifyActors):
+                    CombatStateMachine.VerifyActors();
+                    break;
+                case (CombatStates.SortTurnOrder):
+                    CombatStateMachine.SortTurnOrder();
+                    break;
+                case (CombatStates.SelectMove):
+                    CombatStateMachine.SelectMove();
+                    break;
+                case (CombatStates.ResolveActions):
+                    CombatStateMachine.ResolveActions();
+                    break;
+                case (CombatStates.CheckActorsHP):
+                    CombatStateMachine.CheckActorsHealth(FoeParty);
+                    break;
+                case (CombatStates.GameOverLost):
+                    CombatStateMachine.GameOverLost();
+                    break;
+                case (CombatStates.GameOverWon):
+                    CombatStateMachine.GameOverWon();
+                    break;
 
+            }
+
+            currentState = CombatStateMachine.GetInternalState();
             CombatGUI.Update();
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
@@ -98,23 +129,42 @@ namespace SupremeBroccoli.Screens
 
         public static void Update()
         {
+            //this should handle the state machine
+
+
+
+            //bool flowControl = IndexThruOptions();
+            //if (!flowControl)
+            //{
+            //    return;
+            //}
+        }
+
+        private static CombatButton IndexThruOptions()
+        {
             if (Globals.keyb.WasKeyPressed(Keys.S) || Globals.keyb.WasKeyPressed(Keys.Down))
                 indexer++;
             if (Globals.keyb.WasKeyPressed(Keys.W) || Globals.keyb.WasKeyPressed(Keys.Up))
                 indexer--;
 
-                foreach (CombatButton button in buttons)
-                {
-                    if (button == null)
-                        return;
+            foreach (CombatButton button in buttons)
+            {
+                if (button == null)
+                    return null;
 
-                    if (indexer == Array.IndexOf(buttons, button))
-                        button.color = Color.Red;
-                    else 
-                        button.color = Color.White;
-                }
+                if (indexer == Array.IndexOf(buttons, button))
+                    button.color = Color.Red;
+                else
+                    button.color = Color.White;
+            }
+
+            if (Globals.keyb.WasKeyPressed(Keys.E))
+            {
+
+            }
+
+            return null;
         }
-
     }
     #endregion
 
