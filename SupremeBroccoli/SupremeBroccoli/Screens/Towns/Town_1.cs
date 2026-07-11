@@ -18,7 +18,7 @@ namespace SupremeBroccoli.Screens.Towns
         #region local variables and screen constructor
         private new Game1 Game => (Game1)base.Game;
         MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer;
-        QuestSystem town_1_quest;
+        QuestSystem town_1_quest, town_1_quest_2;
         CustomGuiGroup town_1_gui;
         Rectangle To_Route_1 = new Rectangle(14 * Globals.TileSize, 18 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
@@ -48,7 +48,10 @@ namespace SupremeBroccoli.Screens.Towns
             //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
             //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
 
+
+
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.beastiaryDexAtlas);
+            town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.beastiaryDexAtlas);
             town_1_gui = new();
         }
         public override void Draw(GameTime gameTime)
@@ -63,6 +66,7 @@ namespace SupremeBroccoli.Screens.Towns
             //mapBlockerLayer.DrawMapFromList(Game._spriteBatch);
 
             town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
 
@@ -83,13 +87,27 @@ namespace SupremeBroccoli.Screens.Towns
             //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
 
             town_1_gui.update(gameTime);
+            
             foreach(var t in town_1_quest.objectives)
             {
-                t.isPlayerInteracting(town_1_gui, gameTime);
+                if(t.isPlayerInteracting())
+                    t.OpenGui(town_1_gui, gameTime);
             };
             foreach(var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
-                t.isPlayerInteracting(town_1_gui, gameTime);
+                if(t.isPlayerInteracting())
+                    t.OpenGui(town_1_gui, gameTime);
+            }
+            foreach(var t in town_1_quest_2.CurrentQuest.KvpQuests.Values)
+            {
+                /// need a 'trigger' for the kvp objectives: when the previous one is set to true, 
+                /// the previous/prereq should be disabled or only does the alt text.
+                /// 
+                /// if A is the prereq to B, A should be completed in order to try and complete B
+                if(t.PrerequisiteObjective != QuestList.None)
+
+                if(t.isPlayerInteracting())
+                    t.OpenGui(town_1_gui, gameTime);
             }
 
             GoToRoute_1();
