@@ -12,6 +12,7 @@ namespace JairLib.QuestCore
     {
         None,
         Town_1_Quest,
+        Town_1_Quest_2,
     }
     public class Quest
     {
@@ -74,7 +75,9 @@ namespace JairLib.QuestCore
 
             foreach (KeyObjective obj in CurrentQuest.KvpQuests.Values)
             {
-                obj.texture = Atlases.beastiaryDexAtlas[3];
+                //need to only show the first quest objective that is not completed, and then show the next one after that is completed
+                obj.texture = Atlases.beastiaryDexAtlas[obj.textureValue];
+                //DrawKvpObjectives(_spriteBatch, player);
                 obj.Draw(_spriteBatch);
             }
 
@@ -82,6 +85,8 @@ namespace JairLib.QuestCore
 
             foreach (var objective in objectives)
             {
+                if (objective == null)
+                    return;
 
                 if (!objective.IsCompletedFlag)
                 {
@@ -113,6 +118,16 @@ namespace JairLib.QuestCore
         {
             foreach (var obj in CurrentQuest.SideObjectives)
             {
+                obj.DrawNoCheck(_spriteBatch, player);
+                obj.texture = Atlases.gameTilePrototypeAtlas[obj.textureValue];
+            }
+        }
+        private void DrawKvpObjectives(SpriteBatch _spriteBatch, PlayerOverworld player)
+        {
+            foreach (var obj in CurrentQuest.KvpQuests.Values)
+            {
+                
+
                 obj.DrawNoCheck(_spriteBatch, player);
                 obj.texture = Atlases.gameTilePrototypeAtlas[obj.textureValue];
             }
