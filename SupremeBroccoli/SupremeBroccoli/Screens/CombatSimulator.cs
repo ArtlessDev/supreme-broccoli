@@ -64,7 +64,7 @@ namespace SupremeBroccoli.Screens
                     CombatStateMachine.CheckActorsHealth(FoeParty);
                     break;
                 case (CombatStates.GameOverLost):
-                    CombatStateMachine.GameOverLost();
+                    CombatStateMachine.GameOverLost(FoeParty);
                     break;
                 case (CombatStates.GameOverWon):
                     CombatStateMachine.GameOverWon();

@@ -19,10 +19,6 @@ namespace JairLib.CombatSimulator
         GameOverLost,
         GameOverWon
     }
-    public static bool pressedKey(Keys key)
-    {
-        return 
-    }
 
     public static class CombatStateMachine
     {

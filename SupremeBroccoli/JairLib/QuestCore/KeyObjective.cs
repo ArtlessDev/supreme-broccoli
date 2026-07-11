@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Graphics;
-using System;
-using System.Diagnostics;
-using System.Runtime.Serialization;
 
 namespace JairLib.QuestCore
 {
@@ -78,21 +75,34 @@ namespace JairLib.QuestCore
             }
         }
 
-        public CustomGuiGroup isPlayerInteracting(CustomGuiGroup gui, GameTime gameTime)
+        public bool isPlayerInteracting()
         {
-            bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
             var playerctx = RpgPlayer.PlayerOverworld;
             var playerIntersectFlag = playerctx.interactionBox.Intersects(rectangle);
 
+            if (!playerIntersectFlag)
+                return false;
+
+            if (Globals.keyb.WasKeyPressed(Keys.E))
+            {
+                Globals.LockEKey = true;
+                return true;
+            }
+            else return false;
+
+        }
+        public CustomGuiGroup OpenGui(CustomGuiGroup gui, GameTime gameTime)
+        {
+            bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
+            var playerctx = RpgPlayer.PlayerOverworld;
+
             if (gui.selectionGui.isGuiEnabled)
                 return gui.selectionGui.ChooseDialogueOption(gui);
-            if (!Globals.keyb.WasKeyPressed(Keys.E))
-                return gui;
-            if (!playerIntersectFlag)
+            if (!isPlayerInteracting())
                 return gui;
 
-            Globals.LockEKey = true;
             playerctx.interactWithBox();
+
             gui.baseGui.currentText = objectiveDescription;
             gui.baseGui.DemandsPlayerResponse = this.DemandsPlayerResponse;
             gui.baseGui.isGuiEnabled = !gui.baseGui.isGuiEnabled;
