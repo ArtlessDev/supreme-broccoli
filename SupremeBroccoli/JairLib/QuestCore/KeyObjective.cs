@@ -96,8 +96,6 @@ namespace JairLib.QuestCore
             bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
             var playerctx = RpgPlayer.PlayerOverworld;
 
-            if (gui.selectionGui.isGuiEnabled)
-                return gui.selectionGui.ChooseDialogueOption(gui);
             if (!isPlayerInteracting())
                 return gui;
 
