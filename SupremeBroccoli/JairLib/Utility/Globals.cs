@@ -45,11 +45,15 @@ namespace JairLib.Utility
         public static int fontSize = 24;
         public static int currentLevel = 1;
         public static int CountOfTiles = 8;
+        public static Texture2D player_shader, vignette_shader;
 
         public static void Load()
         {
             font = GlobalContent.Load<SpriteFont>("coolvetica");
             tileSpaces = new List<TileSpace>();
+            player_shader = Globals.GlobalContent.Load<Texture2D>("player_shader");
+            vignette_shader = Globals.GlobalContent.Load<Texture2D>("vignette_shader");
+
         }
 
         public static void Update(GameTime gameTime)
@@ -82,6 +86,21 @@ namespace JairLib.Utility
             {
                 obj.color = Color.White;//obj.reservedColor;
             }
+        }
+
+
+        public static void DrawShader(SpriteBatch spriteBatch, Texture2D shaderTexture)
+        {
+            var rotation = 0f;
+            var origin = new Vector2(0, 0);
+            var position = new Vector2(MainCamera.BoundingRectangle.X, MainCamera.BoundingRectangle.Y);
+
+            var scale = new Vector2(1f, 1f);
+
+            //Globals.
+            //the size of the sprite will always match the size of the tile splitter 
+            spriteBatch.Draw(shaderTexture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+
         }
 
         #region not used in this game
