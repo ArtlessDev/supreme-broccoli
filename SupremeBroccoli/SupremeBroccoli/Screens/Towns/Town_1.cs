@@ -68,12 +68,18 @@ namespace SupremeBroccoli.Screens.Towns
             town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
             town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
+            //player shadow
+            //RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch, Color.Black);
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
 
             Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Route_1, Color.White);
 
             if (town_1_gui != null)
                 town_1_gui.draw(Game._spriteBatch);
+
+           
+            RpgPlayer.PlayerOverworld.DrawShader(Game._spriteBatch, Globals.player_shader);
+            Globals.DrawShader(Game._spriteBatch, Globals.vignette_shader);
 
             Game._spriteBatch.End();
 

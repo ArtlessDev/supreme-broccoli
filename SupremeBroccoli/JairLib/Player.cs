@@ -64,17 +64,32 @@ public class BasePlayer : AnyObject, QuestCore.IStats
     }
     #endregion
 
-    public void Draw(SpriteBatch spriteBatch)
+    //proving an alt color will allow for shadows. needs tweaking for polish
+    public void Draw(SpriteBatch spriteBatch, Color? altColor = null)
     {
-        var rotation = 0f;
         var origin = new Vector2(0, 0);
         var position = new Vector2(rectangle.X, rectangle.Y);
         var scale = new Vector2(1f, 1f);
+
+        color = altColor ?? Color.White;
+        var rotation = altColor != null ? .5f : 0f;
+        
         //the size of the sprite will always match the size of the tile splitter 
         spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, 1f);
         
         if(interactionBox != null)
             spriteBatch.DrawRectangle(interactionBox, color);
+
+    }
+    public void DrawShader(SpriteBatch spriteBatch, Texture2D shaderTexture)
+    {
+        var origin = new Vector2(0, 0);
+        var position = new Vector2(rectangle.X-128, rectangle.Y-256);
+        var scale = new Vector2(1f, 1f);
+        var rotation = 0f;
+
+        //the size of the sprite will always match the size of the tile splitter 
+        spriteBatch.Draw(shaderTexture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
 
     }
 }
@@ -238,15 +253,17 @@ public class PlayerOverworld : BasePlayer
         GridMovement(mapBuilder);
     }
 
-    public void interactWithBox()
+    public PlayerState interactWithBox()
     {
         if (!Globals.keyb.WasKeyPressed(Keys.E))
-            return;
+            return state;
 
         if (state == PlayerState.InCommunication)
             state = PlayerState.Waiting;
         else
             state = PlayerState.InCommunication;
+
+        return state;
     }
 
     public void GridMovement(MapBuilder mapBuilder)
