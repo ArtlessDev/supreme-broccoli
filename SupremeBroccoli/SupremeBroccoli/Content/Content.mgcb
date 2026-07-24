@@ -47,13 +47,7 @@
 /processorParam:TextureFormat=Compressed
 /build:coolvetica.spritefont
 
-#begin Quests/quest_1.json
-/copy:Quests/quest_1.json
-
-#begin Quests/quest_2.json
-/copy:Quests/quest_2.json
-
-#begin tilemaps/tileset_original - Copy.png
+#begin player_shader.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -63,7 +57,13 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/tileset_original - Copy.png
+/build:player_shader.png
+
+#begin Quests/quest_1.json
+/copy:Quests/quest_1.json
+
+#begin Quests/quest_2.json
+/copy:Quests/quest_2.json
 
 #begin tilemaps/tileset_original.png
 /importer:TextureImporter
@@ -76,4 +76,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:tilemaps/tileset_original.png
+
+#begin vignette_shader.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:vignette_shader.png
 

@@ -76,6 +76,9 @@ namespace SupremeBroccoli.Screens.Towns
 
             //Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Route_1, Color.White);
 
+            RpgPlayer.PlayerOverworld.DrawShader(Game._spriteBatch, Globals.player_shader);
+            Globals.DrawShader(Game._spriteBatch, Globals.vignette_shader);
+
             //if (town_1_gui != null)
             //    town_1_gui.draw(Game._spriteBatch);
 
