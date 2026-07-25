@@ -23,7 +23,7 @@ namespace SupremeBroccoli
         public SpriteBatch _spriteBatch;
         private readonly ScreenManager screenManager;
         public BoxingViewportAdapter viewportAdapter;
-        public Vector2 startingPosition = new Vector2(4*Globals.TileSize, 3 * Globals.TileSize);
+        public Vector2 startingPosition = new Vector2(11*Globals.TileSize, 8 * Globals.TileSize);
         public GumService GumUI => GumService.Default;
         public Game1()
         {
@@ -55,7 +55,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
             
-            screenManager.ShowScreen(new Town_1(this));
+            screenManager.ShowScreen(new Town_2(this));
         }
         protected override void LoadContent()
         {

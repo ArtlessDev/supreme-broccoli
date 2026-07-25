@@ -59,6 +59,8 @@ namespace SupremeBroccoli.Screens.Towns
             //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_bottom.csv", 60, 40);
             //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_2\worldMap_town_2_top.csv", 60, 40);
 
+
+            RpgPlayer.PlayerOverworld.LoadAnimations();
         }
         public override void Draw(GameTime gameTime)
         {

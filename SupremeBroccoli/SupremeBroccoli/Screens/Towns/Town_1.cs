@@ -20,7 +20,7 @@ namespace SupremeBroccoli.Screens.Towns
         MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer;
         QuestSystem town_1_quest, town_1_quest_2;
         CustomGuiGroup town_1_gui;
-        Rectangle To_Route_1 = new Rectangle(14 * Globals.TileSize, 18 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 22 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
 
 
@@ -39,9 +39,9 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
-            mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 20, 20);
-            mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 20, 20);
-            mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 20, 20);
+            mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
+            mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 32, 32);
+            mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 32, 32);
 
             //work pc
             //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
@@ -53,6 +53,8 @@ namespace SupremeBroccoli.Screens.Towns
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.beastiaryDexAtlas);
             town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.beastiaryDexAtlas);
             town_1_gui = new();
+
+            RpgPlayer.PlayerOverworld.LoadAnimations();
         }
         public override void Draw(GameTime gameTime)
         {
@@ -128,8 +130,8 @@ namespace SupremeBroccoli.Screens.Towns
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Route_1))
             {
-                int x = 4 * Globals.TileSize, 
-                    y = 2 * Globals.TileSize;
+                int x = 13 * Globals.TileSize, 
+                    y = 8 * Globals.TileSize;
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
                 ScreenManager.CloseScreen();
