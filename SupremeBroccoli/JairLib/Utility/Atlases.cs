@@ -15,12 +15,14 @@ namespace JairLib.Utility
             gameTilePrototypeSet, 
             beastiary_tileset, 
             beastiaryDex,
-            WorldMapSet;
+            WorldMapSet,
+            playerTileset;
         public static Texture2DAtlas 
             gameTilePrototypeAtlas, 
             tilesetAtlas, 
             beastiaryDexAtlas,
-            WorldMapAtlas;
+            WorldMapAtlas,
+            playerAtlas;
 
         public static void Load()
         {
@@ -36,6 +38,8 @@ namespace JairLib.Utility
             beastiary_tileset = Globals.GlobalContent.Load<Texture2D>("beastiary_tileset");
             tilesetAtlas = Texture2DAtlas.Create("playerTileMapPrototype", beastiary_tileset, Globals.TileSize, Globals.TileSize);
 
+            playerTileset = Globals.GlobalContent.Load<Texture2D>("player");
+            playerAtlas = Texture2DAtlas.Create("playerAtlas", playerTileset, Globals.TileSize, Globals.TileSize);
         }
 
         public static Texture2DAtlas SetAtlas(int value)

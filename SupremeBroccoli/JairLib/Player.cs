@@ -64,6 +64,45 @@ public class BasePlayer : AnyObject, QuestCore.IStats
     }
     #endregion
 
+    private SpriteSheet _spriteSheet;
+    public AnimatedSprite _walkDown, _walkSide, _walkUp;
+    public void LoadAnimations()
+    {
+
+        _spriteSheet = new SpriteSheet("SpriteSheet/adventurer", Atlases.playerAtlas);
+
+        _spriteSheet.DefineAnimation("walk-down", builder =>
+        {
+            builder.IsLooping(true)
+                   .AddFrame("playerAtlas_0", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_4", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_8", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_12", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_16", TimeSpan.FromSeconds(0.2));
+        });
+        _spriteSheet.DefineAnimation("walk-side", builder =>
+        {
+            builder.IsLooping(true)
+                   .AddFrame("playerAtlas_1", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_5", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_9", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_13", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_17", TimeSpan.FromSeconds(0.2));
+        });
+        _spriteSheet.DefineAnimation("walk-up", builder =>
+        {
+            builder.IsLooping(true)
+                   .AddFrame("playerAtlas_3", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_7", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_11", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_15", TimeSpan.FromSeconds(0.2))
+                   .AddFrame("playerAtlas_19", TimeSpan.FromSeconds(0.2));
+        });
+
+        _walkDown = new AnimatedSprite(_spriteSheet, "walk-down");
+        _walkSide = new AnimatedSprite(_spriteSheet, "walk-side");
+        _walkUp = new AnimatedSprite(_spriteSheet, "walk-up");
+    }
     //proving an alt color will allow for shadows. needs tweaking for polish
     public void Draw(SpriteBatch spriteBatch, Color? altColor = null)
     {
@@ -73,12 +112,47 @@ public class BasePlayer : AnyObject, QuestCore.IStats
 
         color = altColor ?? Color.White;
         var rotation = altColor != null ? .5f : 0f;
-        
+
+        if (state == PlayerState.Walking)
+        { 
+            switch (playerDirection)
+            {
+                case (Direction.Down):
+                    spriteBatch.Draw(_walkDown, position, 0, scale);
+                    break;
+                case (Direction.Left):
+                case (Direction.Right):
+                    _walkSide.Effect = flipper; 
+                    spriteBatch.Draw(_walkSide, position, 0, scale);
+                    break;
+                case (Direction.Up):
+                    spriteBatch.Draw(_walkUp, position, 0, scale);
+                    break;
+            }
+        }
+        else
+        {
+            switch (playerDirection)
+            {
+                case (Direction.Down):
+                    texture = Atlases.playerAtlas[0];
+                    break;
+                case (Direction.Left):
+                case (Direction.Right):
+                    texture = Atlases.playerAtlas[1];
+                    break;
+                case (Direction.Up):
+                    texture = Atlases.playerAtlas[3];
+                    break;
+            }
+            spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, 1f);
+
+        }
+
         //the size of the sprite will always match the size of the tile splitter 
-        spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, 1f);
         
-        if(interactionBox != null)
-            spriteBatch.DrawRectangle(interactionBox, color);
+        //if(interactionBox != null)
+        //    spriteBatch.DrawRectangle(interactionBox, color);
 
     }
     public void DrawShader(SpriteBatch spriteBatch, Texture2D shaderTexture)
@@ -106,6 +180,7 @@ public class PlayerPlatformer : BasePlayer
         identifier = "player";
 
         texture = Atlases.tilesetAtlas[0]; //blue
+        LoadAnimations();
         rectangle = new Rectangle((int)Globals.STARTING_POSITION.X, (int)Globals.STARTING_POSITION.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         frameStartRectangle = rectangle;
         color = Color.White;
@@ -237,7 +312,7 @@ public class PlayerOverworld : BasePlayer
     public PlayerOverworld()
     {
         identifier = "player";
-        texture = Atlases.tilesetAtlas[3]; //blue
+        texture = Atlases.playerAtlas[0]; //blue
         int startposx = 0;
         int startposy = 0;
         rectangle = new Rectangle(startposx, startposy, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
@@ -251,6 +326,9 @@ public class PlayerOverworld : BasePlayer
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
         GridMovement(mapBuilder);
+        _walkDown.Update(gameTime);
+        _walkSide.Update(gameTime);
+        _walkUp.Update(gameTime);
     }
 
     public PlayerState interactWithBox()
