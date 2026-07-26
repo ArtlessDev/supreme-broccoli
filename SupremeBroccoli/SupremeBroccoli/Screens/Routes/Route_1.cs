@@ -25,7 +25,7 @@ namespace SupremeBroccoli.Screens.Routes
         bool switcher = false;
         Rectangle To_Town_1 = new Rectangle(7 * Globals.TileSize, 4 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
         //Rectangle To_Town_2 = new Rectangle(2 * Globals.TileSize, 10* Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
-        Rectangle To_Town_2 = new Rectangle(48 * Globals.TileSize, 60 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Town_2 = new Rectangle(44 * Globals.TileSize, 60 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
 
         public Route_1(Game game) : base(game)
         {

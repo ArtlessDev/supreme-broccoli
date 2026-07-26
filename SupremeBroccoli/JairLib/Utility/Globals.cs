@@ -35,8 +35,8 @@ namespace JairLib.Utility
         public static int WindowWidth = 1600;//1280;//800;
 
         public static MapBuilder map;
-        public static int mapWidth = 40;
-        public static int mapHeight = 29;
+        public static int mapWidth = 32;
+        public static int mapHeight = 32;
         public static int PUZZLE_SIZE = 25;
         public static int PUZZLE_SIZE_ADJUSTED = (int)(2 + Math.Sqrt(PUZZLE_SIZE)) * (int)(2 + Math.Sqrt(PUZZLE_SIZE));
 

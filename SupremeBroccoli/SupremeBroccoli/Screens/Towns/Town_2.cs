@@ -30,7 +30,7 @@ namespace SupremeBroccoli.Screens.Towns
         /// route 2
         /// some new route/special area that i havent even fleshed out in any capacity?
         /// </summary>
-        Rectangle To_Route_1 = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Route_1 = new Rectangle(14 * Globals.TileSize, 4 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_2 = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_MtDragoon_1 = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_SpecialArea = new Rectangle(2 * Globals.TileSize, 0 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
@@ -106,7 +106,7 @@ namespace SupremeBroccoli.Screens.Towns
             //    t.isPlayerInteracting(town_1_gui);
             //}
 
-            //GoToRoute_1();
+            GoToRoute_1();
 
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             Globals.LockEKey = false;
@@ -117,8 +117,8 @@ namespace SupremeBroccoli.Screens.Towns
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Route_1))
             {
-                int x = 4 * Globals.TileSize,
-                    y = 2 * Globals.TileSize;
+                int x = 52 * Globals.TileSize,
+                    y = 58 * Globals.TileSize;
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
                 ScreenManager.CloseScreen();
