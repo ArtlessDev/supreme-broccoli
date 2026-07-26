@@ -23,9 +23,9 @@ namespace SupremeBroccoli.Screens.Routes
         RandomEncounterZone encounterZone;
         GameTime gameTimeLocal;
         bool switcher = false;
-        Rectangle To_Town_1 = new Rectangle(7 * Globals.TileSize, 4 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Town_1 = new Rectangle(8 * Globals.TileSize, 4 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
         //Rectangle To_Town_2 = new Rectangle(2 * Globals.TileSize, 10* Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
-        Rectangle To_Town_2 = new Rectangle(44 * Globals.TileSize, 60 * Globals.TileSize, 6 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Town_2 = new Rectangle(52 * Globals.TileSize, 60 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
 
         public Route_1(Game game) : base(game)
         {
@@ -54,6 +54,8 @@ namespace SupremeBroccoli.Screens.Routes
             encounterZone = new(2, 4, 50, 50);
             encounterZone.Load();
             encounterZone.encounterTimer.Elapsed += CheckForEncounter;
+
+            RpgPlayer.PlayerOverworld.LoadAnimations();
         }
         public override void Draw(GameTime gameTime)
         {
@@ -115,11 +117,12 @@ namespace SupremeBroccoli.Screens.Routes
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_1))
             {
-                int x = 7 * Globals.TileSize,
-                    y = (4 * Globals.TileSize) - Globals.TileSize;
+                int x = 20 * Globals.TileSize,
+                    y = (24 * Globals.TileSize) - Globals.TileSize;
                 
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+                encounterZone.encounterTimer.Enabled = false;
                 ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
@@ -128,11 +131,12 @@ namespace SupremeBroccoli.Screens.Routes
         {
             if (RpgPlayer.PlayerOverworld.rectangle.Intersects(To_Town_2))
             {
-                int x = 22 * Globals.TileSize,
-                    y = (3 * Globals.TileSize) - Globals.TileSize;
+                int x = 16 * Globals.TileSize,
+                    y = (10 * Globals.TileSize) - Globals.TileSize;
 
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+                //encounterZone.encounterTimer.Enabled = false;
                 ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_2(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
