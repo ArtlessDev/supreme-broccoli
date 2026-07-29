@@ -7,11 +7,6 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 using SupremeBroccoli.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SupremeBroccoli.Screens.Towns
 {

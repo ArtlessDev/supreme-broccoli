@@ -21,7 +21,7 @@ namespace SupremeBroccoli.Screens.Towns
         MapBuilder mapTopLayer, mapBottomLayer, mapBlockerLayer;
         QuestSystem town_1_quest, town_1_quest_2;
         CustomGuiGroup town_1_gui;
-        Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 22 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
+        Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 26 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
 
 
