@@ -16,13 +16,15 @@ namespace JairLib.Utility
             beastiary_tileset, 
             beastiaryDex,
             WorldMapSet,
-            playerTileset;
+            playerTileset,
+            npcBatchOneSet;
         public static Texture2DAtlas 
             gameTilePrototypeAtlas, 
             tilesetAtlas, 
             beastiaryDexAtlas,
             WorldMapAtlas,
-            playerAtlas;
+            playerAtlas,
+            npcBatchOneAtlas;
 
         public static void Load()
         {
@@ -31,15 +33,16 @@ namespace JairLib.Utility
             //gameTilePrototypeAtlas = Texture2DAtlas.Create("gameTileMapPrototype", gameTilePrototypeSet, Globals.TileSize, Globals.TileSize);
             WorldMapSet = Globals.GlobalContent.Load<Texture2D>("tilemaps\\tileset_original");
             WorldMapAtlas = Texture2DAtlas.Create("worldMapAtlas", WorldMapSet, Globals.TileSize, Globals.TileSize);
-
             beastiaryDex = Globals.GlobalContent.Load<Texture2D>("beastiary_dex");
             beastiaryDexAtlas = Texture2DAtlas.Create("beastTileMapPrototype", beastiaryDex, Globals.TileSize, Globals.TileSize);
-
             beastiary_tileset = Globals.GlobalContent.Load<Texture2D>("beastiary_tileset");
             tilesetAtlas = Texture2DAtlas.Create("playerTileMapPrototype", beastiary_tileset, Globals.TileSize, Globals.TileSize);
-
             playerTileset = Globals.GlobalContent.Load<Texture2D>("player");
             playerAtlas = Texture2DAtlas.Create("playerAtlas", playerTileset, Globals.TileSize, Globals.TileSize);
+
+            npcBatchOneSet = Globals.GlobalContent.Load<Texture2D>("npcBatchOne");
+            npcBatchOneAtlas = Texture2DAtlas.Create("npcAtlas", npcBatchOneSet, Globals.TileSize, Globals.TileSize);
+
         }
 
         public static Texture2DAtlas SetAtlas(int value)

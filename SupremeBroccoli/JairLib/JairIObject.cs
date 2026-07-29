@@ -37,6 +37,13 @@ public enum PlayerState
     InCommunication
 }
 
+public enum NpcStates
+{
+    None,
+    Idle,
+    Talking,
+}
+
 public enum Direction
 {
     Left,

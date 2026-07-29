@@ -85,18 +85,19 @@
             }
         },
         "tileset_original.tsx": {
-            "scaleInDock": 0.25
+            "scaleInDock": 0.25,
+            "scaleInEditor": 2
         },
         "worldMap.tmx": {
             "expandedGroupLayers": [
-                4,
-                9
+                9,
+                16
             ],
-            "scale": 0.25,
-            "selectedLayer": 9,
+            "scale": 0.125,
+            "selectedLayer": 16,
             "viewCenter": {
-                "x": -4768,
-                "y": -6174
+                "x": 744,
+                "y": 8716
             }
         }
     },
@@ -112,10 +113,12 @@
     "openFiles": [
         "worldMap.tmx",
         "otherMAp.tmx",
-        "beastiary_map.tmx"
+        "beastiary_map.tmx",
+        "tileset_original.tsx"
     ],
     "project": "beastiary_rescue.tiled-project",
     "recentFiles": [
+        "tileset_original.tsx",
         "beastiary_map.tmx",
         "otherMAp.tmx",
         "worldMap.tmx",

@@ -54,6 +54,7 @@ namespace JairLib.QuestCore
         public bool IsAutoTrigger { get; set; }
         public bool DemandsPlayerResponse { get; set; }
         public QuestList PrerequisiteObjective { get; set; }
+        Direction direction { get; set; }
         #endregion constructor and variables
 
         public void Update(GameTime gameTime, PlayerOverworld player)
@@ -79,6 +80,7 @@ namespace JairLib.QuestCore
         {
             var playerctx = RpgPlayer.PlayerOverworld;
             var playerIntersectFlag = playerctx.interactionBox.Intersects(rectangle);
+            
 
             if (!playerIntersectFlag)
                 return false;
@@ -91,6 +93,55 @@ namespace JairLib.QuestCore
             else return false;
 
         }
+
+        public NpcStates NpcStates;
+        private SpriteSheet _spriteSheet;
+        public AnimatedSprite[] Animations = new AnimatedSprite[8];
+        public string animationString;
+        public AnimatedSprite[] LoadAnimations()
+        {
+
+            _spriteSheet = new SpriteSheet("SpriteSheet/npc", Atlases.npcBatchOneAtlas);
+
+            foreach(AnimatedSprite anisprite in Animations)
+            {
+                int index = Array.IndexOf(Animations, anisprite);
+                var idlePoseString = $"npcAtlas_{textureValue}";
+                var midYapString = $"npcAtlas_{textureValue+4}";
+                animationString = $"npcAtlas_{identifier}_{index}_{textureValue + 4}";
+
+                if (index%2 == 0)
+                {
+                    _spriteSheet.DefineAnimation(animationString, builder =>
+                    {
+                        builder.IsLooping(true)
+                               .AddFrame(idlePoseString, TimeSpan.FromSeconds(0.2));
+                    });
+
+                }
+                else
+                {
+                    _spriteSheet.DefineAnimation(animationString, builder =>
+                    {
+                        builder.IsLooping(true)
+                               .AddFrame(idlePoseString, TimeSpan.FromSeconds(0.2))
+                               .AddFrame(midYapString, TimeSpan.FromSeconds(0.2));
+                    });
+                }
+
+                //_spriteSheet.DefineAnimation(animationString+"_idle", builder =>
+                //{
+                //    builder.IsLooping(true)
+                //           .AddFrame(idlePoseString, TimeSpan.FromSeconds(0.2));
+                //});
+                
+
+                Animations[index] = new AnimatedSprite(_spriteSheet, animationString);
+            }
+
+            return Animations;
+        }
+
         public CustomGuiGroup OpenGui(CustomGuiGroup gui, GameTime gameTime)
         {
             bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
@@ -116,15 +167,69 @@ namespace JairLib.QuestCore
 
         public void Draw(SpriteBatch _spriteBatch)
         {
+            Vector2 position = new(rectangle.X, rectangle.Y);
+            var scale = new Vector2(1f, 1f);
 
-            if (IsCompletedFlag) 
-            { 
-                _spriteBatch.DrawString(Globals.font, objectiveDescription, new(rectangle.X, rectangle.Y), Color.White);
-            }
-            else
+
+
+
+
+            if (NpcStates == NpcStates.Idle)
             {
-                _spriteBatch.Draw(texture, new Vector2(rectangle.X, rectangle.Y), color);
+                _spriteBatch.Draw(Animations[0], position, 0, scale);
+
             }
+            else if (NpcStates == NpcStates.Talking)
+            {
+                _spriteBatch.Draw(Animations[1], position, 0, scale);
+            }
+
+            //{
+            //    switch (direction)
+            //    {
+            //        case (Direction.Down):
+            //            _spriteBatch.Draw(Animations[0], position, 0, scale);
+            //            break;
+            //        case (Direction.Left):
+            //            _spriteBatch.Draw(Animations[1], position, 0, scale);
+            //            break;
+            //        case (Direction.Right):
+            //            //_walkSide.Effect = flipper;
+            //            _spriteBatch.Draw(Animations[2], position, 0, scale);
+            //            break;
+            //        case (Direction.Up):
+            //            _spriteBatch.Draw(Animations[3], position, 0, scale);
+            //            break;
+            //    }
+            //}
+            //else if (NpcStates == NpcStates.Talking)
+            //{
+            //    switch (direction)
+            //    {
+            //        case (Direction.Down):
+            //            _spriteBatch.Draw(Animations[4], position, 0, scale);
+            //            break;
+            //        case (Direction.Left):
+            //            _spriteBatch.Draw(Animations[5], position, 0, scale);
+            //            break;
+            //        case (Direction.Right):
+            //            //_walkSide.Effect = flipper;
+            //            _spriteBatch.Draw(Animations[6], position, 0, scale);
+            //            break;
+            //        case (Direction.Up):
+            //            _spriteBatch.Draw(Animations[7], position, 0, scale);
+            //            break;
+            //    }
+            //}
+
+            //if (IsCompletedFlag)
+            //{
+            //    _spriteBatch.DrawString(Globals.font, objectiveDescription, new(rectangle.X, rectangle.Y), Color.White);
+            //}
+            //else
+            //{
+            //    _spriteBatch.Draw(texture, new Vector2(rectangle.X, rectangle.Y), color);
+            //}
         }
 
         public void DrawNoCheck(SpriteBatch _spriteBatch, PlayerOverworld player)

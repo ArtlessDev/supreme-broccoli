@@ -1,14 +1,15 @@
-﻿using Assimp;
-using JairLib;
+﻿using JairLib;
 using JairLib.QuestCore;
 using JairLib.TileGenerators;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 using SupremeBroccoli.Core;
+using System.Linq;
 
 namespace SupremeBroccoli.Screens.Towns
 {
@@ -50,8 +51,23 @@ namespace SupremeBroccoli.Screens.Towns
 
 
 
-            town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.beastiaryDexAtlas);
-            town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.beastiaryDexAtlas);
+            town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
+            town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.npcBatchOneAtlas);
+
+            for (int i = 0; i < town_1_quest_2.CurrentQuest.KvpQuests.Count; i++)
+            {
+                var _reference = town_1_quest_2.CurrentQuest.KvpQuests.ToArray();
+                town_1_quest_2.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
+
+            }
+            for (int i = 0; i < town_1_quest.CurrentQuest.KvpQuests.Count; i++)
+            {
+                var _reference = town_1_quest.CurrentQuest.KvpQuests.ToArray();
+                town_1_quest.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
+
+            }
+
+
             town_1_gui = new();
 
             RpgPlayer.PlayerOverworld.LoadAnimations();
@@ -74,14 +90,14 @@ namespace SupremeBroccoli.Screens.Towns
             //RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch, Color.Black);
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
 
-            Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Route_1, Color.White);
+            //Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Route_1, Color.White);
 
             if (town_1_gui != null)
                 town_1_gui.draw(Game._spriteBatch);
 
            
-            RpgPlayer.PlayerOverworld.DrawShader(Game._spriteBatch, Globals.player_shader);
-            Globals.DrawShader(Game._spriteBatch, Globals.vignette_shader);
+            //RpgPlayer.PlayerOverworld.DrawShader(Game._spriteBatch, Globals.player_shader);
+            //Globals.DrawShader(Game._spriteBatch, Globals.vignette_shader);
 
             Game._spriteBatch.End();
 
@@ -100,19 +116,68 @@ namespace SupremeBroccoli.Screens.Towns
             {
                 if(t.isPlayerInteracting())
                     t.OpenGui(town_1_gui, gameTime);
+
+                //foreach (AnimatedSprite anim in t.Animations)
+                //{
+                //    anim.Update(gameTime);
+                //}
+
+                if (t.isPlayerInteracting())
+                {
+                    t.NpcStates = NpcStates.Talking;
+                }
+                else
+                {
+                    t.NpcStates = NpcStates.Idle;
+                }
+
             };
             foreach(var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
                 if(t.isPlayerInteracting())
+                {
                     t.OpenGui(town_1_gui, gameTime);
+                    t.Animations[1].Update(gameTime);
+
+                }
+
+                //foreach (AnimatedSprite anim in t.Animations)
+                //{
+                //    anim.Update(gameTime);
+                //}
+
+
+                if (t.isPlayerInteracting())
+                {
+                    t.NpcStates = NpcStates.Talking;
+                }
+                else
+                {
+                    t.NpcStates = NpcStates.Idle;
+                }
+
             }
-            foreach(var t in town_1_quest_2.CurrentQuest.KvpQuests.Values)
+            foreach (var t in town_1_quest_2.CurrentQuest.KvpQuests.Values)
             {
                 /// need a 'trigger' for the kvp objectives: when the previous one is set to true, 
                 /// the previous/prereq should be disabled or only does the alt text.
                 /// 
                 /// if A is the prereq to B, A should be completed in order to try and complete B
-                if(t.PrerequisiteObjective != QuestList.None)
+                foreach (AnimatedSprite anim in t.Animations)
+                {
+                    anim.Update(gameTime);
+                }
+
+                if (t.isPlayerInteracting())
+                {
+                    t.NpcStates = NpcStates.Talking;
+                }
+                else
+                {
+                    t.NpcStates = NpcStates.Idle;
+                }
+
+                if (t.PrerequisiteObjective != QuestList.None)
 
                 if(t.isPlayerInteracting())
                     t.OpenGui(town_1_gui, gameTime);

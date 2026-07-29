@@ -13,6 +13,7 @@ namespace JairLib.QuestCore
         None,
         Town_1_Quest,
         Town_1_Quest_2,
+        A, B, C, D, E, F, G, H, I,
     }
     public class Quest
     {
@@ -70,36 +71,38 @@ namespace JairLib.QuestCore
         public void DrawCurrentQuestObjective(SpriteBatch _spriteBatch, PlayerOverworld player)
         {
 
-            if (CurrentQuest.SideObjectives != null)
-                DrawSideObjectives(_spriteBatch, player);
+            //if (CurrentQuest.SideObjectives != null)
+            //    DrawSideObjectives(_spriteBatch, player);
 
             foreach (KeyObjective obj in CurrentQuest.KvpQuests.Values)
             {
                 //need to only show the first quest objective that is not completed, and then show the next one after that is completed
-                obj.texture = Atlases.beastiaryDexAtlas[obj.textureValue];
+                //obj.texture = Atlases.beastiaryDexAtlas[obj.textureValue];
                 //DrawKvpObjectives(_spriteBatch, player);
                 obj.Draw(_spriteBatch);
             }
 
+
+
             //WasQuestCompletedGoodOrBad(_spriteBatch);
 
-            foreach (var objective in objectives)
-            {
-                if (objective == null)
-                    return;
+            //foreach (var objective in objectives)
+            //{
+            //    if (objective == null)
+            //        return;
 
-                if (!objective.IsCompletedFlag)
-                {
-                    objective.Draw(_spriteBatch);
-                    objective.texture = questAtlas[objective.textureValue];
-                    //return;
-                }
+            //    if (!objective.IsCompletedFlag)
+            //    {
+            //        //objective.Draw(_spriteBatch);
+            //        objective.texture = questAtlas[objective.textureValue];
+            //        //return;
+            //    }
 
-                if (objective.IsCompletedFlag)
-                {
-                    objective.Draw(_spriteBatch);
-                }
-            }
+            //    if (objective.IsCompletedFlag)
+            //    {
+            //        objective.Draw(_spriteBatch);
+            //    }
+            //}
 
         }
 
@@ -145,6 +148,16 @@ namespace JairLib.QuestCore
                 foreach (KeyObjective obj in CurrentQuest.KvpQuests.Values)
                 {
                     HandleQuest(obj, player);
+
+                    if (obj.isPlayerInteracting())
+                    {
+                        obj.NpcStates = NpcStates.Talking;
+                    }
+                    else
+                    {
+                        obj.NpcStates = NpcStates.Idle;
+                    }
+
                 }
             }
 
