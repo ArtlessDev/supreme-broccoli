@@ -149,15 +149,6 @@ namespace JairLib.QuestCore
                 {
                     HandleQuest(obj, player);
 
-                    if (obj.isPlayerInteracting())
-                    {
-                        obj.NpcStates = NpcStates.Talking;
-                    }
-                    else
-                    {
-                        obj.NpcStates = NpcStates.Idle;
-                    }
-
                 }
             }
 

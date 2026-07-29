@@ -9,6 +9,7 @@ using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 using SupremeBroccoli.Core;
+using System;
 using System.Linq;
 
 namespace SupremeBroccoli.Screens.Towns
@@ -112,75 +113,43 @@ namespace SupremeBroccoli.Screens.Towns
 
             town_1_gui.update(gameTime);
             
-            foreach(var t in town_1_quest.objectives)
-            {
-                if(t.isPlayerInteracting())
-                    t.OpenGui(town_1_gui, gameTime);
+            //foreach(var t in town_1_quest.objectives)
+            //{
+            //    if(t.isPlayerInteracting())
+            //        t.OpenGui(town_1_gui, gameTime);
 
-                //foreach (AnimatedSprite anim in t.Animations)
-                //{
-                //    anim.Update(gameTime);
-                //}
+            //    //foreach (AnimatedSprite anim in t.Animations)
+            //    //{
+            //    //    anim.Update(gameTime);
+            //    //}
+            //    t.CurrentAnimation.Update(gameTime);
 
-                if (t.isPlayerInteracting())
-                {
-                    t.NpcStates = NpcStates.Talking;
-                }
-                else
-                {
-                    t.NpcStates = NpcStates.Idle;
-                }
-
-            };
+            ///talking animation gets overridden on subsequent frame and goes back to idle. idle animation is also the animation for talking
+            //};
             foreach(var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
+                t.AssignNpcState(town_1_gui);
+
                 if(t.isPlayerInteracting())
                 {
                     t.OpenGui(town_1_gui, gameTime);
-                    t.Animations[1].Update(gameTime);
-
                 }
-
-                //foreach (AnimatedSprite anim in t.Animations)
-                //{
-                //    anim.Update(gameTime);
-                //}
-
-
-                if (t.isPlayerInteracting())
-                {
-                    t.NpcStates = NpcStates.Talking;
-                }
-                else
-                {
-                    t.NpcStates = NpcStates.Idle;
-                }
-
+                
+                //this is essentially a hover
+                if(t.rectangle.Intersects(RpgPlayer.PlayerOverworld.interactionBox) && town_1_gui.baseGui.isGuiEnabled)
+                    t.CurrentAnimation.Update(gameTime);
             }
             foreach (var t in town_1_quest_2.CurrentQuest.KvpQuests.Values)
             {
-                /// need a 'trigger' for the kvp objectives: when the previous one is set to true, 
-                /// the previous/prereq should be disabled or only does the alt text.
-                /// 
-                /// if A is the prereq to B, A should be completed in order to try and complete B
-                foreach (AnimatedSprite anim in t.Animations)
-                {
-                    anim.Update(gameTime);
-                }
+                t.AssignNpcState(town_1_gui);
 
                 if (t.isPlayerInteracting())
                 {
-                    t.NpcStates = NpcStates.Talking;
-                }
-                else
-                {
-                    t.NpcStates = NpcStates.Idle;
-                }
-
-                if (t.PrerequisiteObjective != QuestList.None)
-
-                if(t.isPlayerInteracting())
                     t.OpenGui(town_1_gui, gameTime);
+                    t.CurrentAnimation.Update(gameTime);
+
+                }
+
             }
 
             GoToRoute_1();

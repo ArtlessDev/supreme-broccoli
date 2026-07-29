@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Graphics;
 
+
 namespace JairLib.QuestCore
 {
     public class KeyObjective : AnyObject//: ITileObject
@@ -14,10 +15,12 @@ namespace JairLib.QuestCore
             textureAtlas = Atlases.SetAtlas(textureAtlasId);
             texture = textureAtlas[textureValue];
             color = Color.White;
+            NpcStates = NpcStates.Idle;
         }
         public KeyObjective(Texture2DAtlas specifiedAtlas) {
             texture = specifiedAtlas[textureValue];
             color = Color.White;
+            NpcStates = NpcStates.Idle;
         }
         public string objectiveTitle { get; set; }
         public string objectiveDescription { get; set; }
@@ -94,40 +97,47 @@ namespace JairLib.QuestCore
 
         }
 
+        public NpcStates AssignNpcState(CustomGuiGroup gui)
+        {
+            var playerctx = RpgPlayer.PlayerOverworld;
+
+            var flag = playerctx.interactionBox.Intersects(this.rectangle);
+            if (gui.baseGui.isGuiEnabled && playerctx.interactionBox.Intersects(this.rectangle))
+            {
+                NpcStates = NpcStates.Talking;
+            }
+            else if (!gui.baseGui.isGuiEnabled)
+            {
+                NpcStates = NpcStates.Idle;
+            }
+
+            return NpcStates;
+        }
+
         public NpcStates NpcStates;
         private SpriteSheet _spriteSheet;
         public AnimatedSprite[] Animations = new AnimatedSprite[8];
+        public AnimatedSprite _idleDown, _talkingDown;
+        public AnimatedSprite CurrentAnimation;
         public string animationString;
         public AnimatedSprite[] LoadAnimations()
         {
 
             _spriteSheet = new SpriteSheet("SpriteSheet/npc", Atlases.npcBatchOneAtlas);
+            var idlePoseString = $"npcAtlas_{textureValue}";
+            var midYapString = $"npcAtlas_{textureValue+4}";
 
             foreach(AnimatedSprite anisprite in Animations)
             {
                 int index = Array.IndexOf(Animations, anisprite);
-                var idlePoseString = $"npcAtlas_{textureValue}";
-                var midYapString = $"npcAtlas_{textureValue+4}";
                 animationString = $"npcAtlas_{identifier}_{index}_{textureValue + 4}";
 
-                if (index%2 == 0)
+                _spriteSheet.DefineAnimation(animationString, builder =>
                 {
-                    _spriteSheet.DefineAnimation(animationString, builder =>
-                    {
-                        builder.IsLooping(true)
-                               .AddFrame(idlePoseString, TimeSpan.FromSeconds(0.2));
-                    });
-
-                }
-                else
-                {
-                    _spriteSheet.DefineAnimation(animationString, builder =>
-                    {
-                        builder.IsLooping(true)
-                               .AddFrame(idlePoseString, TimeSpan.FromSeconds(0.2))
-                               .AddFrame(midYapString, TimeSpan.FromSeconds(0.2));
-                    });
-                }
+                    builder.IsLooping(true)
+                           .AddFrame(idlePoseString, TimeSpan.FromSeconds(0.2))
+                           .AddFrame(midYapString, TimeSpan.FromSeconds(0.2));
+                });
 
                 //_spriteSheet.DefineAnimation(animationString+"_idle", builder =>
                 //{
@@ -139,9 +149,10 @@ namespace JairLib.QuestCore
                 Animations[index] = new AnimatedSprite(_spriteSheet, animationString);
             }
 
+            CurrentAnimation = Animations[0];
             return Animations;
         }
-
+        
         public CustomGuiGroup OpenGui(CustomGuiGroup gui, GameTime gameTime)
         {
             bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
@@ -151,7 +162,7 @@ namespace JairLib.QuestCore
                 return gui;
 
             playerctx.interactWithBox();
-
+            
             gui.baseGui.currentText = objectiveDescription;
             gui.baseGui.DemandsPlayerResponse = this.DemandsPlayerResponse;
             gui.baseGui.isGuiEnabled = !gui.baseGui.isGuiEnabled;
@@ -176,13 +187,15 @@ namespace JairLib.QuestCore
 
             if (NpcStates == NpcStates.Idle)
             {
-                _spriteBatch.Draw(Animations[0], position, 0, scale);
+                CurrentAnimation = Animations[0];
 
             }
             else if (NpcStates == NpcStates.Talking)
             {
-                _spriteBatch.Draw(Animations[1], position, 0, scale);
+                CurrentAnimation = Animations[1];
             }
+
+            _spriteBatch.Draw(CurrentAnimation, position, 0, scale);
 
             //{
             //    switch (direction)
