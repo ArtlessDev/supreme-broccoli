@@ -22,6 +22,7 @@ namespace SupremeBroccoli.Screens
         private new Game1 Game => (Game1)base.Game;
         public static List<CombatActors> PlayerParty = new List<CombatActors>();
         public static List<CombatActors> FoeParty = new List<CombatActors>();
+        public static Screen returnToThisScreen;
         CombatStates currentState;
 
         public CombatSimulator(Game game) : base(game)
@@ -42,7 +43,7 @@ namespace SupremeBroccoli.Screens
 
 
             if (Globals.keyb.WasKeyPressed(Keys.Enter))
-                ScreenManager.ShowScreen(new Routes.Route_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+                ChangeBackScreen(GraphicsDevice, ScreenManager);
 
             switch (currentState)
             {
@@ -69,6 +70,9 @@ namespace SupremeBroccoli.Screens
                 case (CombatStates.GameOverWon):
                     CombatStateMachine.GameOverWon();
                     break;
+                case (CombatStates.ReturnToScreen):
+                    ChangeBackScreen(GraphicsDevice, ScreenManager);
+                    break;
 
             }
 
@@ -77,6 +81,13 @@ namespace SupremeBroccoli.Screens
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
 
+        }
+
+        internal static void ChangeBackScreen(GraphicsDevice graphics, ScreenManager _screenManager)
+        {
+
+            _screenManager.CloseScreen();
+            _screenManager.ShowScreen(returnToThisScreen, new FadeTransition(graphics, Color.Black, 0.5f));
         }
 
         public override void Draw(GameTime gameTime)
@@ -97,6 +108,12 @@ namespace SupremeBroccoli.Screens
         {
             PlayerParty = _playerParty;
             FoeParty = _foeParty;
+        }
+
+        internal void SetCombatActors(List<CombatActors> enemiesFromEncounter, Screen previousScreen)
+        {
+            FoeParty = enemiesFromEncounter;
+            returnToThisScreen = previousScreen;
         }
     }
 

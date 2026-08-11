@@ -17,7 +17,8 @@ namespace JairLib.CombatSimulator
         ResolveActions,
         CheckActorsHP,
         GameOverLost,
-        GameOverWon
+        GameOverWon,
+        ReturnToScreen
     }
 
     public static class CombatStateMachine
@@ -110,6 +111,11 @@ namespace JairLib.CombatSimulator
             //maybe here a player needs to select newly learned move
 
             //player returns to area where they just were
+
+        }
+
+        public static void ReturnToScreen()
+        {
 
         }
 

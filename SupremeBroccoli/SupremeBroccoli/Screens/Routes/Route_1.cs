@@ -1,4 +1,5 @@
 ﻿using JairLib;
+using JairLib.CombatSimulator;
 using JairLib.QuestCore;
 using JairLib.TileGenerators;
 using JairLib.Utility;
@@ -158,7 +159,14 @@ namespace SupremeBroccoli.Screens.Routes
                 encounterZone.encounterTimer.Enabled = false;
                 encounterZone.encounterTimer.Stop();
                 ScreenManager.CloseScreen();
-                ScreenManager.ShowScreen(new CombatSimulator(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+
+                var combatSim = new CombatSimulator(Game);
+
+                List<CombatActors> enemiesFromEncounter = new List<CombatActors>();
+                combatSim.SetCombatActors(enemiesFromEncounter, new Route_1(Game));
+
+
+                ScreenManager.ShowScreen(combatSim, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
             }
             else if (encounterZone.encounterThreshold>=4)
