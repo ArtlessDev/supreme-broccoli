@@ -98,6 +98,11 @@ namespace SupremeBroccoli.Screens
             PlayerParty = _playerParty;
             FoeParty = _foeParty;
         }
+
+        internal void AssignCombatActors(List<CombatActors> combatActors)
+        {
+            
+        }
     }
 
     public static class GumCombatGui

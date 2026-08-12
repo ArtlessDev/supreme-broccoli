@@ -24,6 +24,11 @@ namespace JairLib.CombatSimulator
     {
         static CombatStates internalCombatState = CombatStates.none;
         //TODO: ALL OF THE COMBAT STATES
+        private static List<CombatActors> playerTeam, foeTeam;
+        public static void AssignActors()
+        {
+
+        }
 
         public static void VerifyActors()
         {
