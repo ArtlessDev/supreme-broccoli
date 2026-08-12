@@ -25,7 +25,7 @@ namespace JairLib.Utility
         public static int TileSize = 128;
         public static SpriteSheet spriteSheet, gameObjectSheet;
         public static List<TileSpace> tileSpaces;
-        public static SpriteFont font;
+        public static SpriteFont font, stabilloFont;
 
         //what the camera sees
         public static int ViewportHeight = 1080;//480;
@@ -45,13 +45,15 @@ namespace JairLib.Utility
         public static int fontSize = 24;
         public static int currentLevel = 1;
         public static int CountOfTiles = 8;
-        public static Texture2D player_shader, vignette_shader;
+        public static Texture2D player_shader, vignette_shader, shadow;
 
         public static void Load()
         {
             font = GlobalContent.Load<SpriteFont>("coolvetica");
+            stabilloFont = GlobalContent.Load<SpriteFont>("Stabilo");
             tileSpaces = new List<TileSpace>();
             player_shader = Globals.GlobalContent.Load<Texture2D>("player_shader");
+            shadow = Globals.GlobalContent.Load<Texture2D>("shadow");
             vignette_shader = Globals.GlobalContent.Load<Texture2D>("vignette_shader");
 
         }

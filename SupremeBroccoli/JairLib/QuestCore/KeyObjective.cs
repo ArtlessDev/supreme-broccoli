@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 
 
@@ -14,12 +15,14 @@ namespace JairLib.QuestCore
             //TODO: make the json read the 2nd constructor, not this one
             textureAtlas = Atlases.SetAtlas(textureAtlasId);
             texture = textureAtlas[textureValue];
-            color = Color.White;
+            //color = Color.White;
+
             NpcStates = NpcStates.Idle;
         }
         public KeyObjective(Texture2DAtlas specifiedAtlas) {
             texture = specifiedAtlas[textureValue];
             color = Color.White;
+
             NpcStates = NpcStates.Idle;
         }
         public string objectiveTitle { get; set; }
@@ -122,6 +125,9 @@ namespace JairLib.QuestCore
         public string animationString;
         public AnimatedSprite[] LoadAnimations()
         {
+            var _rValue = Random.Shared.Next(50, 255);
+            var _gValue = Random.Shared.Next(50, 255);
+            var _bValue = Random.Shared.Next(50, 255);
 
             _spriteSheet = new SpriteSheet("SpriteSheet/npc", Atlases.npcBatchOneAtlas);
             var idlePoseString = $"npcAtlas_{textureValue}";
@@ -147,13 +153,15 @@ namespace JairLib.QuestCore
                 
 
                 Animations[index] = new AnimatedSprite(_spriteSheet, animationString);
+                var tempColor = new Color(_rValue, _gValue, _bValue);
+                Animations[index].Color = tempColor;
             }
 
             CurrentAnimation = Animations[0];
             return Animations;
         }
         
-        public CustomGuiGroup OpenGui(CustomGuiGroup gui, GameTime gameTime)
+        public CustomGuiGroup OpenGui(CustomGuiGroup gui, GameTime gameTime, Color _color)
         {
             bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
             var playerctx = RpgPlayer.PlayerOverworld;
@@ -166,6 +174,8 @@ namespace JairLib.QuestCore
             gui.baseGui.currentText = objectiveDescription;
             gui.baseGui.DemandsPlayerResponse = this.DemandsPlayerResponse;
             gui.baseGui.isGuiEnabled = !gui.baseGui.isGuiEnabled;
+            gui.baseGui.speakerId = identifier;
+            gui.baseGui.nameplateColor = _color;
 
             if (gui.baseGui.DemandsPlayerResponse)
             {
@@ -179,8 +189,10 @@ namespace JairLib.QuestCore
         public void Draw(SpriteBatch _spriteBatch)
         {
             Vector2 position = new(rectangle.X, rectangle.Y);
+            Vector2 shadowPosition = new(rectangle.X+64, rectangle.Y +96);
             var scale = new Vector2(1f, 1f);
-
+            var shadowScale = new Vector2(30f, 10f);
+            //Rectangle shadowRectangle = new Rectangle(shadowPosition.X, shadowPosition.Y, rectangle.Width, re);
 
 
 
@@ -194,7 +206,12 @@ namespace JairLib.QuestCore
             {
                 CurrentAnimation = Animations[1];
             }
-
+            
+            var tempShadowColor = new Color(1f, 1f, 1f, .5f);
+            //_spriteBatch.DrawPolygon(shadowPosition, CreateCircle(radius, sides), color, thickness, layerDepth);
+            _spriteBatch.Draw(Globals.shadow, rectangle, Color.White);
+            //_spriteBatch.DrawEllipse(shadowPosition, shadowScale, 16, tempShadowColor);
+            //_spriteBatch.DrawCircle(shadowPosition, 5f, 60, tempShadowColor);
             _spriteBatch.Draw(CurrentAnimation, position, 0, scale);
 
             //{

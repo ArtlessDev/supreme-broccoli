@@ -48,9 +48,18 @@ namespace JairLib.Utility
 
     public class CustomGuiBase
     {
+
+        public Rectangle PrimaryContainer = new((int)RpgPlayer.PlayerOverworld.rectangle.X, (int)RpgPlayer.PlayerOverworld.rectangle.Y, (int)(Globals.TileSize * 1.5f), Globals.TileSize * 2);
+        public bool isGuiEnabled = false;
+        public string currentText;
+        public bool DemandsPlayerResponse = false;
+        public string speakerId = "blank";
+
+        public Color nameplateColor { get; set; }
+
         public CustomGuiBase()
         {
-            int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 566;
+            int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 700;
             int tempy = (int)RpgPlayer.PlayerOverworld.rectangle.Y + 128;
             int tempW = (int)(Globals.WindowWidth * .85f);
             int tempH = (int)(Globals.WindowHeight * .3f);
@@ -61,12 +70,12 @@ namespace JairLib.Utility
             this.isGuiEnabled = isGuiEnabled;
             this.currentText = currentText;
         }
-
-        public Rectangle PrimaryContainer = new((int)RpgPlayer.PlayerOverworld.rectangle.X, (int)RpgPlayer.PlayerOverworld.rectangle.Y, (int)(Globals.TileSize * 1.5f), Globals.TileSize * 2);
-        public bool isGuiEnabled = false;
-        public string currentText;
-        public bool DemandsPlayerResponse = false;
-
+        public CustomGuiBase(bool isGuiEnabled, string currentText, string speakerId)
+        {
+            this.speakerId = speakerId;
+            this.isGuiEnabled = isGuiEnabled;
+            this.currentText = currentText;
+        }
         public void load()
         {
 
@@ -74,10 +83,10 @@ namespace JairLib.Utility
         public virtual void update(GameTime gt)
         {
 
-            int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 566;
+            int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 650;
             int tempy = (int)RpgPlayer.PlayerOverworld.rectangle.Y + 128;
             int tempW = (int)(Globals.WindowWidth * .85f);
-            int tempH = (int)(Globals.WindowHeight * .3f);
+            int tempH = (int)(Globals.WindowHeight * .2f);
 
             PrimaryContainer = new(tempx, tempy, tempW, tempH);
 
@@ -88,10 +97,18 @@ namespace JairLib.Utility
         {
             if (!isGuiEnabled)
                 return;
+            var shownTxt = $"{speakerId} : {currentText}";
 
             sb.FillRectangle(PrimaryContainer.X, PrimaryContainer.Y, PrimaryContainer.Width, PrimaryContainer.Height, Color.Black);
-            sb.DrawRectangle(PrimaryContainer.X, PrimaryContainer.Y, PrimaryContainer.Width, PrimaryContainer.Height, Color.White);
-            sb.DrawString(Globals.font, currentText, new(PrimaryContainer.X + Globals.fontSize, PrimaryContainer.Y), Color.White);
+            sb.DrawRectangle(PrimaryContainer.X, PrimaryContainer.Y, PrimaryContainer.Width, PrimaryContainer.Height, nameplateColor);
+            sb.DrawString(Globals.stabilloFont, currentText, new(PrimaryContainer.X + Globals.fontSize, PrimaryContainer.Y), Color.White);
+
+            //name txtbox
+            sb.FillRectangle(PrimaryContainer.X, PrimaryContainer.Y - Globals.TileSize * .75f, PrimaryContainer.Width * .3f, PrimaryContainer.Height * .5f, Color.Black);
+            sb.DrawRectangle(PrimaryContainer.X, PrimaryContainer.Y - Globals.TileSize * .75f, PrimaryContainer.Width * .3f, PrimaryContainer.Height * .5f, nameplateColor);
+
+            sb.DrawString(Globals.stabilloFont, speakerId, new(PrimaryContainer.X + Globals.fontSize, PrimaryContainer.Y - Globals.TileSize * .75f), nameplateColor);
+
         }
     }
 
@@ -116,7 +133,7 @@ namespace JairLib.Utility
             int tempx = (int)RpgPlayer.PlayerOverworld.rectangle.X - 566;
             int tempy = (int)RpgPlayer.PlayerOverworld.rectangle.Y;
             int tempW = (int)(Globals.WindowWidth * .2f);
-            int tempH = (int)(Globals.WindowHeight * .1f);
+            int tempH = (int)(Globals.WindowHeight * .2f);
 
             PrimaryContainer = new(tempx, tempy, tempW, tempH);
             currentText = tempSelectionFlag.ToString();
