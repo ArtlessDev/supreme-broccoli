@@ -420,3 +420,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/artwork/Visual/Tiled/beastiary_rescue.tiled-session
