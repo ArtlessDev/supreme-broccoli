@@ -1,0 +1,38 @@
+{
+    "Health": 0,
+    "MaximumHealth": 0,
+    "Name": null,
+    "Speed": 0,
+    "Attack": 0,
+    "Moveset": null,
+    "TypeAffinities": null,
+    "TypeWeaknesses": null,
+    "TypeResistances": null,
+    "SpecialAttack": 0,
+    "Defense": 0,
+    "SpecialDefense": 0,
+    "Luck": 0,
+    "Accuracy": 0,
+    "Evasiveness": 0,
+    "identifier": null,
+    "rectangle": {
+        "Left": 0,
+        "Right": 0,
+        "Top": 0,
+        "Bottom": 0,
+        "IsEmpty": true,
+        "Location": {},
+        "Size": {},
+        "Center": {}
+    },
+    "texture": null,
+    "color": {
+        "B": 0,
+        "G": 0,
+        "R": 0,
+        "A": 0,
+        "PackedValue": 0
+    },
+    "absolutePosition": {},
+    "Position": {}
+}
