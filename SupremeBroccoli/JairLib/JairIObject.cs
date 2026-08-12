@@ -96,3 +96,11 @@ public enum Element
     Physical,
     RangedPhysical,
 }
+
+public enum KindOfAttack
+{
+    Physical,
+    Magic,
+    Status,
+    Heal,
+}

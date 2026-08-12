@@ -132,7 +132,7 @@ namespace SupremeBroccoli.Screens.Towns
 
                 if(t.isPlayerInteracting())
                 {
-                    t.OpenGui(town_1_gui, gameTime);
+                    t.OpenGui(town_1_gui, gameTime, t.CurrentAnimation.Color);
                 }
                 
                 //this is essentially a hover
@@ -145,7 +145,7 @@ namespace SupremeBroccoli.Screens.Towns
 
                 if (t.isPlayerInteracting())
                 {
-                    t.OpenGui(town_1_gui, gameTime);
+                    t.OpenGui(town_1_gui, gameTime, t.CurrentAnimation.Color);
                     t.CurrentAnimation.Update(gameTime);
 
                 }

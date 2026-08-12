@@ -109,9 +109,11 @@ public class BasePlayer : AnyObject, QuestCore.IStats
         var origin = new Vector2(0, 0);
         var position = new Vector2(rectangle.X, rectangle.Y);
         var scale = new Vector2(1f, 1f);
+        var shadowRectangle = new Rectangle(rectangle.X+16, rectangle.Y+24, rectangle.Width, rectangle.Height);
 
         color = altColor ?? Color.White;
         var rotation = altColor != null ? .5f : 0f;
+        spriteBatch.Draw(Globals.shadow, shadowRectangle, Color.White);
 
         if (state == PlayerState.Walking)
         { 
