@@ -15,6 +15,15 @@
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\..\..\Users\jayan\.nuget\packages\monogame.framework.content.pipeline\3.8.4.1\contentFiles\any\net8.0\mgfxc.dll" Link="Content\bin\DesktopGL\Content\mgfxc.dll">
+      <Private>False</Private>
+      <NuGetPackageVersion>3.8.4.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <NuGetPackageId>MonoGame.Framework.Content.Pipeline</NuGetPackageId>
+      <Pack>false</Pack>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Icon.ico">
       <LogicalName>Icon.ico</LogicalName>
     </EmbeddedResource>

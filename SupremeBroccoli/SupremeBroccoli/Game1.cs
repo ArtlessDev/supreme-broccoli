@@ -76,19 +76,35 @@ namespace SupremeBroccoli
             base.Draw(gameTime);
         }
         #endregion
+        bool wasTriggered = false;
         public void CameraZoom()
         {
             if (Globals.MainCamera == null)
                 return;
+            if (wasTriggered)
+            {
+                wasTriggered = false;
+                return;
+            }
 
             if(Globals.keyb.WasKeyPressed(Keys.U))
             {
                 Globals.MainCamera.Zoom += .1f;
+                wasTriggered = true;
+            }
+
+            if(Globals.keyb.WasKeyPressed(Keys.P))
+            {
+                _graphics.ToggleFullScreen();
+
+                wasTriggered = true;
+                return;
             }
 
             if (Globals.keyb.WasKeyPressed(Keys.I))
             {
                 Globals.MainCamera.Zoom -= .1f;
+                wasTriggered = true;
             }
         }
     }
