@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
+using SupremeBroccoli.Screens;
 using SupremeBroccoli.Screens.Towns;
 
 namespace SupremeBroccoli
@@ -37,7 +38,6 @@ namespace SupremeBroccoli
         }
         #endregion
 
-        #region init/load/draw/update
         protected override void Initialize()
         {
             base.Initialize();
@@ -53,8 +53,11 @@ namespace SupremeBroccoli
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
             
-            screenManager.ShowScreen(new Town_1(this));
+            screenManager.ShowScreen(new MainMenu(this));
         }
+
+        #region init/load/draw/update
+
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -76,6 +79,7 @@ namespace SupremeBroccoli
             base.Draw(gameTime);
         }
         #endregion
+
         bool wasTriggered = false;
         public void CameraZoom()
         {
