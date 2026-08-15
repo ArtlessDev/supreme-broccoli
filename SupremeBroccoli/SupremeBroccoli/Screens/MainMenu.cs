@@ -12,7 +12,7 @@ namespace SupremeBroccoli.Screens
 {
     public class MainMenu : GameScreen
     {
-        CircleF circle;
+        CircleF circle, player_input;
         private new Game1 Game => (Game1)base.Game;
 
 
@@ -23,7 +23,7 @@ namespace SupremeBroccoli.Screens
         Color color = Color.White;
         int goalToHit = Random.Shared.Next(20, 80);
 
-        double radius = 300;
+        double radius = 500;
         double centerX = 500;
         double centerY = 500.0;
         double angle = 0.0; // In radians
@@ -42,8 +42,23 @@ namespace SupremeBroccoli.Screens
             Globals.Load();
             Atlases.Load();
 
-            circle = new CircleF(new(500,500), 64);
+            //circle.Position = new Vector2(500, 500);
+            //initPoint = new(circle.Center.X, circle.Center.Y);
+            initPoint = new Vector2(Globals.ViewportWidth * .5f, Globals.ViewportHeight * .5f);
 
+            
+            CenteredRectangle = new((int)Globals.MainCamera.Center.X, (int)Globals.MainCamera.Center.Y, 64, 64);
+
+
+            Vector2 circleCenter = new(CenteredRectangle.Center.X, CenteredRectangle.Center.Y);
+
+            circle = new CircleF(circleCenter, 180);
+            player_input = new CircleF(circleCenter, 30);
+            //CenteredRectangle.Center = new Point((int)initPoint.X, (int)initPoint.Y);
+            
+            
+            
+            
             mainMenuPanel = new StackPanel();
             mainMenuPanel.Width = 400;
             
@@ -69,17 +84,22 @@ namespace SupremeBroccoli.Screens
         }
         GumService GumUI => GumService.Default;
         StackPanel mainMenuPanel;
+        Vector2 initPoint = new Vector2();
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
 
             Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
 
-            Game._spriteBatch.DrawCircle(circle, 12, color);
-            Game._spriteBatch.DrawString(Globals.font, slider.ToString(), circle.Center, color);
-            Game._spriteBatch.DrawString(Globals.font, goalToHit.ToString(), new(0,0), color);
+            //Game._spriteBatch.DrawCircle(circle, 12, color);
+            //circle.Center.SetY(180);
+            Game._spriteBatch.DrawCircle(circle.Center, circle.Radius, 64, color);
+            Game._spriteBatch.DrawCircle(player_input.Center, player_input.Radius, 64, color);
+            //Game._spriteBatch.DrawRectangle(CenteredRectangle, color);
+            //Game._spriteBatch.DrawString(Globals.font, slider.ToString(), circle.Center, color);
+            //Game._spriteBatch.DrawString(Globals.font, goalToHit.ToString(), new(0,0), color);
 
-            GumUI.Draw();
+            //GumUI.Draw();
 
             if (mainMenuPanel.IsVisible)
                 {
@@ -96,18 +116,22 @@ namespace SupremeBroccoli.Screens
             Game._spriteBatch.End();
 
         }
-
+        Rectangle CenteredRectangle = new Rectangle();
         internal void UpdatePosition()
         {
             angle += speed;
             if (angle > Math.PI * 2) 
                 angle = 0;
 
-            double newX = centerX + radius * Math.Cos(angle);
-            double newY = centerY + radius * Math.Sin(angle);
+            //double newX = centerX + radius * Math.Cos(angle);
+            //double newY = centerY + radius * Math.Sin(angle);
+            double newX = circle.Radius * Math.Cos(angle);
+            double newY = circle.Radius * Math.Sin(angle);
 
-            circle.Center.X = (float)newX;
-            circle.Center.Y = (float)newY;
+            player_input.Center.X = CenteredRectangle.Center.X + (float)newX;
+            player_input.Center.Y = CenteredRectangle.Center.Y + (float)newY;
+            //CenteredRectangle.X = (int)newX;
+            //CenteredRectangle.Y = (int)newY;
         }
 
         public override void Update(GameTime gameTime)
@@ -125,7 +149,7 @@ namespace SupremeBroccoli.Screens
             //     slider++;
             // else slider--;
 
-            // UpdatePosition();
+            UpdatePosition();
 
             
             //this some bullshit to handle the player inpu for the minigame
