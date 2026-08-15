@@ -104,3 +104,32 @@ public enum KindOfAttack
     Status,
     Heal,
 }
+
+public enum MoveList
+{
+    None,
+    Punch,
+    Fuego_I,
+    Hielo_I,
+    Viento_I,
+    Mag_Up,
+    Phys_Up,
+    Def_Up,
+    Mag_Down,
+    Phys_Down,
+    Def_Down,
+    Speed_Up,
+    Speed_Down,
+    Fuego_II,
+    Hielo_II,
+    Viento_II,
+    Fuego_III,
+    Hielo_III,
+    Viento_III,
+    SUMMON_GUNDAM_M,
+    SUMMON_GUNDAM_P,
+    Reflejo_P,
+    Reflejo_M,
+    Draco_Slash,
+    Draco_Breath,
+}

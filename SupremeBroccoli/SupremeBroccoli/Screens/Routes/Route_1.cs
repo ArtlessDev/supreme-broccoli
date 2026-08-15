@@ -151,7 +151,7 @@ namespace SupremeBroccoli.Screens.Routes
 
             encounterZone.areWeEncounteringWithThis = encounterZone.RollForByte();
 
-            Debug.WriteLine($"threshhold: {encounterZone.encounterThreshold}| rolled: {encounterZone.areWeEncounteringWithThis}");
+            //Debug.WriteLine($"threshhold: {encounterZone.encounterThreshold}| rolled: {encounterZone.areWeEncounteringWithThis}");
 
             if (encounterZone.areWeEncounteringWithThis % encounterZone.encounterThreshold == 0 && encounterZone.isPlayerInZone)
             {
@@ -161,18 +161,41 @@ namespace SupremeBroccoli.Screens.Routes
                 ScreenManager.CloseScreen();
 
                 var combatSim = new CombatSimulator(Game);
+                var useThisToDecideCombatEncounter = encounterZone.areWeEncounteringWithThis;
+
+
 
                 List<CombatActors> enemiesFromEncounter = new List<CombatActors>();
+
                 combatSim.SetCombatActors(enemiesFromEncounter, new Route_1(Game));
 
-
                 ScreenManager.ShowScreen(combatSim, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
-
             }
             else if (encounterZone.encounterThreshold>=4)
             {
                 encounterZone.encounterThreshold -= 2;
             }
         }
+        //private List<CombatActors> Encounters =
+        //{
+
+        //};
+        private List<CombatActors> PickEncounter(int numberUsedToPick)
+        {
+            var returnThisList = new List<CombatActors>();
+
+
+
+            return returnThisList;
+        }
+    }
+    public class enemyBee : CombatActors
+    {
+        enemyBee()
+        {
+            Moveset = [ MoveList.Punch ];
+        }
+
+
     }
 }

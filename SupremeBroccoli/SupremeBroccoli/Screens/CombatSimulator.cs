@@ -104,7 +104,7 @@ namespace SupremeBroccoli.Screens
             Game._spriteBatch.End();
         }       
 
-        public static void SetCombatants(List<CombatActors> _playerParty, List<CombatActors> _foeParty)
+        public void SetCombatants(List<CombatActors> _playerParty, List<CombatActors> _foeParty)
         {
             PlayerParty = _playerParty;
             FoeParty = _foeParty;

@@ -1,5 +1,4 @@
-﻿using JairLib.FootballBoilerPlate;
-using JairLib.TileGenerators;
+﻿using JairLib.TileGenerators;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,8 +6,6 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Input;
-using MonoGame.Extended.ViewportAdapters;
-using System.Diagnostics;
 
 namespace JairLib.Utility
 {

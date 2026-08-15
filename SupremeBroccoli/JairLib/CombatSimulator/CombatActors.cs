@@ -52,7 +52,7 @@ namespace JairLib.CombatSimulator
             get { return attack; }
             set { this.attack = value; }
         }
-        public IndividualMove[] Moveset
+        public MoveList[] Moveset
         {
             get; set;
         }
