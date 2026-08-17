@@ -18,7 +18,7 @@ namespace JairLib.Utility
             WorldMapSet,
             playerTileset,
             npcBatchOneSet;
-        public static Texture2DAtlas 
+        public static Texture2DAtlas
             gameTilePrototypeAtlas, 
             tilesetAtlas, 
             beastiaryDexAtlas,

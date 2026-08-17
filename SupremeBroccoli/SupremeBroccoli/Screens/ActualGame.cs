@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using MonoGame.Extended.Input;
 using MonoGame.Extended.Graphics;
 using JairLib.Utility;
-using JairLib.BeastiaryCore;
 using MonoGame.Extended.Screens.Transitions;
 
 namespace SupremeBroccoli.Screens
@@ -137,7 +136,7 @@ namespace SupremeBroccoli.Screens
 
             int idNum = Random.Shared.Next(0,17);
 
-            tile.beast = BeastSystem.BeastDeserializer(idNum);
+            //tile.beast = BeastSystem.BeastDeserializer(idNum);
 
             AtlasPicker(tile, idNum, true);
             return idNum;
