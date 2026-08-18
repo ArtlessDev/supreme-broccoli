@@ -23,8 +23,8 @@ namespace SupremeBroccoli.Screens
         public static List<CombatActors> PlayerParty = new List<CombatActors>();
         public static List<CombatActors> FoeParty = new List<CombatActors>();
         public static Screen returnToThisScreen;
-        CombatStates currentState;
-
+        public CombatStates currentState;
+        public SpinnerMinigame spinnerMinigame;
         public CombatSimulator(Game game) : base(game)
         {
             UpdateWhenInactive = false;
@@ -34,7 +34,9 @@ namespace SupremeBroccoli.Screens
         public override void LoadContent()
         {
             CombatGUI.Load();
-            currentState = CombatStates.VerifyActors;
+            currentState = CombatStates.CombatMinigame;
+            var f = Globals.MainCamera.Center;
+            spinnerMinigame = new SpinnerMinigame();
         }
 
         public override void Update(GameTime gameTime)
@@ -58,6 +60,9 @@ namespace SupremeBroccoli.Screens
                 case (CombatStates.SelectMove):
                     CombatStateMachine.SelectMove();
                     break;
+                case (CombatStates.CombatMinigame):
+                    CombatStateMachine.CombatMinigame(spinnerMinigame, gameTime);
+                    break;
                 case (CombatStates.ResolveActions):
                     CombatStateMachine.ResolveActions();
                     break;
@@ -76,7 +81,7 @@ namespace SupremeBroccoli.Screens
 
             }
 
-            currentState = CombatStateMachine.GetInternalState();
+            //currentState = CombatStateMachine.GetInternalState();
             CombatGUI.Update();
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
@@ -95,11 +100,45 @@ namespace SupremeBroccoli.Screens
             GraphicsDevice.Clear(Color.Black);
             Game._spriteBatch.Begin();
 
-            //rough numbers, temporary setup
-            Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
-            CombatGUI.fightButton.draw(Game._spriteBatch);
-            CombatGUI.fleeButton.draw(Game._spriteBatch);
-            CombatGUI.bagButton.draw(Game._spriteBatch);
+
+            switch (currentState)
+            {
+                case (CombatStates.none):
+                    break;
+                case (CombatStates.VerifyActors):
+                    CombatStateMachine.VerifyActors();
+                    break;
+                case (CombatStates.SortTurnOrder):
+                    CombatStateMachine.SortTurnOrder();
+                    break;
+                case (CombatStates.SelectMove):
+                    CombatStateMachine.SelectMove();
+                    break;
+                case (CombatStates.CombatMinigame):
+                    spinnerMinigame.Draw(gameTime, Game._spriteBatch);
+                    break;
+                case (CombatStates.ResolveActions):
+                    CombatStateMachine.ResolveActions();
+                    break;
+                case (CombatStates.CheckActorsHP):
+                    CombatStateMachine.CheckActorsHealth(FoeParty);
+                    break;
+                case (CombatStates.GameOverLost):
+                    CombatStateMachine.GameOverLost(FoeParty);
+                    break;
+                case (CombatStates.GameOverWon):
+                    CombatStateMachine.GameOverWon();
+                    break;
+                case (CombatStates.ReturnToScreen):
+                    ChangeBackScreen(GraphicsDevice, ScreenManager);
+                    break;
+
+            }
+            ////rough numbers, temporary setup
+            //Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
+            //CombatGUI.fightButton.draw(Game._spriteBatch);
+            //CombatGUI.fleeButton.draw(Game._spriteBatch);
+            //CombatGUI.bagButton.draw(Game._spriteBatch);
 
             Game._spriteBatch.End();
         }       

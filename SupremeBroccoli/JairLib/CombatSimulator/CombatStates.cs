@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Gum.Forms.Input;
 using JairLib.Utility;
+using Microsoft.Xna.Framework;
 
 namespace JairLib.CombatSimulator
 {
@@ -14,6 +15,7 @@ namespace JairLib.CombatSimulator
         VerifyActors,
         SortTurnOrder,
         SelectMove,
+        CombatMinigame,
         ResolveActions,
         CheckActorsHP,
         GameOverLost,
@@ -21,7 +23,7 @@ namespace JairLib.CombatSimulator
         ReturnToScreen
     }
 
-    public static class CombatStateMachine
+    public static partial class CombatStateMachine
     {
         static CombatStates internalCombatState = CombatStates.none;
         //TODO: ALL OF THE COMBAT STATES
@@ -127,6 +129,11 @@ namespace JairLib.CombatSimulator
         public static CombatStates GetInternalState()
         {
             return internalCombatState;
+        }
+
+        public static void CombatMinigame(SpinnerMinigame _spinnerMinigame, GameTime gameTime)
+        {
+            _spinnerMinigame.Update(gameTime);
         }
     }
 }

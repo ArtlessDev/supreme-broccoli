@@ -53,7 +53,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
             
-            screenManager.ShowScreen(new MainMenu(this));
+            screenManager.ShowScreen(new CombatSimulator(this));
         }
 
         #region init/load/draw/update
