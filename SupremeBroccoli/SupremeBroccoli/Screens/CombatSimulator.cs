@@ -35,6 +35,8 @@ namespace SupremeBroccoli.Screens
         {
             CombatGUI.Load();
             currentState = CombatStates.CombatMinigame;
+            Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
+
             var f = Globals.MainCamera.Center;
             spinnerMinigame = new SpinnerMinigame();
         }
@@ -82,7 +84,7 @@ namespace SupremeBroccoli.Screens
             }
 
             //currentState = CombatStateMachine.GetInternalState();
-            CombatGUI.Update();
+            //CombatGUI.Update();
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
 

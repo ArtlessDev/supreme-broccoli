@@ -33,7 +33,7 @@ namespace JairLib.CombatSimulator
 
             SpinnerCircle = new CircleF(CenteredCircle.Center, 180);
             PlayerInputCircle = new CircleF(CenteredCircle.Center, 30);
-
+            
         }
         public void Draw(GameTime gameTime, SpriteBatch _sb)
         {

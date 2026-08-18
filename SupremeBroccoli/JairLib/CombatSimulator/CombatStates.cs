@@ -133,6 +133,7 @@ namespace JairLib.CombatSimulator
 
         public static void CombatMinigame(SpinnerMinigame _spinnerMinigame, GameTime gameTime)
         {
+            Globals.MainCamera.LookAt(_spinnerMinigame.CenteredCircle.Center);
             _spinnerMinigame.Update(gameTime);
         }
     }
