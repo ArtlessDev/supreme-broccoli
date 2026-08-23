@@ -1,4 +1,5 @@
-﻿using JairLib.QuestCore;
+﻿using JairLib.CombatSimulator;
+using JairLib.QuestCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace JairLib
         public static PlayerCombatActor PlayerCombatActor = new();
         public static int PLAYER_TILESIZE_IN_WORLD = 100;
         public static List<Quest> Quests = new();
+        public static List<CombatActors> PlayerCurrentParty = new();
+        public static List<CombatActors> PlayerReserveParty = new();
+
     }
 }
