@@ -10,6 +10,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 using SupremeBroccoli.Screens;
+using SupremeBroccoli.Screens.Routes;
 using SupremeBroccoli.Screens.Towns;
 
 namespace SupremeBroccoli
@@ -53,7 +54,7 @@ namespace SupremeBroccoli
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
             
-            screenManager.ShowScreen(new CombatSimulator(this));
+            screenManager.ShowScreen(new Town_1(this));
         }
 
         #region init/load/draw/update

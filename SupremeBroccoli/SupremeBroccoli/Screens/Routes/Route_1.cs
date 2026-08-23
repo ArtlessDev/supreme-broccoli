@@ -151,7 +151,7 @@ namespace SupremeBroccoli.Screens.Routes
 
             encounterZone.areWeEncounteringWithThis = encounterZone.RollForByte();
 
-            //Debug.WriteLine($"threshhold: {encounterZone.encounterThreshold}| rolled: {encounterZone.areWeEncounteringWithThis}");
+            Debug.WriteLine($"threshhold: {encounterZone.encounterThreshold}| rolled: {encounterZone.areWeEncounteringWithThis}");
 
             if (encounterZone.areWeEncounteringWithThis % encounterZone.encounterThreshold == 0 && encounterZone.isPlayerInZone)
             {
@@ -163,12 +163,9 @@ namespace SupremeBroccoli.Screens.Routes
                 var combatSim = new CombatSimulator(Game);
                 var useThisToDecideCombatEncounter = encounterZone.areWeEncounteringWithThis;
 
+                List<CombatActors> enemiesFromEncounter = PickEncounter(useThisToDecideCombatEncounter);
 
-
-                List<CombatActors> enemiesFromEncounter = new List<CombatActors>();
-
-                combatSim.SetCombatActors(enemiesFromEncounter, new Route_1(Game));
-
+                combatSim.SetCombatActorsAndScreen(enemiesFromEncounter, new Route_1(Game));
                 ScreenManager.ShowScreen(combatSim, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
             else if (encounterZone.encounterThreshold>=4)
@@ -176,26 +173,27 @@ namespace SupremeBroccoli.Screens.Routes
                 encounterZone.encounterThreshold -= 2;
             }
         }
-        //private List<CombatActors> Encounters =
-        //{
 
-        //};
+        /// <summary>
+        /// this method should be located in every location that has random encounters.
+        /// </summary>
+        /// <param name="numberUsedToPick"></param>
+        /// <returns></returns>
         private List<CombatActors> PickEncounter(int numberUsedToPick)
         {
             var returnThisList = new List<CombatActors>();
 
+            if(numberUsedToPick > 128)
+            {
+                returnThisList.Add(new EnemyBee());
+            }
+            else
+            {
+                returnThisList.Add(new EnemyBee());
+                returnThisList.Add(new EnemyBee());
 
-
+            }
             return returnThisList;
         }
-    }
-    public class enemyBee : CombatActors
-    {
-        enemyBee()
-        {
-            Moveset = [ MoveList.Punch ];
-        }
-
-
     }
 }
