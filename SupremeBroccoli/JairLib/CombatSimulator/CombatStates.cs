@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gum.Forms.Input;
-using JairLib.Utility;
+﻿using JairLib.Utility;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace JairLib.CombatSimulator
 {
@@ -25,17 +23,22 @@ namespace JairLib.CombatSimulator
 
     public static partial class CombatStateMachine
     {
-        static CombatStates internalCombatState = CombatStates.none;
+        static CombatStates INTERNAL_COMBAT_STATE = CombatStates.none;
         //TODO: ALL OF THE COMBAT STATES
-        private static List<CombatActors> playerTeam, foeTeam;
+        private static List<CombatActors> PlayerTeamReference, FoeTeamReference;
         public static void AssignActors()
         {
 
         }
 
-        public static void VerifyActors()
+        public static void VerifyActors(List<CombatActors> _playerTeam, List<CombatActors> _foeTeam)
         {
+            PlayerTeamReference = _playerTeam;
+            // dont need line 38, as the player is added to the party somewhere before this
+            //PlayerTeamReference.Add(RpgPlayer.PlayerCombatActor); 
+            FoeTeamReference = _foeTeam;
 
+            INTERNAL_COMBAT_STATE = CombatStates.VerifyActors;
         }
 
         /// <summary>
@@ -46,14 +49,39 @@ namespace JairLib.CombatSimulator
 
         }
 
+        /// <summary>
+        /// this is where the player selects an action. this is where the bulk of the combat will be for the user. 
+        /// this section needs to include:
+        /// - Moves that the player chooses for themself
+        /// - interacting with bag for player to use bagged items
+        /// - selecting moves for party members
+        /// - using bagged items for the party members
+        /// NOTE: BECAUSE OF ALL THE COMPLEXITY, WE SHOULD AVOID THE ENEMY DOING THEIR OWN ACTION IN HERE.
+        /// ALTERNATE: we make this reusable. as in, we inject the party member that is going to act and use their resources available 
+        /// </summary>
         public static void SelectMove()
         {
-            if(Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.D1))
+            if(Globals.keyb.WasKeyPressed(Keys.D1))
             {
                 //move up in the list
             }
+
+            if (Globals.keyb.IsKeyDown(Keys.D1))
+            {
+                //moveArr[0].ButtonAbility = newAbilities[0];
+                //actions[0].ButtonAbility = newAbilities[0];
+                //actions[0].ButtonAbility.BaseDamagePower = (float)(WaveNumber * .75f) * 30f;
+                //GenerateAbilities = true;
+                //newAbilities.Clear();
+                //CurrentPhase = GamePhases.PlayerTurn;
+                //task = ResetPhaseChangeFlag();
+            }
+
         }
 
+        /// <summary>
+        /// this is where all of the actions, player and foe alike, are resolved
+        /// </summary>
         public static void ResolveActions()
         {
 
@@ -71,6 +99,7 @@ namespace JairLib.CombatSimulator
         public static void CheckActorsHealth(List<CombatActors> foeParty)
         {
             //so long as the player is healthy, they can still fight
+            //we dont care about the HP stats for the player's party members.
             bool playerGoodToGo = RpgPlayer.PlayerCombatActor.Health > 0 ? true : false;
             bool foePartyGoodToGo = false;
             foreach (CombatActors actor in foeParty)
@@ -84,15 +113,15 @@ namespace JairLib.CombatSimulator
             if (playerGoodToGo && foePartyGoodToGo)
             {
                 //keep fighting
-                internalCombatState = CombatStates.SelectMove;
+                INTERNAL_COMBAT_STATE = CombatStates.SelectMove;
             }
             else if (playerGoodToGo && !foePartyGoodToGo)
             {
-                internalCombatState = CombatStates.GameOverWon;
+                INTERNAL_COMBAT_STATE = CombatStates.GameOverWon;
             }
             else
             {
-                internalCombatState = CombatStates.GameOverLost;
+                INTERNAL_COMBAT_STATE = CombatStates.GameOverLost;
             }
         }
         public static void GameOverLost(List<CombatActors> playerParty)
@@ -103,6 +132,8 @@ namespace JairLib.CombatSimulator
                 partyMember.Health = partyMember.MaximumHealth;
             }
             //player then gets sent back to the last save spot
+
+            if (Globals.keyb.WasKeyPressed(Keys.E)) INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
         }
 
 
@@ -119,16 +150,13 @@ namespace JairLib.CombatSimulator
 
             //player returns to area where they just were
 
-        }
 
-        public static void ReturnToScreen()
-        {
-
+            if (Globals.keyb.WasKeyPressed(Keys.E)) INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
         }
 
         public static CombatStates GetInternalState()
         {
-            return internalCombatState;
+            return INTERNAL_COMBAT_STATE;
         }
 
         public static void CombatMinigame(SpinnerMinigame _spinnerMinigame, GameTime gameTime)

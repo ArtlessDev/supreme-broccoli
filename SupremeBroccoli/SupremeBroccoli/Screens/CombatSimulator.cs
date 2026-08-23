@@ -23,7 +23,7 @@ namespace SupremeBroccoli.Screens
         public static List<CombatActors> PlayerParty = new List<CombatActors>();
         public static List<CombatActors> FoeParty = new List<CombatActors>();
         public static Screen returnToThisScreen;
-        public CombatStates currentState;
+        public CombatStates CurrentState;
         public SpinnerMinigame spinnerMinigame;
         public CombatSimulator(Game game) : base(game)
         {
@@ -34,11 +34,14 @@ namespace SupremeBroccoli.Screens
         public override void LoadContent()
         {
             CombatGUI.Load();
-            currentState = CombatStates.CombatMinigame;
+            CurrentState = CombatStates.CombatMinigame;
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             var f = Globals.MainCamera.Center;
             spinnerMinigame = new SpinnerMinigame();
+
+            if (PlayerParty == null || PlayerParty.Count == 0) 
+                PlayerParty = RpgPlayer.PlayerCurrentParty;
         }
 
         public override void Update(GameTime gameTime)
@@ -49,24 +52,13 @@ namespace SupremeBroccoli.Screens
             if (Globals.keyb.WasKeyPressed(Keys.Enter))
                 ChangeBackScreen(GraphicsDevice, ScreenManager);
 
-            switch (currentState)
+            CurrentState = CombatStateMachine.GetInternalState();
+
+            switch (CurrentState)
             {
-                case (CombatStates.none):
-                    break;
                 case (CombatStates.VerifyActors):
-                    CombatStateMachine.VerifyActors();
-                    break;
-                case (CombatStates.SortTurnOrder):
-                    CombatStateMachine.SortTurnOrder();
-                    break;
-                case (CombatStates.SelectMove):
-                    CombatStateMachine.SelectMove();
-                    break;
-                case (CombatStates.CombatMinigame):
-                    CombatStateMachine.CombatMinigame(spinnerMinigame, gameTime);
-                    break;
-                case (CombatStates.ResolveActions):
-                    CombatStateMachine.ResolveActions();
+                case (CombatStates.none):
+                    CombatStateMachine.VerifyActors(PlayerParty, FoeParty);
                     break;
                 case (CombatStates.CheckActorsHP):
                     CombatStateMachine.CheckActorsHealth(FoeParty);
@@ -74,27 +66,31 @@ namespace SupremeBroccoli.Screens
                 case (CombatStates.GameOverLost):
                     CombatStateMachine.GameOverLost(FoeParty);
                     break;
-                case (CombatStates.GameOverWon):
-                    CombatStateMachine.GameOverWon();
-                    break;
                 case (CombatStates.ReturnToScreen):
                     ChangeBackScreen(GraphicsDevice, ScreenManager);
+                    break;
+                case (CombatStates.CombatMinigame):
+                    CombatStateMachine.CombatMinigame(spinnerMinigame, gameTime);
+                    break;
+                case (CombatStates.SortTurnOrder):
+                    CombatStateMachine.SortTurnOrder();
+                    break;
+                case (CombatStates.SelectMove):
+                    CombatStateMachine.SelectMove();
+                    break;
+                case (CombatStates.ResolveActions):
+                    CombatStateMachine.ResolveActions();
+                    break;
+                case (CombatStates.GameOverWon):
+                    CombatStateMachine.GameOverWon();
                     break;
 
             }
 
-            //currentState = CombatStateMachine.GetInternalState();
             //CombatGUI.Update();
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
 
-        }
-
-        internal static void ChangeBackScreen(GraphicsDevice graphics, ScreenManager _screenManager)
-        {
-
-            _screenManager.CloseScreen();
-            _screenManager.ShowScreen(returnToThisScreen, new FadeTransition(graphics, Color.Black, 0.5f));
         }
 
         public override void Draw(GameTime gameTime)
@@ -103,38 +99,23 @@ namespace SupremeBroccoli.Screens
             Game._spriteBatch.Begin();
 
 
-            switch (currentState)
+            switch (CurrentState)
             {
-                case (CombatStates.none):
-                    break;
-                case (CombatStates.VerifyActors):
-                    CombatStateMachine.VerifyActors();
-                    break;
-                case (CombatStates.SortTurnOrder):
-                    CombatStateMachine.SortTurnOrder();
-                    break;
                 case (CombatStates.SelectMove):
                     CombatStateMachine.SelectMove();
                     break;
                 case (CombatStates.CombatMinigame):
                     spinnerMinigame.Draw(gameTime, Game._spriteBatch);
                     break;
-                case (CombatStates.ResolveActions):
-                    CombatStateMachine.ResolveActions();
-                    break;
-                case (CombatStates.CheckActorsHP):
-                    CombatStateMachine.CheckActorsHealth(FoeParty);
-                    break;
-                case (CombatStates.GameOverLost):
-                    CombatStateMachine.GameOverLost(FoeParty);
-                    break;
-                case (CombatStates.GameOverWon):
-                    CombatStateMachine.GameOverWon();
-                    break;
                 case (CombatStates.ReturnToScreen):
                     ChangeBackScreen(GraphicsDevice, ScreenManager);
                     break;
-
+                case (CombatStates.CheckActorsHP):
+                case (CombatStates.GameOverLost):
+                case (CombatStates.GameOverWon):
+                default:
+                    //draw only HPs of actors. we may just want this to be seen always, as a default
+                    break;
             }
             ////rough numbers, temporary setup
             //Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
@@ -145,17 +126,31 @@ namespace SupremeBroccoli.Screens
             Game._spriteBatch.End();
         }       
 
-        public void SetCombatants(List<CombatActors> _playerParty, List<CombatActors> _foeParty)
+
+        /// <summary>
+        /// this always needs to be run before initiating combat
+        /// </summary>
+        /// <param name="_enemiesFromEncounter"></param>
+        /// <param name="_previousScreen"></param>
+        internal void SetCombatActorsAndScreen(List<CombatActors> _enemiesFromEncounter, Screen _previousScreen)
         {
-            PlayerParty = _playerParty;
-            FoeParty = _foeParty;
+            PlayerParty = RpgPlayer.PlayerCurrentParty;
+            PlayerParty.Add(RpgPlayer.PlayerCombatActor);
+            FoeParty = _enemiesFromEncounter;
+            returnToThisScreen = _previousScreen;
         }
 
-        internal void SetCombatActors(List<CombatActors> enemiesFromEncounter, Screen previousScreen)
+        /// <summary>
+        /// this is the primary way to return to prior location
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <param name="_screenManager"></param>
+        internal static void ChangeBackScreen(GraphicsDevice graphics, ScreenManager _screenManager)
         {
-            FoeParty = enemiesFromEncounter;
-            returnToThisScreen = previousScreen;
+            _screenManager.CloseScreen();
+            _screenManager.ShowScreen(returnToThisScreen, new FadeTransition(graphics, Color.Black, 0.5f));
         }
+
     }
 
     public static class GumCombatGui
