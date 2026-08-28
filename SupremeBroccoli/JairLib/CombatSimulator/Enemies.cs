@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
 namespace JairLib.CombatSimulator
 {
@@ -12,6 +8,16 @@ namespace JairLib.CombatSimulator
         {
             Name = "bee";
             Moveset = [MoveList.Punch];
+            MaximumHealth = 5;
+            Speed = 5;
+            Attack = 10;
+            Defense = 5;
+            SpecialDefense = 5;
+            Luck = 10;
+            Accuracy = 10;
+            Evasiveness = 10;
+            identifier = "bee";
+            color = Color.White;
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using JairLib.Utility;
+﻿using JairLib.QuestCore;
+using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Screens;
@@ -18,7 +19,8 @@ namespace JairLib.CombatSimulator
         CheckActorsHP,
         GameOverLost,
         GameOverWon,
-        ReturnToScreen
+        ReturnToScreen,
+        SelectOpponent
     }
 
     public static partial class CombatStateMachine
@@ -38,7 +40,7 @@ namespace JairLib.CombatSimulator
             //PlayerTeamReference.Add(RpgPlayer.PlayerCombatActor); 
             FoeTeamReference = _foeTeam;
 
-            INTERNAL_COMBAT_STATE = CombatStates.VerifyActors;
+            INTERNAL_COMBAT_STATE = CombatStates.CheckActorsHP;
         }
 
         /// <summary>
@@ -64,6 +66,8 @@ namespace JairLib.CombatSimulator
             if(Globals.keyb.WasKeyPressed(Keys.D1))
             {
                 //move up in the list
+                selectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[0]);
+                INTERNAL_COMBAT_STATE = CombatStates.SelectOpponent;
             }
 
             if (Globals.keyb.IsKeyDown(Keys.D1))
@@ -79,6 +83,12 @@ namespace JairLib.CombatSimulator
 
         }
 
+        public static void SelectOpponent()
+        {
+
+        }
+
+        public static Attack? selectedMove = null;
         /// <summary>
         /// this is where all of the actions, player and foe alike, are resolved
         /// </summary>

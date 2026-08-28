@@ -13,13 +13,23 @@ namespace JairLib.QuestCore
         public KindOfAttack KindOfAttack;
         public Element Type;
 
-        public MoveDelegate UpgradeDelegate { get; set; }
+        public MoveDelegate AttackDelegate { get; set; }
         public string MoveName { get; set; }
         public MoveList MoveId { get; set; }
         public bool GetGoingFlag { get; set; }
 
         public delegate MoveGrouping MoveDelegate(MoveGrouping moveGroup);
 
+        public Attack(MoveList _moveId)
+        {
+            switch (_moveId)
+            {
+                default:
+                case (MoveList.Punch)://1
+                    AttackDelegate = Punch;
+                    break;
+            }
+        }
 
         public MoveDelegate GetUpgradeMethod(int moveId)
         {
