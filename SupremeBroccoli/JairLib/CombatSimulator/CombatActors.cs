@@ -1,5 +1,6 @@
 ﻿using JairLib.QuestCore;
 using JairLib.Utility;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace JairLib.CombatSimulator
             this.health = 0;
             this.name =  default(string);
         }
+
+        public virtual void Draw(SpriteBatch _spritebatch) { }
         //properties
         public int Health
         {
@@ -99,5 +102,7 @@ namespace JairLib.CombatSimulator
             get { return evasiveness; }
             set { evasiveness = value; }
         }
+
+        public int DrawOrderCounter { get; set; }
     }
 }

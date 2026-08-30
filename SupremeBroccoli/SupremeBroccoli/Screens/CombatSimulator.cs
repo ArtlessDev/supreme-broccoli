@@ -40,6 +40,11 @@ namespace SupremeBroccoli.Screens
             var f = Globals.MainCamera.Center;
             spinnerMinigame = new SpinnerMinigame();
 
+            if (FoeParty == null || FoeParty.Count == 0)
+            {
+                FoeParty = new List<CombatActors>();
+                FoeParty.Add(new EnemyBee());
+            }
             if (PlayerParty == null || PlayerParty.Count == 0) 
                 PlayerParty = RpgPlayer.PlayerCurrentParty;
         }
@@ -114,11 +119,20 @@ namespace SupremeBroccoli.Screens
                 case (CombatStates.GameOverLost):
                 case (CombatStates.GameOverWon):
                 default:
+
                     //draw only HPs of actors. we may just want this to be seen always, as a default
                     break;
             }
+
+            int counter = 0;
+            foreach (CombatActors ca in FoeParty)
+            {
+                ca.DrawOrderCounter = counter;
+                ca.Draw(Game._spriteBatch);
+                counter++;
+            }
             ////rough numbers, temporary setup
-            //Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
+            Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
             //CombatGUI.fightButton.draw(Game._spriteBatch);
             //CombatGUI.fleeButton.draw(Game._spriteBatch);
             //CombatGUI.bagButton.draw(Game._spriteBatch);

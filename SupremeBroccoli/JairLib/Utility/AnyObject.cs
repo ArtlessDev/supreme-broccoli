@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace JairLib.Utility
         public string identifier { get; set; }
         public Rectangle rectangle { get; set; }
         public Texture2DRegion texture { get; set; }
+        public Texture2D texture2D { get; set; }
         public Color color { get; set; }
         public Vector3 absolutePosition { get; set; }
         public Vector2 Position { get; set; }
