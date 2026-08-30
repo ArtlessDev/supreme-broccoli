@@ -12,6 +12,7 @@ namespace JairLib.CombatSimulator
     public class CombatActors : AnyObject
     {
         private int health;
+        private int maxhealth;
         private string name;
         private int speed;
         private int attack;
@@ -36,6 +37,11 @@ namespace JairLib.CombatSimulator
             set { this.health = value; }
         }
         public int MaximumHealth
+        {
+            get { return maxhealth; }
+            set { this.maxhealth = value; }
+        }
+        public int CurrentHealth
         {
             get { return health; }
             set { this.health = value; }

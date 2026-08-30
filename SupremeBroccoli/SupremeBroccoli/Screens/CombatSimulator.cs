@@ -43,7 +43,8 @@ namespace SupremeBroccoli.Screens
             if (FoeParty == null || FoeParty.Count == 0)
             {
                 FoeParty = new List<CombatActors>();
-                FoeParty.Add(new EnemyBee());
+                FoeParty.Add(new EnemyBee(0));
+                FoeParty.Add(new EnemyBee(1));
             }
             if (PlayerParty == null || PlayerParty.Count == 0) 
                 PlayerParty = RpgPlayer.PlayerCurrentParty;
@@ -59,17 +60,18 @@ namespace SupremeBroccoli.Screens
 
             CurrentState = CombatStateMachine.GetInternalState();
 
+            ///input can be received before or after state machine's update call. right now, we check before the update call.
             switch (CurrentState)
             {
                 case (CombatStates.VerifyActors):
                 case (CombatStates.none):
-                    CombatStateMachine.VerifyActors(PlayerParty, FoeParty);
+                    CombatStateMachine.VerifyActors(PlayerParty, FoeParty); //this is done
                     break;
                 case (CombatStates.CheckActorsHP):
-                    CombatStateMachine.CheckActorsHealth(FoeParty);
+                    CombatStateMachine.CheckActorsHealth(FoeParty); // this is done
                     break;
                 case (CombatStates.GameOverLost):
-                    CombatStateMachine.GameOverLost(FoeParty);
+                    CombatStateMachine.GameOverLost(FoeParty); 
                     break;
                 case (CombatStates.ReturnToScreen):
                     ChangeBackScreen(GraphicsDevice, ScreenManager);
@@ -89,7 +91,9 @@ namespace SupremeBroccoli.Screens
                 case (CombatStates.GameOverWon):
                     CombatStateMachine.GameOverWon();
                     break;
-
+                case (CombatStates.SelectOpponent):
+                    CombatStateMachine.SelectOpponent();
+                    break;
             }
 
             //CombatGUI.Update();
