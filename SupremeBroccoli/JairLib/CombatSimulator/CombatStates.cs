@@ -20,12 +20,16 @@ namespace JairLib.CombatSimulator
         GameOverLost,
         GameOverWon,
         ReturnToScreen,
-        SelectOpponent
+        SelectOpponent,
+        ResolveSecondaryEffects
     }
 
     public static partial class CombatStateMachine
     {
         static CombatStates INTERNAL_COMBAT_STATE = CombatStates.none;
+        public static Attack? SelectedMove = null;
+        public static CombatActors CurrentTargetForAction = null;
+
         //TODO: ALL OF THE COMBAT STATES
         private static List<CombatActors> PlayerTeamReference, FoeTeamReference;
         public static void AssignActors()
@@ -51,6 +55,15 @@ namespace JairLib.CombatSimulator
 
         }
 
+        public static void SelectMoveDraw(SpriteBatch _sb)
+        {
+            foreach(MoveList action in RpgPlayer.PlayerCombatActor.Moveset)
+            {
+
+                _sb.DrawString(Globals.stabilloFont, action.ToString(), new(128,800), RpgPlayer.PlayerCombatActor.color);
+            }
+        }
+
         /// <summary>
         /// this is where the player selects an action. this is where the bulk of the combat will be for the user. 
         /// this section needs to include:
@@ -66,7 +79,8 @@ namespace JairLib.CombatSimulator
             if(Globals.keyb.WasKeyPressed(Keys.D1))
             {
                 //move up in the list
-                selectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[0]);
+                SelectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[0]);
+                SelectedMove.GetUpgradeMethod(SelectedMove.MoveId);
                 INTERNAL_COMBAT_STATE = CombatStates.SelectOpponent;
             }
 
@@ -85,16 +99,39 @@ namespace JairLib.CombatSimulator
 
         public static void SelectOpponent()
         {
+            if (Globals.keyb.WasKeyPressed(Keys.D1))
+            {
+                //move up in the list
+                //SelectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[0]);
+                FoeTeamReference[0].color = Color.Red;
+                MoveGrouping.primaryTarget = FoeTeamReference[0];
+                INTERNAL_COMBAT_STATE = CombatStates.ResolveActions;
+            }
+            else if (Globals.keyb.WasKeyPressed(Keys.D2) && FoeTeamReference[1]!=null)
+            {
+                //move up in the list
+                //SelectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[1]);
+                MoveGrouping.primaryTarget = FoeTeamReference[1];
+                INTERNAL_COMBAT_STATE = CombatStates.ResolveActions;
+            }
 
+            MoveGrouping.foeGroup = FoeTeamReference;
         }
 
-        public static Attack? selectedMove = null;
+        public static MoveGrouping MoveGrouping = new MoveGrouping()
+        {
+            moveUser = RpgPlayer.PlayerCombatActor,
+            primaryTarget = null,
+            allyGroup = PlayerTeamReference,
+            foeGroup = FoeTeamReference
+        };
         /// <summary>
         /// this is where all of the actions, player and foe alike, are resolved
         /// </summary>
         public static void ResolveActions()
         {
-
+            SelectedMove.AttackDelegate(MoveGrouping);
+            INTERNAL_COMBAT_STATE = CombatStates.ResolveSecondaryEffects;
         }
 
         /// <summary>
@@ -104,6 +141,8 @@ namespace JairLib.CombatSimulator
         public static void ResolveSecondaryActions()
         {
 
+
+            INTERNAL_COMBAT_STATE = CombatStates.CheckActorsHP;
         }
 
         public static void CheckActorsHealth(List<CombatActors> foeParty)
@@ -117,7 +156,9 @@ namespace JairLib.CombatSimulator
                 if (actor.Health >= 0)
                 {
                     foePartyGoodToGo = true;
-                } 
+                }
+                else
+                    foePartyGoodToGo = false;
             }
 
             if (playerGoodToGo && foePartyGoodToGo)

@@ -31,10 +31,10 @@ namespace JairLib.QuestCore
             }
         }
 
-        public MoveDelegate GetUpgradeMethod(int moveId)
+        public MoveDelegate GetUpgradeMethod(MoveList moveId)
         {
 
-            switch ((MoveList)moveId)
+            switch (moveId)
             {
                 default:
                 case (MoveList.Punch)://1
@@ -55,7 +55,7 @@ namespace JairLib.QuestCore
 
         private MoveGrouping Punch(MoveGrouping moveGroup)
         {
-            Power = 35;
+            Power = 5;
             Accuracy = 95;
             KindOfAttack = KindOfAttack.Physical;
             Type = Element.Physical;

@@ -34,7 +34,7 @@ namespace SupremeBroccoli.Screens
         public override void LoadContent()
         {
             CombatGUI.Load();
-            CurrentState = CombatStates.CombatMinigame;
+            CurrentState = CombatStates.VerifyActors;
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             var f = Globals.MainCamera.Center;
@@ -111,7 +111,7 @@ namespace SupremeBroccoli.Screens
             switch (CurrentState)
             {
                 case (CombatStates.SelectMove):
-                    CombatStateMachine.SelectMove();
+                    CombatStateMachine.SelectMoveDraw(Game._spriteBatch);
                     break;
                 case (CombatStates.CombatMinigame):
                     spinnerMinigame.Draw(gameTime, Game._spriteBatch);
