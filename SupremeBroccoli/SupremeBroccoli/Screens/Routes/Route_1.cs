@@ -165,7 +165,7 @@ namespace SupremeBroccoli.Screens.Routes
 
                 List<CombatActors> enemiesFromEncounter = PickEncounter(useThisToDecideCombatEncounter);
 
-                combatSim.SetCombatActorsAndScreen(enemiesFromEncounter, new Route_1(Game));
+                combatSim.SetCombatActors(enemiesFromEncounter, new Route_1(Game));
                 ScreenManager.ShowScreen(combatSim, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             }
             else if (encounterZone.encounterThreshold>=4)
@@ -182,7 +182,7 @@ namespace SupremeBroccoli.Screens.Routes
         private List<CombatActors> PickEncounter(int numberUsedToPick)
         {
             var returnThisList = new List<CombatActors>();
-
+            
             if(numberUsedToPick > 128)
             {
                 returnThisList.Add(new EnemyBee());

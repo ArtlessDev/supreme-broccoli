@@ -40,7 +40,9 @@ namespace JairLib.CombatSimulator
             //this draws the spinner texture based off of the main circle boundary
             _sb.Draw(texture2D, CenteredCircle.BoundingRectangle.ToRectangle(), color);
             spinnerMinigameSpace.Draw(gameTime, _sb);
-            _sb.Draw(pointer2D, PlayerInputCircle.Center, null, Color.Blue, (float)angle + (MathF.PI / 2), new Vector2(pointer2D.Width / 2f, pointer2D.Height / 2f), 1f, SpriteEffects.None, 1f);
+
+            var updatedAngle = (float)angle + (MathF.PI / 2);
+            _sb.Draw(pointer2D, PlayerInputCircle.Center, null, Color.Blue, updatedAngle, new Vector2(pointer2D.Width / 2f, pointer2D.Height / 2f), 1f, SpriteEffects.None, 1f);
         }
         internal void UpdatePosition()
         {
@@ -54,7 +56,6 @@ namespace JairLib.CombatSimulator
             PlayerInputCircle.Center.X = CenteredCircle.Center.X + (float)newX;
             PlayerInputCircle.Center.Y = CenteredCircle.Center.Y + (float)newY;
         }
-
         public void Update(GameTime gameTime)
         {
             UpdatePosition();
@@ -68,7 +69,6 @@ namespace JairLib.CombatSimulator
         float smartAngle;
         CircleF CenteredCircle;
         Vector2 smartPosition;
-        Rectangle rectangle;
         public SpinnerMinigameSpace(CircleF _centeredCircle)
         {
             //smartAngle = MathF.PI;
@@ -83,7 +83,7 @@ namespace JairLib.CombatSimulator
         {
             //smartAngle = MathF.PI;
             CenteredCircle = _centeredCircle;
-            color = Color.White;
+            color = Color.Purple;
             smartAngle = _angle;
             texture2D = Globals.GlobalContent.Load<Texture2D>("spinner");
             pointer2D = Globals.GlobalContent.Load<Texture2D>("pointer");
@@ -95,20 +95,23 @@ namespace JairLib.CombatSimulator
             double newX = CenteredCircle.Radius * Math.Cos(smartAngle);
             double newY = CenteredCircle.Radius * Math.Sin(smartAngle);
 
-            smartPosition = new((float)newX + CenteredCircle.Center.X, (float)newY + CenteredCircle.Center.Y);
+            newX += CenteredCircle.Center.X;
+            newY += CenteredCircle.Center.Y;
+
+            smartPosition = new((float)newX, (float)newY);
 
             if (Globals.keyb.WasKeyPressed(Keys.Space) && CircleF.Intersects(_playerInput, new CircleF(smartPosition, texture2D.Width)))
             {
-                color = Color.Green;
+                color = Color.MediumPurple;
             }
             else if (Globals.keyb.WasKeyPressed(Keys.Space) && !_playerInput.Intersects(pointer2D.Bounds))
             {
-                color = Color.White;
+                color = Color.Purple;
             }
         }
         public void Draw(GameTime gameTime, SpriteBatch _sb)
         {
-            _sb.Draw(pointer2D, smartPosition, null, color, smartAngle + (MathF.PI / 2), new Vector2(poison2D.Width / 2f, poison2D.Height / 2f), 1f, SpriteEffects.None, 1f);
+            _sb.Draw(poison2D, smartPosition, null, color, smartAngle + (MathF.PI / 2), new Vector2(poison2D.Width / 2f, poison2D.Height / 2f), 1f, SpriteEffects.None, 1f);
         }
     }
 }

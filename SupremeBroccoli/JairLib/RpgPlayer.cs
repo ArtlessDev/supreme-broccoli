@@ -10,7 +10,7 @@ namespace JairLib
         public static PlayerCombatActor PlayerCombatActor = new()
         { // this needs to be in a json and needs to be loaded before the game starts, specifically for like new saves or first time playing or something.
             MaximumHealth = 20,
-            Health = 20,
+            CurrentHealth = 20,
             Name = "default",
             Speed = 10,
             Attack = 30,

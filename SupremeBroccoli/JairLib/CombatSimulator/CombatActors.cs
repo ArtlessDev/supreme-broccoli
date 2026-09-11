@@ -31,11 +31,6 @@ namespace JairLib.CombatSimulator
 
         public virtual void Draw(SpriteBatch _spritebatch) { }
         //properties
-        public int Health
-        {
-            get { return health; }
-            set { this.health = value; }
-        }
         public int MaximumHealth
         {
             get { return maxhealth; }

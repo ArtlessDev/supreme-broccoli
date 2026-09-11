@@ -62,7 +62,7 @@ namespace JairLib.QuestCore
 
             var modifiedPower = (moveGroup.moveUser.Attack * Power) / 100;
 
-            moveGroup.primaryTarget.Health -= modifiedPower;
+            moveGroup.primaryTarget.CurrentHealth -= modifiedPower;
 
             return moveGroup;
         }

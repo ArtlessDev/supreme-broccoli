@@ -149,11 +149,13 @@ namespace JairLib.CombatSimulator
         {
             //so long as the player is healthy, they can still fight
             //we dont care about the HP stats for the player's party members.
-            bool playerGoodToGo = RpgPlayer.PlayerCombatActor.Health > 0 ? true : false;
+            bool playerGoodToGo = RpgPlayer.PlayerCombatActor.CurrentHealth > 0 ? true : false;
             bool foePartyGoodToGo = false;
             foreach (CombatActors actor in foeParty)
             {
-                if (actor.Health >= 0)
+                //theres probably a lot of cases where this needs tweaking.
+                //but for now happy path is alright
+                if (actor.CurrentHealth > 0)
                 {
                     foePartyGoodToGo = true;
                 }
@@ -180,7 +182,7 @@ namespace JairLib.CombatSimulator
             //players health gets reset to max hp along with their mp
             foreach (CombatActors partyMember in playerParty)
             {
-                partyMember.Health = partyMember.MaximumHealth;
+                partyMember.CurrentHealth = partyMember.MaximumHealth;
             }
             //player then gets sent back to the last save spot
 
@@ -214,6 +216,28 @@ namespace JairLib.CombatSimulator
         {
             Globals.MainCamera.LookAt(_spinnerMinigame.CenteredCircle.Center);
             _spinnerMinigame.Update(gameTime);
+        }
+
+        public static void DrawGameOverWon(SpriteBatch _sb)
+        {
+            string wonString = $"You defeated your opponent!" +
+                $"\nyou have received 10 dubloons" +
+                $"\nPress E to return to overworld";
+            _sb.DrawString(Globals.stabilloFont, wonString, new(64, 700), Color.Green);
+
+            if(Globals.keyb.WasKeyPressed(Keys.E))
+                INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
+            //throw new NotImplementedException();
+        }
+
+        public static void DrawGameOverLost(SpriteBatch _sb)
+        {
+            string wonString = $"You have been defeated by your opponent. " +
+                $"\nreset to the previous location";
+            _sb.DrawString(Globals.stabilloFont, wonString, new(128, 700), Color.Green);
+
+            if (Globals.keyb.WasKeyPressed(Keys.E))
+                INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
         }
     }
 }
