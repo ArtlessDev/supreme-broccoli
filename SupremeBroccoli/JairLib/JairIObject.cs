@@ -133,3 +133,19 @@ public enum MoveList
     Draco_Slash,
     Draco_Breath,
 }
+
+public enum CombatStates
+{
+    none,
+    VerifyActors,
+    SortTurnOrder,
+    SelectMove,
+    CombatMinigame,
+    ResolveActions,
+    CheckActorsHP,
+    GameOverLost,
+    GameOverWon,
+    ReturnToScreen,
+    SelectOpponent,
+    ResolveSecondaryEffects
+}

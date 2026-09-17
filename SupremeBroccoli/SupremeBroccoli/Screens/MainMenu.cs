@@ -11,6 +11,10 @@ using System;
 
 namespace SupremeBroccoli.Screens
 {
+
+    /// <summary>
+    /// we can clear this all out. CombatSimulator should have all the working changes
+    /// </summary>
     public class MainMenu : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
@@ -114,7 +118,8 @@ namespace SupremeBroccoli.Screens
 
             UpdatePosition();
 
-            spinnerMinigameSpace.Update(gameTime, PlayerInputCircle);
+            spinnerMinigameSpace.UpdateTargetPosition(gameTime);
+            //spinnerMinigameSpace.UpdateTargetPosition(gameTime);
         }
     }
 

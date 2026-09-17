@@ -55,7 +55,7 @@ namespace JairLib.QuestCore
 
         private MoveGrouping Punch(MoveGrouping moveGroup)
         {
-            Power = 5;
+            Power = 10;
             Accuracy = 95;
             KindOfAttack = KindOfAttack.Physical;
             Type = Element.Physical;

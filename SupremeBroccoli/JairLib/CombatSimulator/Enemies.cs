@@ -57,13 +57,13 @@ namespace JairLib.CombatSimulator
         }
         public override void Draw(SpriteBatch _spriteBatch)
         {
-            CircleF useAsBoundsRect = new(new((512 * DrawOrderCounter), 0), 256);
+            CircleF useAsBoundsRect = new(new((256 * DrawOrderCounter), 0), 256);
 
             Vector2 circleCenter = useAsBoundsRect.Center;
-            
+            circleCenter.SetX(circleCenter.X+64);// screeen margin
             //Game._spriteBatch.Draw(ca.texture2D, circleCenter, Color.White);
 
-            //this.rectangle = BoundingRect;
+            this.rectangle = new Rectangle((int)circleCenter.X, (int)circleCenter.Y, this.rectangle.Width, this.rectangle.Height);
             _spriteBatch.Draw(this.texture2D, this.rectangle, Color.White);
 
             var hpText = $"{Name}\nHP: {CurrentHealth}/{MaximumHealth}";

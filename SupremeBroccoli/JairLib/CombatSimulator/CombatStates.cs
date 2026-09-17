@@ -8,21 +8,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace JairLib.CombatSimulator
 {
-    public enum CombatStates
-    {
-        none,
-        VerifyActors,
-        SortTurnOrder,
-        SelectMove,
-        CombatMinigame,
-        ResolveActions,
-        CheckActorsHP,
-        GameOverLost,
-        GameOverWon,
-        ReturnToScreen,
-        SelectOpponent,
-        ResolveSecondaryEffects
-    }
+
 
     public static partial class CombatStateMachine
     {
@@ -105,17 +91,28 @@ namespace JairLib.CombatSimulator
                 //SelectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[0]);
                 FoeTeamReference[0].color = Color.Red;
                 MoveGrouping.primaryTarget = FoeTeamReference[0];
-                INTERNAL_COMBAT_STATE = CombatStates.ResolveActions;
+                INTERNAL_COMBAT_STATE = CombatStates.CombatMinigame;
             }
             else if (Globals.keyb.WasKeyPressed(Keys.D2) && FoeTeamReference[1]!=null)
             {
                 //move up in the list
                 //SelectedMove = new Attack(RpgPlayer.PlayerCombatActor.Moveset[1]);
                 MoveGrouping.primaryTarget = FoeTeamReference[1];
-                INTERNAL_COMBAT_STATE = CombatStates.ResolveActions;
+                INTERNAL_COMBAT_STATE = CombatStates.CombatMinigame;
             }
 
             MoveGrouping.foeGroup = FoeTeamReference;
+        }
+        
+        public static void CombatMinigame(SpinnerMinigame _spinnerMinigame, GameTime gameTime)
+        {
+            Globals.MainCamera.LookAt(_spinnerMinigame.CenteredCircle.Center);
+            
+            _spinnerMinigame.UpdatePlayerInputPosition();
+            _spinnerMinigame.spinnerMinigameSpace.UpdateTargetPosition(gameTime);
+            _spinnerMinigame.spinnerMinigameSpace.PlayerInputUpdate(_spinnerMinigame.PlayerInputCircle);
+
+            //_spinnerMinigame.UpdateTargetPosition(gameTime);
         }
 
         public static MoveGrouping MoveGrouping = new MoveGrouping()
@@ -212,11 +209,6 @@ namespace JairLib.CombatSimulator
             return INTERNAL_COMBAT_STATE;
         }
 
-        public static void CombatMinigame(SpinnerMinigame _spinnerMinigame, GameTime gameTime)
-        {
-            Globals.MainCamera.LookAt(_spinnerMinigame.CenteredCircle.Center);
-            _spinnerMinigame.Update(gameTime);
-        }
 
         public static void DrawGameOverWon(SpriteBatch _sb)
         {

@@ -44,7 +44,7 @@ namespace JairLib.CombatSimulator
             var updatedAngle = (float)angle + (MathF.PI / 2);
             _sb.Draw(pointer2D, PlayerInputCircle.Center, null, Color.Blue, updatedAngle, new Vector2(pointer2D.Width / 2f, pointer2D.Height / 2f), 1f, SpriteEffects.None, 1f);
         }
-        internal void UpdatePosition()
+        internal void UpdatePlayerInputPosition()
         {
             angle += speed;
             if (angle > Math.PI * 2)
@@ -55,11 +55,6 @@ namespace JairLib.CombatSimulator
 
             PlayerInputCircle.Center.X = CenteredCircle.Center.X + (float)newX;
             PlayerInputCircle.Center.Y = CenteredCircle.Center.Y + (float)newY;
-        }
-        public void Update(GameTime gameTime)
-        {
-            UpdatePosition();
-            spinnerMinigameSpace.Update(gameTime, PlayerInputCircle);
         }
     }
     public class SpinnerMinigameSpace
@@ -89,26 +84,43 @@ namespace JairLib.CombatSimulator
             pointer2D = Globals.GlobalContent.Load<Texture2D>("pointer");
             poison2D = Globals.GlobalContent.Load<Texture2D>("poison_space");
         }
-        public void Update(GameTime gameTime, CircleF _playerInput)
-        {
 
+        /// <summary>
+        /// targets should be statically set. there needs to be a counter for each time a target is hit. 
+        /// 
+        /// there needs to be a 'spinner minigame setup' phase so that the player isnt just jumpscared with the spinner ui
+        /// along with that, there needs to also be a 'spinner minigame completed' phase for the player to quickly review if they missed or not
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void UpdateTargetPosition(GameTime gameTime)
+        {
+            
             double newX = CenteredCircle.Radius * Math.Cos(smartAngle);
             double newY = CenteredCircle.Radius * Math.Sin(smartAngle);
 
-            newX += CenteredCircle.Center.X;
-            newY += CenteredCircle.Center.Y;
+            newX += this.CenteredCircle.Center.X;
+            newY += this.CenteredCircle.Center.Y;
 
-            smartPosition = new((float)newX, (float)newY);
+            this.smartPosition = new((float)newX, (float)newY);
 
+
+        }
+
+        int GoodHitCounter, BadHitCounter;
+        public void PlayerInputUpdate(CircleF _playerInput)
+        {
             if (Globals.keyb.WasKeyPressed(Keys.Space) && CircleF.Intersects(_playerInput, new CircleF(smartPosition, texture2D.Width)))
             {
-                color = Color.MediumPurple;
+                color = Color.Green;
+                GoodHitCounter++;
             }
             else if (Globals.keyb.WasKeyPressed(Keys.Space) && !_playerInput.Intersects(pointer2D.Bounds))
             {
-                color = Color.Purple;
+                color = Color.Red;
+                BadHitCounter++;
             }
         }
+
         public void Draw(GameTime gameTime, SpriteBatch _sb)
         {
             _sb.Draw(poison2D, smartPosition, null, color, smartAngle + (MathF.PI / 2), new Vector2(poison2D.Width / 2f, poison2D.Height / 2f), 1f, SpriteEffects.None, 1f);

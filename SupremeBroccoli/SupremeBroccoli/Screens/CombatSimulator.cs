@@ -93,7 +93,7 @@ namespace SupremeBroccoli.Screens
             }
 
             COMBAT_CURRENT_STATE = CombatStateMachine.GetInternalState();
-            //CombatGUI.Update();
+            //CombatGUI.UpdateTargetPosition();
             //CombatGUI.fleeButton.update();
             //CombatGUI.bagButton.update();
 
@@ -150,7 +150,7 @@ namespace SupremeBroccoli.Screens
                 }
             }
             ////rough numbers, temporary setup
-            Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
+            //Game._spriteBatch.DrawRectangle(CombatGUI.PrimaryContainer.X, CombatGUI.PrimaryContainer.Y, CombatGUI.PrimaryContainer.Width, CombatGUI.PrimaryContainer.Height, Color.White);
             //CombatGUI.fightButton.draw(Game._spriteBatch);
             //CombatGUI.fleeButton.draw(Game._spriteBatch);
             //CombatGUI.bagButton.draw(Game._spriteBatch);
