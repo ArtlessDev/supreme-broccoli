@@ -18,9 +18,16 @@ namespace JairLib.CombatSimulator
 
         //TODO: ALL OF THE COMBAT STATES
         private static List<CombatActors> PlayerTeamReference, FoeTeamReference;
-        public static void AssignActors()
-        {
 
+
+        public static CombatStates GetInternalState()
+        {
+            return INTERNAL_COMBAT_STATE;
+        }
+
+        public static void SetInternalState(CombatStates _desiredState)
+        {
+            INTERNAL_COMBAT_STATE = _desiredState;
         }
 
         public static void VerifyActors(List<CombatActors> _playerTeam, List<CombatActors> _foeTeam)
@@ -202,11 +209,6 @@ namespace JairLib.CombatSimulator
 
 
             if (Globals.keyb.WasKeyPressed(Keys.E)) INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
-        }
-
-        public static CombatStates GetInternalState()
-        {
-            return INTERNAL_COMBAT_STATE;
         }
 
 

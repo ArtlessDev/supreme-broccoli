@@ -46,15 +46,26 @@ namespace JairLib.CombatSimulator
         }
         internal void UpdatePlayerInputPosition()
         {
+            //this works as-is for essentially an 'infinite loop'
             angle += speed;
+
             if (angle > Math.PI * 2)
+            {
+                AutoStopMinigame();
                 angle = 0;
+            }
 
             double newX = SpinnerCircle.Radius * Math.Cos(angle);
             double newY = SpinnerCircle.Radius * Math.Sin(angle);
 
             PlayerInputCircle.Center.X = CenteredCircle.Center.X + (float)newX;
             PlayerInputCircle.Center.Y = CenteredCircle.Center.Y + (float)newY;
+        }
+
+        internal void AutoStopMinigame()
+        {
+            if (angle > Math.PI * 2)
+                CombatStateMachine.SetInternalState(CombatStates.ResolveActions);
         }
     }
     public class SpinnerMinigameSpace
