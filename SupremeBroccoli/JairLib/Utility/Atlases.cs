@@ -37,10 +37,10 @@ namespace JairLib.Utility
             beastiaryDexAtlas = Texture2DAtlas.Create("beastTileMapPrototype", beastiaryDex, Globals.TileSize, Globals.TileSize);
             beastiary_tileset = Globals.GlobalContent.Load<Texture2D>("beastiary_tileset");
             tilesetAtlas = Texture2DAtlas.Create("playerTileMapPrototype", beastiary_tileset, Globals.TileSize, Globals.TileSize);
-            playerTileset = Globals.GlobalContent.Load<Texture2D>("player");
+            playerTileset = Globals.GlobalContent.Load<Texture2D>("OverworldTextures/player");
             playerAtlas = Texture2DAtlas.Create("playerAtlas", playerTileset, Globals.TileSize, Globals.TileSize);
 
-            npcBatchOneSet = Globals.GlobalContent.Load<Texture2D>("npcBatchOne");
+            npcBatchOneSet = Globals.GlobalContent.Load<Texture2D>("OverworldTextures/npcBatchOne");
             npcBatchOneAtlas = Texture2DAtlas.Create("npcAtlas", npcBatchOneSet, Globals.TileSize, Globals.TileSize);
 
         }

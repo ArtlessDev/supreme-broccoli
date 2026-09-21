@@ -24,8 +24,8 @@ namespace JairLib.CombatSimulator
 
             initPoint = new Vector2(Globals.MainCamera.Center.X, Globals.MainCamera.Center.Y);
 
-            texture2D = Globals.GlobalContent.Load<Texture2D>("spinner");
-            pointer2D = Globals.GlobalContent.Load<Texture2D>("pointer");
+            texture2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/spinner");
+            pointer2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/pointer");
 
             CenteredCircle = new(initPoint, (float)radius);
             smartAngle = Random.Shared.NextAngle();
@@ -81,9 +81,9 @@ namespace JairLib.CombatSimulator
             CenteredCircle = _centeredCircle;
             color = Color.White;
             smartAngle = Random.Shared.NextAngle();
-            texture2D = Globals.GlobalContent.Load<Texture2D>("spinner");
-            pointer2D = Globals.GlobalContent.Load<Texture2D>("pointer");
-            poison2D = Globals.GlobalContent.Load<Texture2D>("poison_space");
+            texture2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/spinner");
+            pointer2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/pointer");
+            poison2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/poison_space");
         }
         public SpinnerMinigameSpace(CircleF _centeredCircle, float _angle)
         {
@@ -91,9 +91,9 @@ namespace JairLib.CombatSimulator
             CenteredCircle = _centeredCircle;
             color = Color.Purple;
             smartAngle = _angle;
-            texture2D = Globals.GlobalContent.Load<Texture2D>("spinner");
-            pointer2D = Globals.GlobalContent.Load<Texture2D>("pointer");
-            poison2D = Globals.GlobalContent.Load<Texture2D>("poison_space");
+            texture2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/spinner");
+            pointer2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTexture/pointer");
+            poison2D = Globals.GlobalContent.Load<Texture2D>("SpinnerTextures/poison_space");
         }
 
         /// <summary>

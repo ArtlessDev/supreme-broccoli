@@ -46,12 +46,12 @@ namespace JairLib.Utility
 
         public static void Load()
         {
-            font = GlobalContent.Load<SpriteFont>("coolvetica");
-            stabilloFont = GlobalContent.Load<SpriteFont>("Stabilo");
+            font = GlobalContent.Load<SpriteFont>("Fonts/coolvetica");
+            stabilloFont = GlobalContent.Load<SpriteFont>("Fonts/Stabilo");
             tileSpaces = new List<TileSpace>();
-            player_shader = Globals.GlobalContent.Load<Texture2D>("player_shader");
-            shadow = Globals.GlobalContent.Load<Texture2D>("shadow");
-            vignette_shader = Globals.GlobalContent.Load<Texture2D>("vignette_shader");
+            player_shader = Globals.GlobalContent.Load<Texture2D>("OverworldTextures/player_shader");
+            shadow = Globals.GlobalContent.Load<Texture2D>("OverworldTextures/shadow");
+            vignette_shader = Globals.GlobalContent.Load<Texture2D>("OverworldTextures/vignette_shader");
 
         }
 
