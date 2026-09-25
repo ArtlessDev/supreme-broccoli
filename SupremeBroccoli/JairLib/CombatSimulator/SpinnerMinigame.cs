@@ -75,6 +75,7 @@ namespace JairLib.CombatSimulator
         float smartAngle;
         CircleF CenteredCircle;
         Vector2 smartPosition;
+
         public SpinnerMinigameSpace(CircleF _centeredCircle)
         {
             //smartAngle = MathF.PI;

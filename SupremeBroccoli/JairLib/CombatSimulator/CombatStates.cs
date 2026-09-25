@@ -132,12 +132,19 @@ namespace JairLib.CombatSimulator
             INTERNAL_COMBAT_STATE = CombatStates.CheckActorsHP;
         }
 
+        /// <summary>
+        /// this has become the "turn-precheck". checks the HP of the actors. resets AdditionalMinigameFunctions
+        /// </summary>
+        /// <param name="foeParty"></param>
         public static void CheckActorsHealth(List<CombatActors> foeParty)
         {
             //so long as the player is healthy, they can still fight
             //we dont care about the HP stats for the player's party members.
             bool playerGoodToGo = RpgPlayer.PlayerCombatActor.CurrentHealth > 0 ? true : false;
             bool foePartyGoodToGo = false;
+            AddtMinigameFunctions.ResetBadHit();
+            AddtMinigameFunctions.ResetGoodHit();
+
             foreach (CombatActors actor in foeParty)
             {
                 //theres probably a lot of cases where this needs tweaking.
