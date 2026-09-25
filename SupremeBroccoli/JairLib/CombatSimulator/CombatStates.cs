@@ -173,6 +173,7 @@ namespace JairLib.CombatSimulator
         }
         public static void GameOverLost(List<CombatActors> playerParty)
         {
+            INTERNAL_COMBAT_STATE = CombatStates.GameOverLost;
             //players health gets reset to max hp along with their mp
             foreach (CombatActors partyMember in playerParty)
             {
@@ -180,7 +181,11 @@ namespace JairLib.CombatSimulator
             }
             //player then gets sent back to the last save spot
 
-            if (Globals.keyb.WasKeyPressed(Keys.E)) INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
+            if (Globals.keyb.WasKeyPressed(Keys.E))
+            {
+                
+                INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
+            }
         }
 
 

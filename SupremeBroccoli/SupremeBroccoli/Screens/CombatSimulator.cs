@@ -10,6 +10,7 @@ using JairLib.Utility;
 using JairLib.CombatSimulator;
 using Gum.Forms.Controls;
 using JairLib;
+using SupremeBroccoli.Screens.Towns;
 
 namespace SupremeBroccoli.Screens
 {
@@ -19,6 +20,7 @@ namespace SupremeBroccoli.Screens
         public static List<CombatActors> PlayerParty = new List<CombatActors>();
         public static List<CombatActors> FoeParty = new List<CombatActors>();
         public static Screen ReturnToThisScreen;
+        
         public CombatStates COMBAT_CURRENT_STATE;
         public SpinnerMinigame spinnerMinigame;
         public CombatSimulator(Game game) : base(game)
@@ -30,7 +32,7 @@ namespace SupremeBroccoli.Screens
         public override void LoadContent()
         {
             CombatGUI.Load();
-            COMBAT_CURRENT_STATE = CombatStates.VerifyActors;
+            COMBAT_CURRENT_STATE = CombatStates.GameOverLost;
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             var f = Globals.MainCamera.Center;
@@ -67,7 +69,8 @@ namespace SupremeBroccoli.Screens
                     CombatStateMachine.ResolveSecondaryActions();
                     break;
                 case (CombatStates.GameOverLost):
-                    CombatStateMachine.GameOverLost(FoeParty); 
+                    CombatStateMachine.GameOverLost(FoeParty);
+                    GameOverLostSetupReturn();
                     break;
                 case (CombatStates.ReturnToScreen):
                     ChangeBackScreen(GraphicsDevice, ScreenManager);
@@ -177,7 +180,23 @@ namespace SupremeBroccoli.Screens
             ReturnToThisScreen = _previousScreen;
         }
 
+        /// <summary>
+        /// this needs to be able to teleport people back to the last save spot but for now it just TPs back to town 1
+        /// </summary>
+        public void GameOverLostSetupReturn()
+        {
+            int x = 20 * Globals.TileSize,
+                    y = (24 * Globals.TileSize) - Globals.TileSize;
+
+            RpgPlayer.PlayerOverworld.Position = new(x, y);
+            RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+
+            AddtMinigameFunctions.SetLostReturn(new Town_1(Game));
+            //RpgPlayer.PlayerOverworld.Position = new Vector2(Globals.TileSize * 26, Globals.TileSize * 26);
+            ReturnToThisScreen = AddtMinigameFunctions.GetLostReturn();
+        }
     }
+
 
     public static class GumCombatGui
     {
