@@ -4,27 +4,34 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
+using System.Diagnostics;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace JairLib.CombatSimulator
 {
 
-
+    #region UPDATE FUNCTIONS
     public static partial class CombatStateMachine
     {
         static CombatStates INTERNAL_COMBAT_STATE = CombatStates.none;
         public static Attack? SelectedMove = null;
         public static CombatActors CurrentTargetForAction = null;
-
-        //TODO: ALL OF THE COMBAT STATES
         private static List<CombatActors> PlayerTeamReference, FoeTeamReference;
 
+        public static MoveGrouping MoveGrouping = new MoveGrouping()
+        {
+            moveUser = RpgPlayer.PlayerCombatActor,
+            primaryTarget = null,
+            allyGroup = PlayerTeamReference,
+            foeGroup = FoeTeamReference,
+            AttackBooster = 1f
+        };
 
+        #region STATE SETTER AND GETTER
         public static CombatStates GetInternalState()
         {
             return INTERNAL_COMBAT_STATE;
         }
-
         public static void SetInternalState(CombatStates _desiredState)
         {
             INTERNAL_COMBAT_STATE = _desiredState;
@@ -39,6 +46,7 @@ namespace JairLib.CombatSimulator
 
             INTERNAL_COMBAT_STATE = CombatStates.CheckActorsHP;
         }
+        #endregion
 
         /// <summary>
         /// this will check speed of actors and then reorder the actors within the turnorder list
@@ -46,15 +54,6 @@ namespace JairLib.CombatSimulator
         public static void SortTurnOrder()
         {
 
-        }
-
-        public static void SelectMoveDraw(SpriteBatch _sb)
-        {
-            foreach(MoveList action in RpgPlayer.PlayerCombatActor.Moveset)
-            {
-
-                _sb.DrawString(Globals.stabilloFont, action.ToString(), new(128,800), RpgPlayer.PlayerCombatActor.color);
-            }
         }
 
         /// <summary>
@@ -76,18 +75,6 @@ namespace JairLib.CombatSimulator
                 SelectedMove.GetUpgradeMethod(SelectedMove.MoveId);
                 INTERNAL_COMBAT_STATE = CombatStates.SelectOpponent;
             }
-
-            if (Globals.keyb.IsKeyDown(Keys.D1))
-            {
-                //moveArr[0].ButtonAbility = newAbilities[0];
-                //actions[0].ButtonAbility = newAbilities[0];
-                //actions[0].ButtonAbility.BaseDamagePower = (float)(WaveNumber * .75f) * 30f;
-                //GenerateAbilities = true;
-                //newAbilities.Clear();
-                //CurrentPhase = GamePhases.PlayerTurn;
-                //task = ResetPhaseChangeFlag();
-            }
-
         }
 
         public static void SelectOpponent()
@@ -122,18 +109,14 @@ namespace JairLib.CombatSimulator
             //_spinnerMinigame.UpdateTargetPosition(gameTime);
         }
 
-        public static MoveGrouping MoveGrouping = new MoveGrouping()
-        {
-            moveUser = RpgPlayer.PlayerCombatActor,
-            primaryTarget = null,
-            allyGroup = PlayerTeamReference,
-            foeGroup = FoeTeamReference
-        };
         /// <summary>
         /// this is where all of the actions, player and foe alike, are resolved
         /// </summary>
-        public static void ResolveActions()
+        public static void ResolveActions(SpinnerMinigame _spinnerMinigame, GameTime gameTime)
         {
+            MoveGrouping.AttackBooster = AddtMinigameFunctions.GoodHitCounter - AddtMinigameFunctions.BadHitCounter;
+            //Debug.WriteLine($"attack boosted by: {MoveGrouping.AttackBooster}");
+
             SelectedMove.AttackDelegate(MoveGrouping);
             INTERNAL_COMBAT_STATE = CombatStates.ResolveSecondaryEffects;
         }
@@ -212,14 +195,28 @@ namespace JairLib.CombatSimulator
         }
 
 
+    }
+    #endregion
+    #region DRAW FUNCTIONS
+    public static partial class CombatStateMachine
+    {
+
+        public static void SelectMoveDraw(SpriteBatch _sb)
+        {
+            foreach (MoveList action in RpgPlayer.PlayerCombatActor.Moveset)
+            {
+
+                _sb.DrawString(Globals.stabilloFont, action.ToString(), new(128, 700), RpgPlayer.PlayerCombatActor.color);
+            }
+        }
+
         public static void DrawGameOverWon(SpriteBatch _sb)
         {
             string wonString = $"You defeated your opponent!" +
-                $"\nyou have received 10 dubloons" +
-                $"\nPress E to return to overworld";
+                $"\nreceived 10 dubloons. Press E to return to overworld";
             _sb.DrawString(Globals.stabilloFont, wonString, new(64, 700), Color.Green);
 
-            if(Globals.keyb.WasKeyPressed(Keys.E))
+            if (Globals.keyb.WasKeyPressed(Keys.E))
                 INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
             //throw new NotImplementedException();
         }
@@ -233,5 +230,7 @@ namespace JairLib.CombatSimulator
             if (Globals.keyb.WasKeyPressed(Keys.E))
                 INTERNAL_COMBAT_STATE = CombatStates.ReturnToScreen;
         }
+
     }
+    #endregion
 }

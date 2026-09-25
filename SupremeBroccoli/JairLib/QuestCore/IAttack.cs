@@ -49,6 +49,7 @@ namespace JairLib.QuestCore
         public CombatActors primaryTarget;
         public List<CombatActors> allyGroup;
         public List<CombatActors> foeGroup;
+        public float AttackBooster;
     }
     public partial class Attack
     {
@@ -60,7 +61,10 @@ namespace JairLib.QuestCore
             KindOfAttack = KindOfAttack.Physical;
             Type = Element.Physical;
 
-            var modifiedPower = (moveGroup.moveUser.Attack * Power) / 100;
+            
+            var modBoost = (moveGroup.AttackBooster * 1.25f) * Power;
+
+            int modifiedPower = (moveGroup.moveUser.Attack * (int)modBoost) / 100;
 
             moveGroup.primaryTarget.CurrentHealth -= modifiedPower;
 

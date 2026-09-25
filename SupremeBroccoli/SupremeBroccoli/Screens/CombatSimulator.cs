@@ -82,7 +82,7 @@ namespace SupremeBroccoli.Screens
                     CombatStateMachine.SelectMove();
                     break;
                 case (CombatStates.ResolveActions):
-                    CombatStateMachine.ResolveActions();
+                    CombatStateMachine.ResolveActions(spinnerMinigame, gameTime);
                     break;
                 case (CombatStates.GameOverWon):
                     CombatStateMachine.GameOverWon();

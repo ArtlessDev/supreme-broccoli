@@ -18,7 +18,7 @@ namespace JairLib.CombatSimulator
         public double radius = 180;
         public double angle = 0.0; // In radians
         public double speed = 0.1; // Speed of rotation
-
+        
         public SpinnerMinigame()
         {
 
@@ -117,18 +117,17 @@ namespace JairLib.CombatSimulator
 
         }
 
-        int GoodHitCounter, BadHitCounter;
         public void PlayerInputUpdate(CircleF _playerInput)
         {
             if (Globals.keyb.WasKeyPressed(Keys.Space) && CircleF.Intersects(_playerInput, new CircleF(smartPosition, texture2D.Width)))
             {
                 color = Color.Green;
-                GoodHitCounter++;
+                AddtMinigameFunctions.GoodHitIncrement();
             }
             else if (Globals.keyb.WasKeyPressed(Keys.Space) && !_playerInput.Intersects(pointer2D.Bounds))
             {
                 color = Color.Red;
-                BadHitCounter++;
+                AddtMinigameFunctions.BadHitIncrement();
             }
         }
 
