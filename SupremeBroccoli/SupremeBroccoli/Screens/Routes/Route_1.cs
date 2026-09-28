@@ -185,12 +185,12 @@ namespace SupremeBroccoli.Screens.Routes
             
             if(numberUsedToPick > 128)
             {
-                returnThisList.Add(new EnemyBee());
+                returnThisList.Add(new EnemyMouseQueen());
             }
             else
             {
-                returnThisList.Add(new EnemyBee());
-                returnThisList.Add(new EnemyBee());
+                returnThisList.Add(new EnemyMagicMouse());
+                returnThisList.Add(new EnemySlime());
 
             }
             return returnThisList;

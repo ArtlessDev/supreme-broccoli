@@ -144,7 +144,7 @@ namespace JairLib.CombatSimulator
     {
         public EnemyMagicMouse()
         {
-            Name = "magic mouse";
+            Name = "M. Mouse";
             Moveset = [MoveList.Punch];
             MaximumHealth = 20;
             CurrentHealth = MaximumHealth;
@@ -155,7 +155,7 @@ namespace JairLib.CombatSimulator
             Luck = 10;
             Accuracy = 10;
             Evasiveness = 10;
-            identifier = "magic mouse";
+            identifier = "M. Mouse";
             color = Color.White;
             texture2D = Globals.GlobalContent.Load<Texture2D>("CombatSprites/magicmouse");
             rectangle = new(256, 128, 256, 256);
@@ -210,7 +210,7 @@ namespace JairLib.CombatSimulator
     {
         public EnemyMouseQueen()
         {
-            Name = "mouse queen";
+            Name = "Queen of M.";
             Moveset = [MoveList.Punch];
             MaximumHealth = 30;
             CurrentHealth = MaximumHealth;
@@ -221,7 +221,7 @@ namespace JairLib.CombatSimulator
             Luck = 10;
             Accuracy = 10;
             Evasiveness = 10;
-            identifier = "mouse queen";
+            identifier = "Queen of M.";
             color = Color.White;
             texture2D = Globals.GlobalContent.Load<Texture2D>("CombatSprites/ratqueen");
             rectangle = new(256, 128, 256, 256);

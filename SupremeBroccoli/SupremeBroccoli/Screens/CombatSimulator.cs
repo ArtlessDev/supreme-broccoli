@@ -41,8 +41,10 @@ namespace SupremeBroccoli.Screens
             if (FoeParty == null || FoeParty.Count == 0)
             {
                 FoeParty = new List<CombatActors>();
-                FoeParty.Add(new EnemyBee(0));
-                FoeParty.Add(new EnemyBee(1));
+                FoeParty.Add(new EnemyBigRat() { DrawOrderCounter = 0});
+                FoeParty.Add(new EnemyMagicMouse() { DrawOrderCounter = 1});
+                FoeParty.Add(new EnemyMouseQueen() { DrawOrderCounter = 2});
+                FoeParty.Add(new EnemyBee() { DrawOrderCounter = 3 });
             }
             if (PlayerParty == null || PlayerParty.Count == 0) 
                 PlayerParty = RpgPlayer.PlayerCurrentParty;
