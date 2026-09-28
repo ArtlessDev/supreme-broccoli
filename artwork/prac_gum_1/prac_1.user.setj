@@ -1,0 +1,13 @@
+{
+  "TreeViewState": {
+    "ExpandedNodes": [
+      "Screens",
+      "Screens/MainScreen",
+      "Screens/MainScreen/DialogBoxInstance",
+      "Components",
+      "Components/Styles",
+      "Components/Styles/Colors",
+      "Components/Styles/TextStyles"
+    ]
+  }
+}
