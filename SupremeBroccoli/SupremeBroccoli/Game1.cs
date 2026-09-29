@@ -21,7 +21,7 @@ namespace SupremeBroccoli
         public GraphicsDeviceManager _graphics;
         public GraphicsDevice _device;
         public SpriteBatch _spriteBatch;
-        private readonly ScreenManager screenManager;
+        public ScreenManager screenManager;
         public BoxingViewportAdapter viewportAdapter;
         public Vector2 startingPosition = new Vector2(11*Globals.TileSize, 8 * Globals.TileSize);
         public GumService GumUI => GumService.Default;
@@ -41,8 +41,16 @@ namespace SupremeBroccoli
 
         protected override void Initialize()
         {
+
+            var gumProject = GumUI.Initialize(this
+                , "UI/SideQuests.gumx");
+            
+            var screen = new TitleScreen();
+            screenManager.ShowScreen(new MainMenu(this) { _titleScreen = screen });
+            
+
+            //GumUI.Initialize(this, DefaultVisualsVersion.V3);
             base.Initialize();
-            GumUI.Initialize(this, DefaultVisualsVersion.V3);
 
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
@@ -50,11 +58,10 @@ namespace SupremeBroccoli
             /// SETS STARTING POSITION OF PLAYER IN GAME
             RpgPlayer.PlayerOverworld.Position = startingPosition;
             RpgPlayer.PlayerOverworld.rectangle = new((int)RpgPlayer.PlayerOverworld.Position.X, (int)RpgPlayer.PlayerOverworld.Position.Y, RpgPlayer.PlayerOverworld.rectangle.Width, RpgPlayer.PlayerOverworld.rectangle.Height);
-            Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
-            Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
+            //Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
+            //Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             
-            
-            screenManager.ShowScreen(new CombatSimulator(this));
+            //screenManager.ShowScreen(otherscreen);
         }
 
         #region init/load/draw/update

@@ -55,7 +55,8 @@
   <Guides />
   <ShowLocalizationInGum>true</ShowLocalizationInGum>
   <CurrentLanguageIndex>0</CurrentLanguageIndex>
-  <ScreenReference Name="MainScreen" />
+  <ScreenReference Name="CombatScreen" />
+  <ScreenReference Name="TitleScreen" />
   <ComponentReference Name="ccEnemyContainer" />
   <ComponentReference Name="Controls/ButtonClose" />
   <ComponentReference Name="Controls/ButtonConfirm" />
