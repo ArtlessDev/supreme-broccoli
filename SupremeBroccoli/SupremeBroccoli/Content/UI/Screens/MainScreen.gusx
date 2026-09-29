@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScreenSave xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>MainScreen</Name>
+  <State>
+    <Name>Default</Name>
+    <Variable Type="float" Name="BottomMiddle_DBox.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">25</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="BottomMiddle_DBox.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="BottomMiddle_DBox.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">80</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="BottomMiddle_DBox.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="BottomMiddle_DBox.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="BottomMiddle_DBox.XOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="BottomMiddle_DBox.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">6</Value>
+    </Variable>
+    <Variable Type="float" Name="BottomMiddle_DBox.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">95</Value>
+    </Variable>
+    <Variable Type="VerticalAlignment" Name="BottomMiddle_DBox.YOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="BottomMiddle_DBox.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyContainer.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">512</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyContainer.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">512</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="EnemyContainer.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyContainer.X" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="EnemyContainer.XOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="EnemyContainer.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyContainer.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">5</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="EnemyContainer.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyDetails.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">20</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="EnemyDetails.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="EnemyDetails.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">EnemyContainer</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyDetails.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">100</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="EnemyDetails.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyDetails.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="EnemyDetails.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemyDetails.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="VerticalAlignment" Name="EnemyDetails.YOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="EnemyDetails.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">9</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemySprite.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">100</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="EnemySprite.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="EnemySprite.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">EnemyContainer</Value>
+    </Variable>
+    <Variable IsFile="true" Type="string" Name="EnemySprite.SourceFile" SetsValue="true">
+      <Value xsi:type="xsd:string">..\CombatSprites\magicmouse.png</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemySprite.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">100</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="EnemySprite.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemySprite.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="EnemySprite.XOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="EnemySprite.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="EnemySprite.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="VerticalAlignment" Name="EnemySprite.YOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="EnemySprite.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerDetails.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">20</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerDetails.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerDetails.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">20</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerDetails.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerDetails.X" SetsValue="true">
+      <Value xsi:type="xsd:float">5</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerDetails.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerDetails.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="VerticalAlignment" Name="PlayerDetails.YOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerDetails.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">9</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="PlayerHealth.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
+    <Variable Type="int" Name="PlayerHealth.FontSize" SetsValue="true">
+      <Value xsi:type="xsd:int">36</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerHealth.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerHealth.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="PlayerHealth.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerHealth.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">PlayerDetails</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerHealth.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">player health</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerHealth.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerHealth.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerHealth.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerHealth.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">30</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerHealth.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="PlayerHealth1.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
+    <Variable Type="int" Name="PlayerHealth1.FontSize" SetsValue="true">
+      <Value xsi:type="xsd:int">36</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerHealth1.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerHealth1.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="PlayerHealth1.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerHealth1.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">EnemyDetails</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerHealth1.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">player health</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerHealth1.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerHealth1.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerHealth1.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerHealth1.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">30</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerHealth1.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="PlayerName.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
+    <Variable Type="int" Name="PlayerName.FontSize" SetsValue="true">
+      <Value xsi:type="xsd:int">36</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerName.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">25</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerName.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="PlayerName.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerName.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">PlayerDetails</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerName.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">player name</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerName.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="PlayerName1.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
+    <Variable Type="int" Name="PlayerName1.FontSize" SetsValue="true">
+      <Value xsi:type="xsd:int">36</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerName1.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">25</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerName1.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="PlayerName1.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerName1.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">EnemyDetails</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerName1.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">player name</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerName1.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="PlayerStatus.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
+    <Variable Type="int" Name="PlayerStatus.FontSize" SetsValue="true">
+      <Value xsi:type="xsd:int">36</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerStatus.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerStatus.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="PlayerStatus.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerStatus.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">PlayerDetails</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerStatus.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">player status</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerStatus.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerStatus.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerStatus.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerStatus.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">60</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerStatus.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="PlayerStatus1.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
+    <Variable Type="int" Name="PlayerStatus1.FontSize" SetsValue="true">
+      <Value xsi:type="xsd:int">36</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerStatus1.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerStatus1.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="PlayerStatus1.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerStatus1.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">EnemyDetails</Value>
+    </Variable>
+    <Variable Type="string" Name="PlayerStatus1.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">player status</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="PlayerStatus1.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerStatus1.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerStatus1.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="PlayerStatus1.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">60</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="PlayerStatus1.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="SpriteInstance1.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="SpriteInstance1.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">PlayerDetails</Value>
+    </Variable>
+    <Variable IsFile="true" Type="string" Name="SpriteInstance1.SourceFile" SetsValue="true">
+      <Value xsi:type="xsd:string">KenneyAssets\panel_blue.png</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="SpriteInstance1.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="SpriteInstance1.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="SpriteInstance1.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="SpriteInstance2.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="SpriteInstance2.Parent" SetsValue="true">
+      <Value xsi:type="xsd:string">EnemyDetails</Value>
+    </Variable>
+    <Variable IsFile="true" Type="string" Name="SpriteInstance2.SourceFile" SetsValue="true">
+      <Value xsi:type="xsd:string">KenneyAssets\panel_blue.png</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="SpriteInstance2.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="SpriteInstance2.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="SpriteInstance2.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="SpriteInstance2.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="SpriteInstance2.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+  </State>
+  <Instance Name="SpriteInstance2" BaseType="Sprite" />
+  <Instance Name="SpriteInstance1" BaseType="Sprite" />
+  <Instance Name="BottomMiddle_DBox" BaseType="Controls/DialogBox" />
+  <Instance Name="PlayerDetails" BaseType="Container" />
+  <Instance Name="PlayerName" BaseType="Text" />
+  <Instance Name="PlayerHealth" BaseType="Text" />
+  <Instance Name="PlayerStatus" BaseType="Text" />
+  <Instance Name="PlayerName1" BaseType="Text" />
+  <Instance Name="PlayerHealth1" BaseType="Text" />
+  <Instance Name="PlayerStatus1" BaseType="Text" />
+  <Instance Name="EnemyContainer" BaseType="Container" />
+  <Instance Name="EnemyDetails" BaseType="Container" />
+  <Instance Name="EnemySprite" BaseType="Sprite" />
+  <Behaviors />
+</ScreenSave>
