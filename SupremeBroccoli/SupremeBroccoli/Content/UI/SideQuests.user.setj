@@ -2,9 +2,13 @@
   "TreeViewState": {
     "ExpandedNodes": [
       "Screens",
-      "Screens/MainScreen",
-      "Screens/MainScreen/EnemyContainer",
-      "Components"
+      "Screens/CombatScreen",
+      "Screens/TitleScreen",
+      "Screens/TitleScreen/TextInstance",
+      "Components",
+      "Components/Controls",
+      "Components/Controls/ButtonIcon",
+      "Components/Elements"
     ]
   }
 }

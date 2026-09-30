@@ -34,8 +34,8 @@ partial class TitleScreen : global::Gum.Forms.Controls.FrameworkElement
             return gue;
         });
     }
-    public ButtonStandard ButtonStandardInstance { get; protected set; }
     public TextRuntime TextInstance { get; protected set; }
+    public ButtonStandard ButtonStandardInstance { get; protected set; }
 
     public TitleScreen(InteractiveGue visual) : base(visual)
     {
@@ -49,8 +49,8 @@ partial class TitleScreen : global::Gum.Forms.Controls.FrameworkElement
     protected override void ReactToVisualChanged()
     {
         base.ReactToVisualChanged();
-        ButtonStandardInstance = global::Gum.Forms.GraphicalUiElementFormsExtensions.TryGetFrameworkElementByName<ButtonStandard>(this.Visual,"ButtonStandardInstance");
         TextInstance = this.Visual?.GetGraphicalUiElementByName("TextInstance") as global::MonoGameGum.GueDeriving.TextRuntime;
+        ButtonStandardInstance = global::Gum.Forms.GraphicalUiElementFormsExtensions.TryGetFrameworkElementByName<ButtonStandard>(this.Visual,"ButtonStandardInstance");
         CustomInitialize();
     }
     //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
