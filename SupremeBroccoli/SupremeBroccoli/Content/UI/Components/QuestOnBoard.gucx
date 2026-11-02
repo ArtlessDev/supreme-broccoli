@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ComponentSave xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>QuestOnBoard</Name>
+  <BaseType>Container</BaseType>
+  <State>
+    <Name>Default</Name>
+    <Variable Type="bool" Name="AcceptQuestButton.HasEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="string" Name="AcceptQuestButton.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">Accept Quest</Value>
+    </Variable>
+    <Variable Type="float" Name="AcceptQuestButton.X" SetsValue="true">
+      <Value xsi:type="xsd:float">75</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="AcceptQuestButton.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="AcceptQuestButton.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="AcceptQuestButton.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="float" Name="Height" SetsValue="true">
+      <Value xsi:type="xsd:float">100</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+    <Variable Type="bool" Name="QuestDetails.ExposeChildrenEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="bool" Name="QuestDetails.HasEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestDetails.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="QuestDetails.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="QuestDetails.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">Quest Details</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestDetails.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">100</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="QuestDetails.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestDetails.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="QuestDetails.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="bool" Name="QuestTitle.ExposeChildrenEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="bool" Name="QuestTitle.HasEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestTitle.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="QuestTitle.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="QuestTitle.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">Quest Title</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestTitle.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">50</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="QuestTitle.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestTitle.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="QuestTitle.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="QuestTitle.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="bool" Name="RejectQuestButton.HasEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="string" Name="RejectQuestButton.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">Leave Quest</Value>
+    </Variable>
+    <Variable Type="float" Name="RejectQuestButton.X" SetsValue="true">
+      <Value xsi:type="xsd:float">90</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="RejectQuestButton.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="RejectQuestButton.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="RejectQuestButton.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="State" Name="State" Category="States and Visibility" SetsValue="false">
+      <Value xsi:type="xsd:string">Default</Value>
+    </Variable>
+    <Variable Type="float" Name="Width" SetsValue="true">
+      <Value xsi:type="xsd:float">900</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+  </State>
+  <Instance Name="RejectQuestButton" BaseType="Controls/ButtonStandard" />
+  <Instance Name="AcceptQuestButton" BaseType="Controls/ButtonStandard" />
+  <Instance Name="QuestTitle" BaseType="Text" />
+  <Instance Name="QuestDetails" BaseType="Text" />
+  <Behaviors />
+</ComponentSave>

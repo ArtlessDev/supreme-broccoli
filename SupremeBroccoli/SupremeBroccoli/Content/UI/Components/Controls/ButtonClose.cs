@@ -7,9 +7,9 @@ using RenderingLibrary.Graphics;
 
 using System.Linq;
 
-namespace SupremeBroccoli.Screens
+namespace SupremeBroccoli.Components.Controls
 {
-    partial class TitleScreen
+    partial class ButtonClose
     {
         partial void CustomInitialize()
         {

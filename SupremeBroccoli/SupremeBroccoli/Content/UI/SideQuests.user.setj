@@ -3,12 +3,14 @@
     "ExpandedNodes": [
       "Screens",
       "Screens/CombatScreen",
+      "Screens/QuestBoard",
+      "Screens/QuestBoard/BoardTitle",
+      "Screens/QuestBoard/BoardTitle/BoardOfQuests",
       "Screens/TitleScreen",
       "Screens/TitleScreen/TextInstance",
       "Components",
-      "Components/Controls",
-      "Components/Controls/ButtonIcon",
-      "Components/Elements"
+      "Components/Elements",
+      "Components/QuestOnBoard"
     ]
   }
 }

@@ -56,6 +56,7 @@
   <ShowLocalizationInGum>true</ShowLocalizationInGum>
   <CurrentLanguageIndex>0</CurrentLanguageIndex>
   <ScreenReference Name="CombatScreen" />
+  <ScreenReference Name="QuestBoard" />
   <ScreenReference Name="TitleScreen" />
   <ComponentReference Name="ccEnemyContainer" />
   <ComponentReference Name="Controls/ButtonClose" />
@@ -102,6 +103,7 @@
   <ComponentReference Name="Elements/PercentBar" />
   <ComponentReference Name="Elements/PercentBarIcon" />
   <ComponentReference Name="Elements/VerticalLines" />
+  <ComponentReference Name="QuestOnBoard" />
   <ComponentReference Name="Styles" />
   <StandardElementReference Name="Circle" />
   <StandardElementReference Name="Component" />

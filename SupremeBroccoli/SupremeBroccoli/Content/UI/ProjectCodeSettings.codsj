@@ -4,7 +4,7 @@
   "RootNamespace": "SupremeBroccoli",
   "AppendFolderToNamespace": true,
   "InheritanceLocation": 1,
-  "ObjectInstantiationType": 1,
+  "ObjectInstantiationType": 0,
   "DefaultScreenBase": "",
   "OutputLibrary": 5,
   "AdjustPixelValuesForDensity": false,
