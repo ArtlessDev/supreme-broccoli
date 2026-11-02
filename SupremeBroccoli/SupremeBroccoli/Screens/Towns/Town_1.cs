@@ -24,6 +24,7 @@ namespace SupremeBroccoli.Screens.Towns
         CustomGuiGroup town_1_gui;
         Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 26 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
+        internal QuestBoard _questBoardGui { get; set; }
 
 
         public Town_1(Game game) : base(game)
@@ -50,7 +51,11 @@ namespace SupremeBroccoli.Screens.Towns
             //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
             //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
 
-
+            ///THESE ARE OLD NOTES, RETAINING FOR REFERENCE
+            ///need to add functionality to the buttons
+            ///essentially just 'accept' and 'put back' quest options
+            ///this will be a list of quests that the player can accept or decline
+            ///and the player will only have access to one quest at a time, so if they accept a quest, it will be added to their quest log and they will not be able to accept another quest until they complete the current one
 
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.npcBatchOneAtlas);
@@ -77,10 +82,21 @@ namespace SupremeBroccoli.Screens.Towns
         {
             GraphicsDevice.Clear(Color.Black);
             Game.CameraZoom();
+            Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
+            
+            stableDraw();
 
-            Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix());
+            Game.GumUI.Draw();
+            ///this shows the ui on the screen when the rest is commented out
+            ///but not with everything else for some reason
+            /// currently moving the gum for here into it's own menu. will see how that goes
 
-            mapBottomLayer.DrawMapFromList(Game._spriteBatch);
+            Game._spriteBatch.End();
+        }
+        public void stableDraw()
+        {
+
+            //mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
             //mapBlockerLayer.DrawMapFromList(Game._spriteBatch);
 
@@ -93,14 +109,9 @@ namespace SupremeBroccoli.Screens.Towns
 
             //Game._spriteBatch.Draw(Atlases.WorldMapAtlas[0].Texture, To_Route_1, Color.White);
 
-            if (town_1_gui != null)
-                town_1_gui.draw(Game._spriteBatch);
-
-           
+            
             //RpgPlayer.PlayerOverworld.DrawShader(Game._spriteBatch, Globals.player_shader);
             //Globals.DrawShader(Game._spriteBatch, Globals.vignette_shader);
-
-            Game._spriteBatch.End();
 
         }
         public override void Update(GameTime gameTime)
@@ -112,7 +123,19 @@ namespace SupremeBroccoli.Screens.Towns
             //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
 
             town_1_gui.update(gameTime);
-            
+
+            if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.V))
+            {
+                Game.GumUI.Root.Children.Clear();
+                var questMenu = new QuestMenu(Game) { ReturnToThisScreen = this,
+                screen = new QuestBoard()
+                };
+                //questMenu.AddToRoot(); 
+                //ScreenManager.CloseScreen();
+                //ScreenManager.ShowScreen(questMenu, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+
+            }
+
             //foreach(var t in town_1_quest.objectives)
             //{
             //    if(t.isPlayerInteracting())
@@ -126,7 +149,7 @@ namespace SupremeBroccoli.Screens.Towns
 
             ///talking animation gets overridden on subsequent frame and goes back to idle. idle animation is also the animation for talking
             //};
-            foreach(var t in town_1_quest.CurrentQuest.KvpQuests.Values)
+            foreach (var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
                 t.AssignNpcState(town_1_gui);
 

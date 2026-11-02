@@ -44,6 +44,8 @@ namespace SupremeBroccoli.Screens
 
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+
+                Game.GumUI.Root.Children.Clear();
                 ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             };
