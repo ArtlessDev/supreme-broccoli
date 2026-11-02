@@ -42,8 +42,7 @@ namespace SupremeBroccoli
         protected override void Initialize()
         {
 
-            var gumProject = GumUI.Initialize(this
-                , "UI/SideQuests.gumx");
+            GumUI.Initialize(this, "UI/SideQuests.gumx");
             
             var screen = new TitleScreen();
             screenManager.ShowScreen(new MainMenu(this) { _titleScreen = screen });
