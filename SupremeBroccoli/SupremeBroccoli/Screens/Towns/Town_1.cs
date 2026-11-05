@@ -131,8 +131,8 @@ namespace SupremeBroccoli.Screens.Towns
                 screen = new QuestBoard()
                 };
                 //questMenu.AddToRoot(); 
-                //ScreenManager.CloseScreen();
-                //ScreenManager.ShowScreen(questMenu, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+                ScreenManager.CloseScreen();
+                ScreenManager.ShowScreen(questMenu, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
             }
 

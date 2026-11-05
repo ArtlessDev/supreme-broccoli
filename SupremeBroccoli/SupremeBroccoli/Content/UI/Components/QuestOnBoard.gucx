@@ -117,5 +117,6 @@
   <Instance Name="AcceptQuestButton" BaseType="Controls/ButtonStandard" />
   <Instance Name="QuestTitle" BaseType="Text" />
   <Instance Name="QuestDetails" BaseType="Text" />
+  <Instance Name="StackPanelInstance" BaseType="Controls/StackPanel" />
   <Behaviors />
 </ComponentSave>

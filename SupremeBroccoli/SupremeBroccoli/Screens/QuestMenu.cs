@@ -29,12 +29,14 @@ namespace SupremeBroccoli.Screens
         public QuestMenu(Game game) : base(game)
         {
         }
+
         public static Dictionary<string, string> EXAMPLE_QUESTS = new Dictionary<string, string>()
         {
             { "quest_1", "This is the first quest. It is a simple quest that requires the player to collect 10 apples." },
             { "quest_2", "This is the second quest. It is a more complex quest that requires the player to defeat a boss." },
             { "quest_3", "This is the third quest. It is a very complex quest that requires the player to complete a series of tasks." }
         };
+        
         public override void LoadContent()
         {
             //Game.GumUI.Initialize(Game, "UI/SideQuests.gumx");
@@ -42,7 +44,12 @@ namespace SupremeBroccoli.Screens
             Globals.Load();
             Atlases.Load();
 
-            screen.QuestOnBoardInstance3.QuestTitle.Text = "quest_2";
+            var questInstance = new QuestOnBoard();
+            questInstance.QuestTitle.Text = "help with cat!";
+            questInstance.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
+            
+            screen.StackPanelInstance.AddChild(questInstance); 
+            //.QuestOnBoardInstance3.QuestTitle.Text = "quest_2";
             screen.QuestOnBoardInstance3.QuestDetails.Text = EXAMPLE_QUESTS["quest_2"];
             screen.AddToRoot();
             //Game.GumUI.Root.AddToRoot();
@@ -63,7 +70,7 @@ namespace SupremeBroccoli.Screens
             screen.QuestOnBoardInstance3.RejectQuestButton.Click += (s, e) =>
             {
                 //screen.QuestOnBoardInstance.RemoveFromRoot();
-                screen.QuestOnBoardInstance.Visual.Visible = false;
+                screen.StackPanelInstance.Visual.Visible = false;
                 //Game.GumUI.Root.RemoveChild(screen.QuestOnBoardInstance);
                 //screen.QuestOnBoardInstance.AddToRoot();
             };

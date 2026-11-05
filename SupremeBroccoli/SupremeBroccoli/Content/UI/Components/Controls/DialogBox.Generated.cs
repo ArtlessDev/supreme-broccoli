@@ -1,0 +1,154 @@
+//Code for Controls/DialogBox (Container)
+using Gum;
+using Gum.Converters;
+using Gum.DataTypes;
+using Gum.GueDeriving;
+using Gum.Managers;
+using Gum.Wireframe;
+using GumRuntime;
+using RenderingLibrary.Graphics;
+using SupremeBroccoli.Components.Elements;
+using System.Linq;
+namespace SupremeBroccoli.Components.Controls;
+[global::Gum.DataTypes.GumElement("Controls/DialogBox", FormsType = typeof(global::Gum.Forms.Controls.Games.DialogBox))]
+partial class DialogBox : global::Gum.Forms.Controls.Games.DialogBox
+{
+    #if UNITY_5_3_OR_NEWER && !GUM_NO_UNITY_ENGINE
+    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+    #else
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    #endif
+    public static void RegisterRuntimeType()
+    {
+        var template = new global::Gum.Forms.VisualTemplate((vm, createForms) =>
+        {
+            var visual = new global::Gum.GueDeriving.ContainerRuntime();
+            var element = ObjectFinder.Self.GetRequiredElementSave("Controls/DialogBox");
+            element.SetGraphicalUiElement(visual, RenderingLibrary.SystemManagers.Default);
+            if(createForms) visual.FormsControlAsObject = new DialogBox(visual);
+            return visual;
+        });
+        global::Gum.Forms.Controls.FrameworkElement.DefaultFormsTemplates[typeof(DialogBox)] = template;
+        global::Gum.Forms.Controls.FrameworkElement.DefaultFormsTemplates[typeof(global::Gum.Forms.Controls.Games.DialogBox)] = template;
+        ElementSaveExtensions.RegisterGueInstantiation("Controls/DialogBox", () => 
+        {
+            var gue = template.CreateContent(null, true) as InteractiveGue;
+            return gue;
+        });
+    }
+    public NineSliceRuntime NineSliceInstance { get; protected set; }
+    public TextRuntime TextInstance { get; protected set; }
+    public Icon ContinueIndicatorInstance { get; protected set; }
+
+    public DialogBox(InteractiveGue visual) : base(visual)
+    {
+        InitializeInstancesFromVisual();
+        ReactToGeneratedVisual();
+        CustomInitialize();
+    }
+    public DialogBox() : base(new ContainerRuntime())
+    {
+
+         
+        this.Visual.Height = 128f;
+        this.Visual.Width = 256f;
+
+        InitializeInstances();
+
+        ApplyDefaultVariables();
+        AssignParents();
+        ReactToGeneratedVisual();
+        CustomInitialize();
+    }
+    protected virtual void InitializeInstances()
+    {
+        NineSliceInstance = new global::Gum.GueDeriving.NineSliceRuntime();
+        NineSliceInstance.ElementSave = ObjectFinder.Self.GetStandardElement("NineSlice");
+        if (NineSliceInstance.ElementSave != null) NineSliceInstance.AddStatesAndCategoriesRecursivelyToGue(NineSliceInstance.ElementSave);
+        if (NineSliceInstance.ElementSave != null) NineSliceInstance.SetInitialState();
+        NineSliceInstance.Name = "NineSliceInstance";
+        TextInstance = new global::Gum.GueDeriving.TextRuntime();
+        TextInstance.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
+        if (TextInstance.ElementSave != null) TextInstance.AddStatesAndCategoriesRecursivelyToGue(TextInstance.ElementSave);
+        if (TextInstance.ElementSave != null) TextInstance.SetInitialState();
+        TextInstance.Name = "TextInstance";
+        ContinueIndicatorInstance = new SupremeBroccoli.Components.Elements.Icon();
+        ContinueIndicatorInstance.Name = "ContinueIndicatorInstance";
+    }
+    protected virtual void InitializeInstancesFromVisual()
+    {
+        NineSliceInstance = this.Visual?.GetGraphicalUiElementByName("NineSliceInstance") as global::Gum.GueDeriving.NineSliceRuntime;
+        TextInstance = this.Visual?.GetGraphicalUiElementByName("TextInstance") as global::Gum.GueDeriving.TextRuntime;
+        ContinueIndicatorInstance = global::Gum.Forms.GraphicalUiElementFormsExtensions.FindFormsControl<Icon>(this.Visual,"ContinueIndicatorInstance");
+    }
+    protected virtual void AssignParents()
+    {
+        this.Visual.AddChild(this.NineSliceInstance);
+        this.Visual.AddChild(this.TextInstance);
+        this.Visual.AddChild(this.ContinueIndicatorInstance.Visual);
+    }
+    protected virtual void ApplyDefaultVariables()
+    {
+        this.NineSliceInstance.Blue = 177;
+        this.NineSliceInstance.Green = 159;
+        this.NineSliceInstance.Height = 0f;
+        this.NineSliceInstance.HeightUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
+        this.NineSliceInstance.Red = 6;
+        this.NineSliceInstance.SourceFileName = @"UISpriteSheet.png";
+        this.NineSliceInstance.TextureAddress = global::Gum.Managers.TextureAddress.Custom;
+        this.NineSliceInstance.TextureHeight = 24;
+        this.NineSliceInstance.TextureLeft = 96;
+        this.NineSliceInstance.TextureTop = 48;
+        this.NineSliceInstance.TextureWidth = 24;
+        this.NineSliceInstance.Width = 0f;
+        this.NineSliceInstance.WidthUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
+        this.NineSliceInstance.XOrigin = global::RenderingLibrary.Graphics.HorizontalAlignment.Center;
+        this.NineSliceInstance.XUnits = global::Gum.Converters.GeneralUnitType.PixelsFromMiddle;
+        this.NineSliceInstance.YOrigin = global::RenderingLibrary.Graphics.VerticalAlignment.Center;
+        this.NineSliceInstance.YUnits = global::Gum.Converters.GeneralUnitType.PixelsFromMiddle;
+
+        this.TextInstance.Blue = 255;
+        this.TextInstance.CustomFontFile = @"";
+        this.TextInstance.Font = @"Arial";
+        this.TextInstance.FontScale = 1f;
+        this.TextInstance.FontSize = 14;
+        this.TextInstance.Green = 255;
+        this.TextInstance.Height = -32f;
+        this.TextInstance.HeightUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
+        this.TextInstance.IsBold = false;
+        this.TextInstance.IsItalic = false;
+        this.TextInstance.LineHeightMultiplier = 1f;
+        this.TextInstance.Red = 255;
+        this.TextInstance.Text = @"This is a dialog box. This text will be displayed one character at a time. Typically a dialog box is added to a Screen such as the GameScreen, but it defaults to being invisible.";
+        this.TextInstance.TextOverflowVerticalMode = global::RenderingLibrary.Graphics.TextOverflowVerticalMode.TruncateLine;
+        this.TextInstance.UseCustomFont = false;
+        this.TextInstance.Width = -16f;
+        this.TextInstance.WidthUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
+        this.TextInstance.XOrigin = global::RenderingLibrary.Graphics.HorizontalAlignment.Center;
+        this.TextInstance.XUnits = global::Gum.Converters.GeneralUnitType.PixelsFromMiddle;
+        this.TextInstance.Y = 8f;
+
+        this.ContinueIndicatorInstance.IconCategoryState = SupremeBroccoli.Components.Elements.Icon.IconCategory.Arrow2;
+        this.ContinueIndicatorInstance.Visual.Height = 24f;
+        this.ContinueIndicatorInstance.Visual.Rotation = -90f;
+        this.ContinueIndicatorInstance.Visual.Width = 24f;
+        this.ContinueIndicatorInstance.Visual.X = -8f;
+        this.ContinueIndicatorInstance.Visual.XOrigin = global::RenderingLibrary.Graphics.HorizontalAlignment.Right;
+        this.ContinueIndicatorInstance.Visual.XUnits = global::Gum.Converters.GeneralUnitType.PixelsFromLarge;
+        this.ContinueIndicatorInstance.Visual.Y = -8f;
+        this.ContinueIndicatorInstance.Visual.YOrigin = global::RenderingLibrary.Graphics.VerticalAlignment.Top;
+        this.ContinueIndicatorInstance.Visual.YUnits = global::Gum.Converters.GeneralUnitType.PixelsFromLarge;
+
+    }
+    private bool _isGeneratedVisualBuilt;
+    protected override void ReactToVisualChanged()
+    {
+        if (_isGeneratedVisualBuilt) base.ReactToVisualChanged();
+    }
+    private void ReactToGeneratedVisual()
+    {
+        _isGeneratedVisualBuilt = true;
+        ReactToVisualChanged();
+    }
+    partial void CustomInitialize();
+}
