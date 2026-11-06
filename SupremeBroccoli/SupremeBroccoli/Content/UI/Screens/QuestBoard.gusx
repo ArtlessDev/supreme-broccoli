@@ -3,42 +3,6 @@
   <Name>QuestBoard</Name>
   <State>
     <Name>Default</Name>
-    <Variable Type="ChildrenLayout" Name="BoardOfQuests.ChildrenLayout" SetsValue="true">
-      <Value xsi:type="xsd:int">1</Value>
-    </Variable>
-    <Variable Type="string" Name="BoardOfQuests.ContainedType" SetsValue="true">
-      <Value xsi:type="xsd:string">QuestOnBoard</Value>
-    </Variable>
-    <Variable Type="float" Name="BoardOfQuests.Height" SetsValue="true">
-      <Value xsi:type="xsd:float">200</Value>
-    </Variable>
-    <Variable Type="DimensionUnitType" Name="BoardOfQuests.HeightUnits" SetsValue="true">
-      <Value xsi:type="xsd:int">10</Value>
-    </Variable>
-    <Variable Type="string" Name="BoardOfQuests.Parent" SetsValue="true">
-      <Value xsi:type="xsd:string">BoardTitle</Value>
-    </Variable>
-    <Variable Type="float" Name="BoardOfQuests.Width" SetsValue="true">
-      <Value xsi:type="xsd:float">900</Value>
-    </Variable>
-    <Variable Type="DimensionUnitType" Name="BoardOfQuests.WidthUnits" SetsValue="true">
-      <Value xsi:type="xsd:int">2</Value>
-    </Variable>
-    <Variable Type="bool" Name="BoardOfQuests.WrapsChildren" SetsValue="true">
-      <Value xsi:type="xsd:boolean">false</Value>
-    </Variable>
-    <Variable Type="float" Name="BoardOfQuests.X" SetsValue="true">
-      <Value xsi:type="xsd:float">0</Value>
-    </Variable>
-    <Variable Type="float" Name="BoardOfQuests.Y" SetsValue="true">
-      <Value xsi:type="xsd:float">0</Value>
-    </Variable>
-    <Variable Type="VerticalAlignment" Name="BoardOfQuests.YOrigin" SetsValue="true">
-      <Value xsi:type="xsd:int">0</Value>
-    </Variable>
-    <Variable Type="PositionUnitType" Name="BoardOfQuests.YUnits" SetsValue="true">
-      <Value xsi:type="xsd:int">5</Value>
-    </Variable>
     <Variable Type="bool" Name="BoardTitle.ExposeChildrenEvents" SetsValue="true">
       <Value xsi:type="xsd:boolean">true</Value>
     </Variable>
@@ -75,31 +39,40 @@
     <Variable Type="PositionUnitType" Name="BoardTitle.YUnits" SetsValue="true">
       <Value xsi:type="xsd:int">3</Value>
     </Variable>
-    <Variable Type="bool" Name="QuestOnBoardInstance.HasEvents" SetsValue="true">
-      <Value xsi:type="xsd:boolean">true</Value>
-    </Variable>
-    <Variable Type="string" Name="QuestOnBoardInstance.Parent" SetsValue="true">
-      <Value xsi:type="xsd:string">BoardOfQuests</Value>
-    </Variable>
-    <Variable Type="string" Name="QuestOnBoardInstance1.Parent" SetsValue="true">
-      <Value xsi:type="xsd:string">BoardOfQuests</Value>
-    </Variable>
-    <Variable Type="string" Name="QuestOnBoardInstance2.Parent" SetsValue="true">
-      <Value xsi:type="xsd:string">BoardOfQuests</Value>
-    </Variable>
     <Variable Type="string" Name="QuestOnBoardInstance3.Parent" SetsValue="true" />
     <Variable Type="float" Name="QuestOnBoardInstance3.X" SetsValue="true">
-      <Value xsi:type="xsd:float">93</Value>
+      <Value xsi:type="xsd:float">55</Value>
     </Variable>
     <Variable Type="float" Name="QuestOnBoardInstance3.Y" SetsValue="true">
-      <Value xsi:type="xsd:float">444</Value>
+      <Value xsi:type="xsd:float">484</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanelInstance.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">70</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="StackPanelInstance.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanelInstance.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">80</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="StackPanelInstance.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanelInstance.X" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="StackPanelInstance.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanelInstance.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">20</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="StackPanelInstance.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
     </Variable>
   </State>
   <Instance Name="QuestOnBoardInstance3" BaseType="QuestOnBoard" />
   <Instance Name="BoardTitle" BaseType="Text" />
-  <Instance Name="BoardOfQuests" BaseType="Container" />
-  <Instance Name="QuestOnBoardInstance" BaseType="QuestOnBoard" />
-  <Instance Name="QuestOnBoardInstance1" BaseType="QuestOnBoard" />
-  <Instance Name="QuestOnBoardInstance2" BaseType="QuestOnBoard" />
+  <Instance Name="StackPanelInstance" BaseType="Controls/StackPanel" />
   <Behaviors />
 </ScreenSave>

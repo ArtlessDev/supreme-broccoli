@@ -138,10 +138,12 @@ namespace SupremeBroccoli.Screens.Towns
             if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.V))
             {
                 Game.GumUI.Root.Children.Clear();
-                //_questBoardGui = new QuestBoard();
-
-                //ScreenManager.CloseScreen();
-                //ScreenManager.ShowScreen(questMenu, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+                var questMenu = new QuestMenu(Game) { ReturnToThisScreen = this,
+                screen = new QuestBoard()
+                };
+                //questMenu.AddToRoot(); 
+                ScreenManager.CloseScreen();
+                ScreenManager.ShowScreen(questMenu, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
             }
 
