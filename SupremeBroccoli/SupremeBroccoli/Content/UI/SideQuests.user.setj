@@ -10,6 +10,7 @@
       "Screens/TitleScreen/TextInstance",
       "Components",
       "Components/Elements",
+      "Components/ccEnemyContainer",
       "Components/QuestOnBoard"
     ]
   }

@@ -48,18 +48,18 @@ namespace SupremeBroccoli.Screens
             questInstance.QuestTitle.Text = "help with cat!";
             questInstance.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
             
-            screen.StackPanelInstance.AddChild(questInstance); 
+            screen.StackPanel.AddChild(questInstance); 
             //.QuestOnBoardInstance3.QuestTitle.Text = "quest_2";
-            screen.QuestOnBoardInstance3.QuestDetails.Text = EXAMPLE_QUESTS["quest_2"];
+            //screen.QuestOnBoardInstance3.QuestDetails.Text = EXAMPLE_QUESTS["quest_2"];
 
             QuestOnBoard qob1 = new QuestOnBoard();
             qob1.QuestTitle.Text = "quest_1";
             qob1.QuestDetails.Text = EXAMPLE_QUESTS["quest_1"];
-            screen.BoardOfQuests.AddChild(qob1);
+            screen.StackPanel.AddChild(qob1);
             screen.AddToRoot();
             //Game.GumUI.Root.AddToRoot();
-            
-            screen.QuestOnBoardInstance3.AcceptQuestButton.Click += (s, e) =>
+
+            qob1.AcceptQuestButton.Click += (s, e) =>
             {
                 //Game.screenManager.LoadScreen(new Town_1(Game));
                 int x = 10 * Globals.TileSize,
@@ -72,12 +72,12 @@ namespace SupremeBroccoli.Screens
                 ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
             };
 
-            screen.QuestOnBoardInstance3.RejectQuestButton.Click += (s, e) =>
+            qob1.RejectQuestButton.Click += (s, e) =>
             {
                 //screen.QuestOnBoardInstance.RemoveFromRoot();
-                screen.StackPanelInstance.Visual.Visible = false;
+                screen.StackPanel.Visual.Visible = false;
                 //Game.GumUI.Root.RemoveChild(screen.QuestOnBoardInstance);
-                screen.QuestOnBoardInstance.AddToRoot();
+                screen.StackPanel.AddToRoot();
             };
         }
 

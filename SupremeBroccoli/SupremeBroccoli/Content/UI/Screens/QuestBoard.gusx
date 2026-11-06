@@ -39,40 +39,63 @@
     <Variable Type="PositionUnitType" Name="BoardTitle.YUnits" SetsValue="true">
       <Value xsi:type="xsd:int">3</Value>
     </Variable>
-    <Variable Type="string" Name="QuestOnBoardInstance3.Parent" SetsValue="true" />
-    <Variable Type="float" Name="QuestOnBoardInstance3.X" SetsValue="true">
-      <Value xsi:type="xsd:float">55</Value>
+    <Variable Type="float" Name="NineSliceInstance.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">90</Value>
     </Variable>
-    <Variable Type="float" Name="QuestOnBoardInstance3.Y" SetsValue="true">
-      <Value xsi:type="xsd:float">484</Value>
-    </Variable>
-    <Variable Type="float" Name="StackPanelInstance.Height" SetsValue="true">
-      <Value xsi:type="xsd:float">70</Value>
-    </Variable>
-    <Variable Type="DimensionUnitType" Name="StackPanelInstance.HeightUnits" SetsValue="true">
+    <Variable Type="DimensionUnitType" Name="NineSliceInstance.HeightUnits" SetsValue="true">
       <Value xsi:type="xsd:int">1</Value>
     </Variable>
-    <Variable Type="float" Name="StackPanelInstance.Width" SetsValue="true">
-      <Value xsi:type="xsd:float">80</Value>
+    <Variable Type="bool" Name="NineSliceInstance.IsTilingMiddleSections" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
     </Variable>
-    <Variable Type="DimensionUnitType" Name="StackPanelInstance.WidthUnits" SetsValue="true">
+    <Variable IsFile="true" Type="string" Name="NineSliceInstance.SourceFile" SetsValue="true">
+      <Value xsi:type="xsd:string">KenneyAssets\panel_brown.png</Value>
+    </Variable>
+    <Variable Type="float" Name="NineSliceInstance.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">90</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="NineSliceInstance.WidthUnits" SetsValue="true">
       <Value xsi:type="xsd:int">1</Value>
     </Variable>
-    <Variable Type="float" Name="StackPanelInstance.X" SetsValue="true">
-      <Value xsi:type="xsd:float">10</Value>
+    <Variable Type="float" Name="NineSliceInstance.X" SetsValue="true">
+      <Value xsi:type="xsd:float">5</Value>
     </Variable>
-    <Variable Type="PositionUnitType" Name="StackPanelInstance.XUnits" SetsValue="true">
+    <Variable Type="PositionUnitType" Name="NineSliceInstance.XUnits" SetsValue="true">
       <Value xsi:type="xsd:int">2</Value>
     </Variable>
-    <Variable Type="float" Name="StackPanelInstance.Y" SetsValue="true">
+    <Variable Type="float" Name="NineSliceInstance.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">5</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="NineSliceInstance.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanel.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">70</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="StackPanel.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanel.Width" SetsValue="true">
+      <Value xsi:type="xsd:float">80</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="StackPanel.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanel.X" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="StackPanel.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="StackPanel.Y" SetsValue="true">
       <Value xsi:type="xsd:float">20</Value>
     </Variable>
-    <Variable Type="PositionUnitType" Name="StackPanelInstance.YUnits" SetsValue="true">
+    <Variable Type="PositionUnitType" Name="StackPanel.YUnits" SetsValue="true">
       <Value xsi:type="xsd:int">3</Value>
     </Variable>
   </State>
-  <Instance Name="QuestOnBoardInstance3" BaseType="QuestOnBoard" />
+  <Instance Name="NineSliceInstance" BaseType="NineSlice" />
   <Instance Name="BoardTitle" BaseType="Text" />
-  <Instance Name="StackPanelInstance" BaseType="Controls/StackPanel" />
+  <Instance Name="StackPanel" BaseType="Controls/StackPanel" />
   <Behaviors />
 </ScreenSave>

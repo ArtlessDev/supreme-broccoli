@@ -1,30 +1,24 @@
 //Code for QuestBoard
-using Gum;
 using Gum.Converters;
 using Gum.DataTypes;
-using Gum.GueDeriving;
 using Gum.Managers;
 using Gum.Wireframe;
 using GumRuntime;
+using MonoGameGum;
+using MonoGameGum.GueDeriving;
 using RenderingLibrary.Graphics;
-using SupremeBroccoli.Components;
 using SupremeBroccoli.Components.Controls;
 using System.Linq;
 namespace SupremeBroccoli.Screens;
-[global::Gum.DataTypes.GumElement("QuestBoard")]
 partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
 {
-    #if UNITY_5_3_OR_NEWER && !GUM_NO_UNITY_ENGINE
-    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
-    #else
     [System.Runtime.CompilerServices.ModuleInitializer]
-    #endif
     public static void RegisterRuntimeType()
     {
         var template = new global::Gum.Forms.VisualTemplate((vm, createForms) =>
         {
-            var visual = new global::Gum.GueDeriving.ContainerRuntime();
-            var element = ObjectFinder.Self.GetRequiredElementSave("QuestBoard");
+            var visual = new global::MonoGameGum.GueDeriving.ContainerRuntime();
+            var element = ObjectFinder.Self.GetElementSave("QuestBoard") ?? throw new System.InvalidOperationException("Could not find an element named QuestBoard - did you forget to load a Gum project?");
             element.SetGraphicalUiElement(visual, RenderingLibrary.SystemManagers.Default);
             if(createForms) visual.FormsControlAsObject = new QuestBoard(visual);
             visual.Width = 0;
@@ -40,13 +34,13 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
             return gue;
         });
     }
-    public QuestOnBoard QuestOnBoardInstance3 { get; protected set; }
+    public NineSliceRuntime NineSliceInstance { get; protected set; }
     public TextRuntime BoardTitle { get; protected set; }
-    public StackPanel StackPanelInstance { get; protected set; }
+    public StackPanel StackPanel { get; protected set; }
 
     public QuestBoard(InteractiveGue visual) : base(visual)
     {
-        InitializeInstancesFromVisual();
+        InitializeInstances();
         CustomInitialize();
     }
     public QuestBoard() : base(new ContainerRuntime())
@@ -61,36 +55,42 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
     }
     protected virtual void InitializeInstances()
     {
-        QuestOnBoardInstance3 = new SupremeBroccoli.Components.QuestOnBoard();
-        QuestOnBoardInstance3.Name = "QuestOnBoardInstance3";
-        BoardTitle = new global::Gum.GueDeriving.TextRuntime();
+        NineSliceInstance = new global::MonoGameGum.GueDeriving.NineSliceRuntime();
+        NineSliceInstance.ElementSave = ObjectFinder.Self.GetStandardElement("NineSlice");
+        if (NineSliceInstance.ElementSave != null) NineSliceInstance.AddStatesAndCategoriesRecursivelyToGue(NineSliceInstance.ElementSave);
+        if (NineSliceInstance.ElementSave != null) NineSliceInstance.SetInitialState();
+        NineSliceInstance.Name = "NineSliceInstance";
+        BoardTitle = new global::MonoGameGum.GueDeriving.TextRuntime();
         BoardTitle.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (BoardTitle.ElementSave != null) BoardTitle.AddStatesAndCategoriesRecursivelyToGue(BoardTitle.ElementSave);
         if (BoardTitle.ElementSave != null) BoardTitle.SetInitialState();
         BoardTitle.Name = "BoardTitle";
-        StackPanelInstance = new SupremeBroccoli.Components.Controls.StackPanel();
-        StackPanelInstance.Name = "StackPanelInstance";
-    }
-    protected virtual void InitializeInstancesFromVisual()
-    {
-        QuestOnBoardInstance3 = global::Gum.Forms.GraphicalUiElementFormsExtensions.FindFormsControl<QuestOnBoard>(this.Visual,"QuestOnBoardInstance3");
-        BoardTitle = this.Visual?.GetGraphicalUiElementByName("BoardTitle") as global::Gum.GueDeriving.TextRuntime;
-        StackPanelInstance = global::Gum.Forms.GraphicalUiElementFormsExtensions.FindFormsControl<StackPanel>(this.Visual,"StackPanelInstance");
+        StackPanel = new SupremeBroccoli.Components.Controls.StackPanel();
+        StackPanel.Name = "StackPanel";
+        base.RefreshInternalVisualReferences();
     }
     protected virtual void AssignParents()
     {
-        this.AddChild(QuestOnBoardInstance3);
+        this.AddChild(NineSliceInstance);
         this.AddChild(BoardTitle);
-        this.AddChild(StackPanelInstance);
+        this.AddChild(StackPanel);
     }
-    protected virtual void ApplyDefaultVariables()
+    private void ApplyDefaultVariables()
     {
         this.Visual.Width = 0f;
         this.Visual.WidthUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
         this.Visual.Height = 0f;
         this.Visual.HeightUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
-        this.QuestOnBoardInstance3.Visual.X = 55f;
-        this.QuestOnBoardInstance3.Visual.Y = 484f;
+        this.NineSliceInstance.Height = 90f;
+        this.NineSliceInstance.HeightUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
+        this.NineSliceInstance.IsTilingMiddleSections = true;
+        this.NineSliceInstance.SourceFileName = @"KenneyAssets\panel_brown.png";
+        this.NineSliceInstance.Width = 90f;
+        this.NineSliceInstance.WidthUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
+        this.NineSliceInstance.X = 5f;
+        this.NineSliceInstance.XUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+        this.NineSliceInstance.Y = 5f;
+        this.NineSliceInstance.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
 
         this.BoardTitle.Font = @"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf";
         this.BoardTitle.FontSize = 36;
@@ -103,14 +103,14 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
         this.BoardTitle.Y = 10f;
         this.BoardTitle.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
 
-        this.StackPanelInstance.Visual.Height = 70f;
-        this.StackPanelInstance.Visual.HeightUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
-        this.StackPanelInstance.Visual.Width = 80f;
-        this.StackPanelInstance.Visual.WidthUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
-        this.StackPanelInstance.Visual.X = 10f;
-        this.StackPanelInstance.Visual.XUnits = global::Gum.Converters.GeneralUnitType.Percentage;
-        this.StackPanelInstance.Visual.Y = 20f;
-        this.StackPanelInstance.Visual.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+        this.StackPanel.Visual.Height = 70f;
+        this.StackPanel.Visual.HeightUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
+        this.StackPanel.Visual.Width = 80f;
+        this.StackPanel.Visual.WidthUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
+        this.StackPanel.Visual.X = 10f;
+        this.StackPanel.Visual.XUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+        this.StackPanel.Visual.Y = 20f;
+        this.StackPanel.Visual.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
 
     }
     partial void CustomInitialize();
