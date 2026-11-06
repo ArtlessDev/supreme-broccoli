@@ -43,14 +43,14 @@ namespace SupremeBroccoli.Screens.Routes
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             ///pc
-            mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 68, 62);
-            mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 68, 62);
-            mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 68, 62);
+            //mapBlockerLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 68, 62);
+            //mapBottomLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 68, 62);
+            //mapTopLayer = new MapBuilder(@"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 68, 62);
 
             ///work
-            //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 60, 50);
-            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 60, 50);
-            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 60, 50);
+            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_blocker.csv", 68, 62);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_bottom.csv", 68, 62);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\route_1\worldMap_route_1_top.csv", 68, 62);
             
             encounterZone = new(2, 4, 50, 50);
             encounterZone.Load();

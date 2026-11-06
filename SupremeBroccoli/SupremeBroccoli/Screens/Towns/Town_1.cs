@@ -8,6 +8,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
+using SupremeBroccoli.Components;
 using SupremeBroccoli.Core;
 using System;
 using System.Linq;
@@ -42,20 +43,22 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
-            mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
-            mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 32, 32);
-            mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 32, 32);
+            //mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
+            //mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 32, 32);
+            //mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 32, 32);
 
             //work pc
-            //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 20, 20);
-            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 20, 20);
-            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 20, 20);
+            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 32, 32);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 32, 32);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 32, 32);
 
             ///THESE ARE OLD NOTES, RETAINING FOR REFERENCE
             ///need to add functionality to the buttons
             ///essentially just 'accept' and 'put back' quest options
             ///this will be a list of quests that the player can accept or decline
-            ///and the player will only have access to one quest at a time, so if they accept a quest, it will be added to their quest log and they will not be able to accept another quest until they complete the current one
+            ///and the player will only have access to one quest at a time, so if they accept a quest, 
+            ///it will be added to their quest log and they will not be able to accept another quest 
+            ///until they complete the current one
 
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.npcBatchOneAtlas);
@@ -75,6 +78,15 @@ namespace SupremeBroccoli.Screens.Towns
 
 
             town_1_gui = new();
+            var qob1 = new QuestOnBoard();
+            qob1.QuestTitle.Text = "";
+            qob1.QuestDetails.Text = "";
+
+            _questBoardGui = new();
+            _questBoardGui.BoardOfQuests.AddChild(qob1);
+            _questBoardGui.BoardTitle.AddToRoot();
+            _questBoardGui.BoardOfQuests.Children[0].AddToRoot();
+            
 
             RpgPlayer.PlayerOverworld.LoadAnimations();
         }
@@ -86,19 +98,18 @@ namespace SupremeBroccoli.Screens.Towns
             
             stableDraw();
 
-            Game.GumUI.Draw();
             ///this shows the ui on the screen when the rest is commented out
             ///but not with everything else for some reason
             /// currently moving the gum for here into it's own menu. will see how that goes
 
             Game._spriteBatch.End();
+            Game.GumUI.Draw();
         }
         public void stableDraw()
         {
 
-            //mapBottomLayer.DrawMapFromList(Game._spriteBatch);
+            mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
-            //mapBlockerLayer.DrawMapFromList(Game._spriteBatch);
 
             town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
             town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
@@ -127,10 +138,8 @@ namespace SupremeBroccoli.Screens.Towns
             if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.V))
             {
                 Game.GumUI.Root.Children.Clear();
-                var questMenu = new QuestMenu(Game) { ReturnToThisScreen = this,
-                screen = new QuestBoard()
-                };
-                //questMenu.AddToRoot(); 
+                //_questBoardGui = new QuestBoard();
+
                 //ScreenManager.CloseScreen();
                 //ScreenManager.ShowScreen(questMenu, new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
 
@@ -149,6 +158,7 @@ namespace SupremeBroccoli.Screens.Towns
 
             ///talking animation gets overridden on subsequent frame and goes back to idle. idle animation is also the animation for talking
             //};
+            
             foreach (var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
                 t.AssignNpcState(town_1_gui);
@@ -177,6 +187,7 @@ namespace SupremeBroccoli.Screens.Towns
 
             GoToRoute_1();
 
+            Game.GumUI.Update(gameTime);
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             Globals.LockEKey = false;
         }

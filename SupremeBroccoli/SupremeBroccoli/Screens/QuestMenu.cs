@@ -19,7 +19,7 @@ namespace SupremeBroccoli.Screens
 {
 
     /// <summary>
-    /// we can clear this all out. CombatSimulator should have all the working changes
+    /// we can clear this all out. Town 1 has quest board working in the same screen
     /// </summary>
     public class QuestMenu : GameScreen
     {
@@ -44,6 +44,11 @@ namespace SupremeBroccoli.Screens
 
             screen.QuestOnBoardInstance3.QuestTitle.Text = "quest_2";
             screen.QuestOnBoardInstance3.QuestDetails.Text = EXAMPLE_QUESTS["quest_2"];
+
+            QuestOnBoard qob1 = new QuestOnBoard();
+            qob1.QuestTitle.Text = "quest_1";
+            qob1.QuestDetails.Text = EXAMPLE_QUESTS["quest_1"];
+            screen.BoardOfQuests.AddChild(qob1);
             screen.AddToRoot();
             //Game.GumUI.Root.AddToRoot();
             
@@ -65,9 +70,10 @@ namespace SupremeBroccoli.Screens
                 //screen.QuestOnBoardInstance.RemoveFromRoot();
                 screen.QuestOnBoardInstance.Visual.Visible = false;
                 //Game.GumUI.Root.RemoveChild(screen.QuestOnBoardInstance);
-                //screen.QuestOnBoardInstance.AddToRoot();
+                screen.QuestOnBoardInstance.AddToRoot();
             };
         }
+
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Transparent);

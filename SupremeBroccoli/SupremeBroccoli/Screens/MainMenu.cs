@@ -39,8 +39,8 @@ namespace SupremeBroccoli.Screens
             _titleScreen.ButtonStandardInstance.Click += (s, e) =>
             {
                 //Game.screenManager.LoadScreen(new Town_1(Game));
-                int x = 20 * Globals.TileSize,
-                    y = (24 * Globals.TileSize) - Globals.TileSize;
+                int x = 16 * Globals.TileSize,
+                    y = (23 * Globals.TileSize) - Globals.TileSize;
 
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
