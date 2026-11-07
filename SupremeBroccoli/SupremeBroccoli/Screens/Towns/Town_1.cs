@@ -84,9 +84,6 @@ namespace SupremeBroccoli.Screens.Towns
             qob1.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
 
             _questBoardGui = new();
-            //_questBoardGui.NineSliceInstance.AddToRoot();
-            //_questBoardGui.BoardTitle.AddToRoot();
-            //_questBoardGui.StackPanel.AddToRoot();
             _questBoardGui.StackPanel.AddChild(qob1);
             _questBoardGui.AddToRoot();
 
@@ -129,9 +126,11 @@ namespace SupremeBroccoli.Screens.Towns
                 if (!visCheck)
                 {
                     _questBoardGui.AddToRoot();
+                    _questBoardGui.IsVisible = true;
                 }
                 else
                 {
+                    _questBoardGui.IsVisible = false;
                     _questBoardGui.RemoveFromRoot();
                 }
             }
