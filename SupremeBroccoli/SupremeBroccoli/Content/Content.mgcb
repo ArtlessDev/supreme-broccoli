@@ -174,6 +174,18 @@
 /processorParam:TextureFormat=Color
 /build:OverworldTextures/player.png
 
+#begin OverworldTextures/QuestBoard.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:OverworldTextures/QuestBoard.png
+
 #begin OverworldTextures/shadow.png
 /importer:TextureImporter
 /processor:TextureProcessor

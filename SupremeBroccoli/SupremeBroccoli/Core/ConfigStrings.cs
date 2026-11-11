@@ -23,6 +23,7 @@ namespace SupremeBroccoli.Core
 
         #endregion maps
         #region quests
+        public const string QuestList = @".\Content\Quests\QuestList.json";
         public const string town_1_quest = @".\Content\Quests\quest_1.json";
         public const string town_1_quest_2 = @".\Content\Quests\quest_2.json";
         

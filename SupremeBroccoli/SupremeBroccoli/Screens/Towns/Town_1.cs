@@ -6,12 +6,10 @@ using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 using SupremeBroccoli.Components;
 using SupremeBroccoli.Core;
-using System;
 using System.Linq;
 
 namespace SupremeBroccoli.Screens.Towns
@@ -26,8 +24,8 @@ namespace SupremeBroccoli.Screens.Towns
         CustomGuiGroup town_1_gui;
         Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 26 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
-        internal QuestBoard _questBoardGui { get; set; }
-
+        internal QuestBoard QuestBoardGui { get; set; }
+        public QuestBoardObject QuestBoardObjectInstance = new QuestBoardObject(new Rectangle(12 * Globals.TileSize, 12 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize));
 
         public Town_1(Game game) : base(game)
         {
@@ -83,12 +81,11 @@ namespace SupremeBroccoli.Screens.Towns
             qob1.QuestTitle.Text = "lost cat";
             qob1.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
 
-            _questBoardGui = new();
-            _questBoardGui.StackPanel.AddChild(qob1);
-            _questBoardGui.AddToRoot();
-
-            RpgPlayer.PlayerOverworld.LoadAnimations();
+            QuestBoardGui = new();
+            //QuestBoardGui.StackPanel.AddChild(qob1);
+            //QuestBoardGui.AddToRoot();
         }
+
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -101,6 +98,7 @@ namespace SupremeBroccoli.Screens.Towns
             town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
             town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
+            QuestBoardObjectInstance.Draw(Game._spriteBatch);
             //player shadow
             //RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch, Color.Black);
             RpgPlayer.PlayerOverworld.Draw(Game._spriteBatch);
@@ -119,21 +117,7 @@ namespace SupremeBroccoli.Screens.Towns
 
             town_1_gui.update(gameTime);
 
-            if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.V))
-            {
-                var visCheck = _questBoardGui.IsVisible;
-                
-                if (!visCheck)
-                {
-                    _questBoardGui.AddToRoot();
-                    _questBoardGui.IsVisible = true;
-                }
-                else
-                {
-                    _questBoardGui.IsVisible = false;
-                    _questBoardGui.RemoveFromRoot();
-                }
-            }
+            InteractWithQuestBoard();
 
             //foreach(var t in town_1_quest.objectives)
             //{
@@ -148,12 +132,12 @@ namespace SupremeBroccoli.Screens.Towns
 
             ///talking animation gets overridden on subsequent frame and goes back to idle. idle animation is also the animation for talking
             //};
-            
+
             foreach (var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
                 t.AssignNpcState(town_1_gui);
 
-                if(t.isPlayerInteracting())
+                if (t.isPlayerInteracting())
                 {
                     t.OpenGui(town_1_gui, gameTime, t.CurrentAnimation.Color);
                     t.CurrentAnimation.Update(gameTime);
@@ -182,6 +166,25 @@ namespace SupremeBroccoli.Screens.Towns
             Game.GumUI.Update(gameTime);
             Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
             Globals.LockEKey = false;
+        }
+
+        private void InteractWithQuestBoard()
+        {
+            if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && QuestBoardObjectInstance.IsPlayerInRange())
+            {
+                var visCheck = QuestBoardGui.IsVisible;
+
+                if (!visCheck)
+                {
+                    QuestBoardGui.AddToRoot();
+                    QuestBoardGui.IsVisible = true;
+                }
+                else
+                {
+                    QuestBoardGui.IsVisible = false;
+                    QuestBoardGui.RemoveFromRoot();
+                }
+            }
         }
         #endregion
 

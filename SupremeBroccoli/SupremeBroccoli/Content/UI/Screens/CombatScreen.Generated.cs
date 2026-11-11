@@ -1,29 +1,24 @@
 //Code for CombatScreen
-using Gum;
 using Gum.Converters;
 using Gum.DataTypes;
-using Gum.GueDeriving;
 using Gum.Managers;
 using Gum.Wireframe;
 using GumRuntime;
+using MonoGameGum;
+using MonoGameGum.GueDeriving;
 using RenderingLibrary.Graphics;
 using SupremeBroccoli.Components.Controls;
 using System.Linq;
 namespace SupremeBroccoli.Screens;
-[global::Gum.DataTypes.GumElement("CombatScreen")]
 partial class CombatScreen : global::Gum.Forms.Controls.FrameworkElement
 {
-    #if UNITY_5_3_OR_NEWER && !GUM_NO_UNITY_ENGINE
-    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
-    #else
     [System.Runtime.CompilerServices.ModuleInitializer]
-    #endif
     public static void RegisterRuntimeType()
     {
         var template = new global::Gum.Forms.VisualTemplate((vm, createForms) =>
         {
-            var visual = new global::Gum.GueDeriving.ContainerRuntime();
-            var element = ObjectFinder.Self.GetRequiredElementSave("CombatScreen");
+            var visual = new global::MonoGameGum.GueDeriving.ContainerRuntime();
+            var element = ObjectFinder.Self.GetElementSave("CombatScreen") ?? throw new System.InvalidOperationException("Could not find an element named CombatScreen - did you forget to load a Gum project?");
             element.SetGraphicalUiElement(visual, RenderingLibrary.SystemManagers.Default);
             if(createForms) visual.FormsControlAsObject = new CombatScreen(visual);
             visual.Width = 0;
@@ -55,7 +50,7 @@ partial class CombatScreen : global::Gum.Forms.Controls.FrameworkElement
 
     public CombatScreen(InteractiveGue visual) : base(visual)
     {
-        InitializeInstancesFromVisual();
+        InitializeInstances();
         CustomInitialize();
     }
     public CombatScreen() : base(new ContainerRuntime())
@@ -70,84 +65,69 @@ partial class CombatScreen : global::Gum.Forms.Controls.FrameworkElement
     }
     protected virtual void InitializeInstances()
     {
-        SpriteInstance2 = new global::Gum.GueDeriving.SpriteRuntime();
+        SpriteInstance2 = new global::MonoGameGum.GueDeriving.SpriteRuntime();
         SpriteInstance2.ElementSave = ObjectFinder.Self.GetStandardElement("Sprite");
         if (SpriteInstance2.ElementSave != null) SpriteInstance2.AddStatesAndCategoriesRecursivelyToGue(SpriteInstance2.ElementSave);
         if (SpriteInstance2.ElementSave != null) SpriteInstance2.SetInitialState();
         SpriteInstance2.Name = "SpriteInstance2";
-        SpriteInstance1 = new global::Gum.GueDeriving.SpriteRuntime();
+        SpriteInstance1 = new global::MonoGameGum.GueDeriving.SpriteRuntime();
         SpriteInstance1.ElementSave = ObjectFinder.Self.GetStandardElement("Sprite");
         if (SpriteInstance1.ElementSave != null) SpriteInstance1.AddStatesAndCategoriesRecursivelyToGue(SpriteInstance1.ElementSave);
         if (SpriteInstance1.ElementSave != null) SpriteInstance1.SetInitialState();
         SpriteInstance1.Name = "SpriteInstance1";
         BottomMiddle_DBox = new SupremeBroccoli.Components.Controls.DialogBox();
         BottomMiddle_DBox.Name = "BottomMiddle_DBox";
-        PlayerDetails = new global::Gum.GueDeriving.ContainerRuntime();
+        PlayerDetails = new global::MonoGameGum.GueDeriving.ContainerRuntime();
         PlayerDetails.ElementSave = ObjectFinder.Self.GetStandardElement("Container");
         if (PlayerDetails.ElementSave != null) PlayerDetails.AddStatesAndCategoriesRecursivelyToGue(PlayerDetails.ElementSave);
         if (PlayerDetails.ElementSave != null) PlayerDetails.SetInitialState();
         PlayerDetails.Name = "PlayerDetails";
-        PlayerName = new global::Gum.GueDeriving.TextRuntime();
+        PlayerName = new global::MonoGameGum.GueDeriving.TextRuntime();
         PlayerName.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (PlayerName.ElementSave != null) PlayerName.AddStatesAndCategoriesRecursivelyToGue(PlayerName.ElementSave);
         if (PlayerName.ElementSave != null) PlayerName.SetInitialState();
         PlayerName.Name = "PlayerName";
-        PlayerHealth = new global::Gum.GueDeriving.TextRuntime();
+        PlayerHealth = new global::MonoGameGum.GueDeriving.TextRuntime();
         PlayerHealth.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (PlayerHealth.ElementSave != null) PlayerHealth.AddStatesAndCategoriesRecursivelyToGue(PlayerHealth.ElementSave);
         if (PlayerHealth.ElementSave != null) PlayerHealth.SetInitialState();
         PlayerHealth.Name = "PlayerHealth";
-        PlayerStatus = new global::Gum.GueDeriving.TextRuntime();
+        PlayerStatus = new global::MonoGameGum.GueDeriving.TextRuntime();
         PlayerStatus.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (PlayerStatus.ElementSave != null) PlayerStatus.AddStatesAndCategoriesRecursivelyToGue(PlayerStatus.ElementSave);
         if (PlayerStatus.ElementSave != null) PlayerStatus.SetInitialState();
         PlayerStatus.Name = "PlayerStatus";
-        PlayerName1 = new global::Gum.GueDeriving.TextRuntime();
+        PlayerName1 = new global::MonoGameGum.GueDeriving.TextRuntime();
         PlayerName1.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (PlayerName1.ElementSave != null) PlayerName1.AddStatesAndCategoriesRecursivelyToGue(PlayerName1.ElementSave);
         if (PlayerName1.ElementSave != null) PlayerName1.SetInitialState();
         PlayerName1.Name = "PlayerName1";
-        PlayerHealth1 = new global::Gum.GueDeriving.TextRuntime();
+        PlayerHealth1 = new global::MonoGameGum.GueDeriving.TextRuntime();
         PlayerHealth1.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (PlayerHealth1.ElementSave != null) PlayerHealth1.AddStatesAndCategoriesRecursivelyToGue(PlayerHealth1.ElementSave);
         if (PlayerHealth1.ElementSave != null) PlayerHealth1.SetInitialState();
         PlayerHealth1.Name = "PlayerHealth1";
-        PlayerStatus1 = new global::Gum.GueDeriving.TextRuntime();
+        PlayerStatus1 = new global::MonoGameGum.GueDeriving.TextRuntime();
         PlayerStatus1.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
         if (PlayerStatus1.ElementSave != null) PlayerStatus1.AddStatesAndCategoriesRecursivelyToGue(PlayerStatus1.ElementSave);
         if (PlayerStatus1.ElementSave != null) PlayerStatus1.SetInitialState();
         PlayerStatus1.Name = "PlayerStatus1";
-        EnemyContainer = new global::Gum.GueDeriving.ContainerRuntime();
+        EnemyContainer = new global::MonoGameGum.GueDeriving.ContainerRuntime();
         EnemyContainer.ElementSave = ObjectFinder.Self.GetStandardElement("Container");
         if (EnemyContainer.ElementSave != null) EnemyContainer.AddStatesAndCategoriesRecursivelyToGue(EnemyContainer.ElementSave);
         if (EnemyContainer.ElementSave != null) EnemyContainer.SetInitialState();
         EnemyContainer.Name = "EnemyContainer";
-        EnemyDetails = new global::Gum.GueDeriving.ContainerRuntime();
+        EnemyDetails = new global::MonoGameGum.GueDeriving.ContainerRuntime();
         EnemyDetails.ElementSave = ObjectFinder.Self.GetStandardElement("Container");
         if (EnemyDetails.ElementSave != null) EnemyDetails.AddStatesAndCategoriesRecursivelyToGue(EnemyDetails.ElementSave);
         if (EnemyDetails.ElementSave != null) EnemyDetails.SetInitialState();
         EnemyDetails.Name = "EnemyDetails";
-        EnemySprite = new global::Gum.GueDeriving.SpriteRuntime();
+        EnemySprite = new global::MonoGameGum.GueDeriving.SpriteRuntime();
         EnemySprite.ElementSave = ObjectFinder.Self.GetStandardElement("Sprite");
         if (EnemySprite.ElementSave != null) EnemySprite.AddStatesAndCategoriesRecursivelyToGue(EnemySprite.ElementSave);
         if (EnemySprite.ElementSave != null) EnemySprite.SetInitialState();
         EnemySprite.Name = "EnemySprite";
-    }
-    protected virtual void InitializeInstancesFromVisual()
-    {
-        SpriteInstance2 = this.Visual?.GetGraphicalUiElementByName("SpriteInstance2") as global::Gum.GueDeriving.SpriteRuntime;
-        SpriteInstance1 = this.Visual?.GetGraphicalUiElementByName("SpriteInstance1") as global::Gum.GueDeriving.SpriteRuntime;
-        BottomMiddle_DBox = global::Gum.Forms.GraphicalUiElementFormsExtensions.FindFormsControl<DialogBox>(this.Visual,"BottomMiddle_DBox");
-        PlayerDetails = this.Visual?.GetGraphicalUiElementByName("PlayerDetails") as global::Gum.GueDeriving.ContainerRuntime;
-        PlayerName = this.Visual?.GetGraphicalUiElementByName("PlayerName") as global::Gum.GueDeriving.TextRuntime;
-        PlayerHealth = this.Visual?.GetGraphicalUiElementByName("PlayerHealth") as global::Gum.GueDeriving.TextRuntime;
-        PlayerStatus = this.Visual?.GetGraphicalUiElementByName("PlayerStatus") as global::Gum.GueDeriving.TextRuntime;
-        PlayerName1 = this.Visual?.GetGraphicalUiElementByName("PlayerName1") as global::Gum.GueDeriving.TextRuntime;
-        PlayerHealth1 = this.Visual?.GetGraphicalUiElementByName("PlayerHealth1") as global::Gum.GueDeriving.TextRuntime;
-        PlayerStatus1 = this.Visual?.GetGraphicalUiElementByName("PlayerStatus1") as global::Gum.GueDeriving.TextRuntime;
-        EnemyContainer = this.Visual?.GetGraphicalUiElementByName("EnemyContainer") as global::Gum.GueDeriving.ContainerRuntime;
-        EnemyDetails = this.Visual?.GetGraphicalUiElementByName("EnemyDetails") as global::Gum.GueDeriving.ContainerRuntime;
-        EnemySprite = this.Visual?.GetGraphicalUiElementByName("EnemySprite") as global::Gum.GueDeriving.SpriteRuntime;
+        base.RefreshInternalVisualReferences();
     }
     protected virtual void AssignParents()
     {
@@ -165,7 +145,7 @@ partial class CombatScreen : global::Gum.Forms.Controls.FrameworkElement
         EnemyContainer.AddChild(EnemyDetails);
         EnemyContainer.AddChild(EnemySprite);
     }
-    protected virtual void ApplyDefaultVariables()
+    private void ApplyDefaultVariables()
     {
         this.Visual.Width = 0f;
         this.Visual.WidthUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;

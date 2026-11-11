@@ -53,7 +53,7 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
         AssignParents();
         CustomInitialize();
     }
-    protected virtual void InitializeInstances()
+    public virtual void InitializeInstances()
     {
         NineSliceInstance = new global::MonoGameGum.GueDeriving.NineSliceRuntime();
         NineSliceInstance.ElementSave = ObjectFinder.Self.GetStandardElement("NineSlice");
@@ -69,13 +69,13 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
         StackPanel.Name = "StackPanel";
         base.RefreshInternalVisualReferences();
     }
-    protected virtual void AssignParents()
+    public virtual void AssignParents()
     {
         this.AddChild(NineSliceInstance);
         this.AddChild(BoardTitle);
         this.AddChild(StackPanel);
     }
-    private void ApplyDefaultVariables()
+    public void ApplyDefaultVariables()
     {
         this.Visual.Width = 0f;
         this.Visual.WidthUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
