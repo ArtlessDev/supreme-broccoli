@@ -1,4 +1,5 @@
-﻿using JairLib;
+﻿using Gum.Forms.Controls;
+using JairLib;
 using JairLib.QuestCore;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
@@ -9,50 +10,63 @@ using System.Collections.Generic;
 
 namespace SupremeBroccoli.Core
 {
+    public class QuestJson
+    {
+        public string QuestTitle { get; set; }
+        public string QuestDetails { get; set; }
+        public string QuestGiver { get; set; }
+        public string QuestReward { get; set; }
+        public string QuestStatus { get; set; }
+    }
     public class QuestBoardObject : AnyObject
     {
         public QuestBoardObject()
         {
-            texture2D = Globals.GlobalContent.Load<Texture2D>(FileString);
+            texture2D = Globals.GlobalContent.Load<Texture2D>(TextureFileString);
         }
         public QuestBoardObject(Rectangle _rect)
         {
-            texture2D = Globals.GlobalContent.Load<Texture2D>(FileString);
+            texture2D = Globals.GlobalContent.Load<Texture2D>(TextureFileString);
             rectangle = _rect;
+            QuestBoardGui = new();
         }
-
-        const string FileString = "OverworldTextures/QuestBoard";
+        internal QuestBoard QuestBoardGui { get; set; }
+        const string TextureFileString = "OverworldTextures/QuestBoard";
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture2D, rectangle, Color.White);
         }
 
-        //public void Update(GameTime gameTime, QuestBoard _questBoardGui, Dictionary<Quest> quests)
-        //{
-        //    if (RpgPlayer.PlayerOverworld.interactionBox.Intersects(rectangle) && Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
-        //    {
-        //        var qob1 = new QuestOnBoard();
-        //        qob1.QuestTitle.Text = "lost cat";
-        //        qob1.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
+        internal void Update(GameTime gameTime)
+        {
+            if (IsPlayerInRange() && Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
+            {
+                var visCheck = QuestBoardGui.IsVisible;
 
-        //        QuestBoardGui = new();
-        //        _questBoardGui.StackPanel.AddChild(qob1);
-        //        _questBoardGui.AddToRoot();
-
-        //    }
-        //}
+                if (!visCheck)
+                {
+                    QuestBoardGui.AddToRoot();
+                    QuestBoardGui.IsVisible = true;
+                }
+                else
+                {
+                    QuestBoardGui.IsVisible = false;
+                    QuestBoardGui.RemoveFromRoot();
+                }
+            }
+        }
 
         public bool IsPlayerInRange()
         {
             return RpgPlayer.PlayerOverworld.interactionBox.Intersects(rectangle);
         }
 
-        //public QuestBoard OpenGui()
-        //{
-        //    QuestBoardGui = new QuestBoard();
-        //    QuestBoardGui.AddToRoot();
+        internal QuestBoard OpenGui()
+        {
+            QuestBoardGui = new QuestBoard();
+            QuestBoardGui.AddToRoot();
 
-        //    return QuestBoardGui;
-        //}
+            return QuestBoardGui;
+        }
     }
 }

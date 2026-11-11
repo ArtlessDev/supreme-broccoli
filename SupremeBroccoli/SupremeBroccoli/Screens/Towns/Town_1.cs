@@ -24,8 +24,7 @@ namespace SupremeBroccoli.Screens.Towns
         CustomGuiGroup town_1_gui;
         Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 26 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
-        internal QuestBoard QuestBoardGui { get; set; }
-        public QuestBoardObject QuestBoardObjectInstance = new QuestBoardObject(new Rectangle(12 * Globals.TileSize, 12 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize));
+        public QuestBoardObject QuestBoardObjectInstance = new QuestBoardObject(new Rectangle(13 * Globals.TileSize, 13 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize));
 
         public Town_1(Game game) : base(game)
         {
@@ -81,8 +80,7 @@ namespace SupremeBroccoli.Screens.Towns
             qob1.QuestTitle.Text = "lost cat";
             qob1.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
 
-            QuestBoardGui = new();
-            //QuestBoardGui.StackPanel.AddChild(qob1);
+            QuestBoardObjectInstance.QuestBoardGui.StackPanel.AddChild(qob1);
             //QuestBoardGui.AddToRoot();
         }
 
@@ -117,7 +115,7 @@ namespace SupremeBroccoli.Screens.Towns
 
             town_1_gui.update(gameTime);
 
-            InteractWithQuestBoard();
+            QuestBoardObjectInstance.Update(gameTime);
 
             //foreach(var t in town_1_quest.objectives)
             //{
@@ -168,24 +166,7 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.LockEKey = false;
         }
 
-        private void InteractWithQuestBoard()
-        {
-            if (Globals.keyb.WasKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && QuestBoardObjectInstance.IsPlayerInRange())
-            {
-                var visCheck = QuestBoardGui.IsVisible;
 
-                if (!visCheck)
-                {
-                    QuestBoardGui.AddToRoot();
-                    QuestBoardGui.IsVisible = true;
-                }
-                else
-                {
-                    QuestBoardGui.IsVisible = false;
-                    QuestBoardGui.RemoveFromRoot();
-                }
-            }
-        }
         #endregion
 
         #region teleporters
