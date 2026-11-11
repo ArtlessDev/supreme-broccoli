@@ -98,7 +98,7 @@ namespace SupremeBroccoli
                 return;
             }
 
-            if(Globals.keyb.WasKeyPressed(Keys.U))
+            if(Globals.keyb.WasKeyPressed(Keys.I))
             {
                 Globals.MainCamera.Zoom += .1f;
                 wasTriggered = true;
@@ -112,7 +112,7 @@ namespace SupremeBroccoli
                 return;
             }
 
-            if (Globals.keyb.WasKeyPressed(Keys.I))
+            if (Globals.keyb.WasKeyPressed(Keys.O))
             {
                 Globals.MainCamera.Zoom -= .1f;
                 wasTriggered = true;
