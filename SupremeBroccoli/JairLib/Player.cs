@@ -315,6 +315,7 @@ public class PlayerOverworld : BasePlayer
     {
         identifier = "player";
         texture = Atlases.playerAtlas[0]; //blue
+        LoadAnimations();
         int startposx = 0;
         int startposy = 0;
         rectangle = new Rectangle(startposx, startposy, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
