@@ -3,15 +3,19 @@
     "ExpandedNodes": [
       "Screens",
       "Screens/CombatScreen",
+      "Screens/DialogueScreen",
+      "Screens/DialogueScreen/NineSliceInstance1",
+      "Screens/DialogueScreen/NineSliceInstance1/SpeakerNamePlate",
       "Screens/QuestBoard",
       "Screens/QuestBoard/BoardTitle",
-      "Screens/QuestBoard/BoardTitle/BoardOfQuests",
       "Screens/TitleScreen",
       "Screens/TitleScreen/TextInstance",
       "Components",
       "Components/Elements",
       "Components/ccEnemyContainer",
-      "Components/QuestOnBoard"
+      "Components/NameplateComponent",
+      "Components/QuestOnBoard",
+      "Components/Styles"
     ]
   }
 }

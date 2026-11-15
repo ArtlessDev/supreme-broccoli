@@ -4,7 +4,7 @@
   <State>
     <Name>Default</Name>
     <Variable Type="float" Name="DialogueBox.Height" SetsValue="true">
-      <Value xsi:type="xsd:float">25</Value>
+      <Value xsi:type="xsd:float">15</Value>
     </Variable>
     <Variable Type="DimensionUnitType" Name="DialogueBox.HeightUnits" SetsValue="true">
       <Value xsi:type="xsd:int">1</Value>
@@ -33,7 +33,20 @@
     <Variable Type="PositionUnitType" Name="DialogueBox.YUnits" SetsValue="true">
       <Value xsi:type="xsd:int">3</Value>
     </Variable>
+    <Variable Type="float" Name="NameplateComponentInstance.X" SetsValue="true">
+      <Value xsi:type="xsd:float">10</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="NameplateComponentInstance.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="NameplateComponentInstance.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">75</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="NameplateComponentInstance.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
   </State>
   <Instance Name="DialogueBox" BaseType="Controls/DialogBox" />
+  <Instance Name="NameplateComponentInstance" BaseType="NameplateComponent" />
   <Behaviors />
 </ScreenSave>

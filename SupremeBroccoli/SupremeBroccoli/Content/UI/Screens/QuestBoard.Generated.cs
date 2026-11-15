@@ -37,6 +37,7 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
     public NineSliceRuntime NineSliceInstance { get; protected set; }
     public TextRuntime BoardTitle { get; protected set; }
     public StackPanel StackPanel { get; protected set; }
+    public TextRuntime SpeakerNamePlate1 { get; protected set; }
 
     public QuestBoard(InteractiveGue visual) : base(visual)
     {
@@ -53,7 +54,7 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
         AssignParents();
         CustomInitialize();
     }
-    public virtual void InitializeInstances()
+    protected virtual void InitializeInstances()
     {
         NineSliceInstance = new global::MonoGameGum.GueDeriving.NineSliceRuntime();
         NineSliceInstance.ElementSave = ObjectFinder.Self.GetStandardElement("NineSlice");
@@ -67,15 +68,21 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
         BoardTitle.Name = "BoardTitle";
         StackPanel = new SupremeBroccoli.Components.Controls.StackPanel();
         StackPanel.Name = "StackPanel";
+        SpeakerNamePlate1 = new global::MonoGameGum.GueDeriving.TextRuntime();
+        SpeakerNamePlate1.ElementSave = ObjectFinder.Self.GetStandardElement("Text");
+        if (SpeakerNamePlate1.ElementSave != null) SpeakerNamePlate1.AddStatesAndCategoriesRecursivelyToGue(SpeakerNamePlate1.ElementSave);
+        if (SpeakerNamePlate1.ElementSave != null) SpeakerNamePlate1.SetInitialState();
+        SpeakerNamePlate1.Name = "SpeakerNamePlate1";
         base.RefreshInternalVisualReferences();
     }
-    public virtual void AssignParents()
+    protected virtual void AssignParents()
     {
         this.AddChild(NineSliceInstance);
         this.AddChild(BoardTitle);
         this.AddChild(StackPanel);
+        this.AddChild(SpeakerNamePlate1);
     }
-    public void ApplyDefaultVariables()
+    private void ApplyDefaultVariables()
     {
         this.Visual.Width = 0f;
         this.Visual.WidthUnits = global::Gum.DataTypes.DimensionUnitType.RelativeToParent;
@@ -111,6 +118,22 @@ partial class QuestBoard : global::Gum.Forms.Controls.FrameworkElement
         this.StackPanel.Visual.XUnits = global::Gum.Converters.GeneralUnitType.Percentage;
         this.StackPanel.Visual.Y = 20f;
         this.StackPanel.Visual.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+
+        this.SpeakerNamePlate1.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+        this.SpeakerNamePlate1.YOrigin = global::RenderingLibrary.Graphics.VerticalAlignment.Top;
+        this.SpeakerNamePlate1.Y = 0f;
+        this.SpeakerNamePlate1.XUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+        this.SpeakerNamePlate1.X = 0f;
+        this.SpeakerNamePlate1.WidthUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
+        ((TextRuntime)this.SpeakerNamePlate1).VerticalAlignment = global::RenderingLibrary.Graphics.VerticalAlignment.Center;
+        this.SpeakerNamePlate1.UseCustomFont = false;
+        this.SpeakerNamePlate1.TextOverflowVerticalMode = global::RenderingLibrary.Graphics.TextOverflowVerticalMode.SpillOver;
+        ((TextRuntime)this.SpeakerNamePlate1).TextOverflowHorizontalMode = global::RenderingLibrary.Graphics.TextOverflowHorizontalMode.EllipsisLetter;
+        this.SpeakerNamePlate1.Text = @"holy mother of the ghosts ghouls and goblins";
+        ((TextRuntime)this.SpeakerNamePlate1).HorizontalAlignment = global::RenderingLibrary.Graphics.HorizontalAlignment.Center;
+        this.SpeakerNamePlate1.HeightUnits = global::Gum.DataTypes.DimensionUnitType.PercentageOfParent;
+        this.SpeakerNamePlate1.Height = 100f;
+        this.SpeakerNamePlate1.Font = @"C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf";
 
     }
     partial void CustomInitialize();

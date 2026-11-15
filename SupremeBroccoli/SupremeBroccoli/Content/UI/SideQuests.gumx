@@ -104,6 +104,7 @@
   <ComponentReference Name="Elements/PercentBar" />
   <ComponentReference Name="Elements/PercentBarIcon" />
   <ComponentReference Name="Elements/VerticalLines" />
+  <ComponentReference Name="NameplateComponent" />
   <ComponentReference Name="QuestOnBoard" />
   <ComponentReference Name="Styles" />
   <StandardElementReference Name="Circle" />

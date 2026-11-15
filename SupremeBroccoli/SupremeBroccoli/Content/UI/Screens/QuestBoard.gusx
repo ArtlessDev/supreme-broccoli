@@ -93,9 +93,55 @@
     <Variable Type="PositionUnitType" Name="StackPanel.YUnits" SetsValue="true">
       <Value xsi:type="xsd:int">3</Value>
     </Variable>
+    <Variable Type="PositionUnitType" Name="SpeakerNamePlate1.YUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">3</Value>
+    </Variable>
+    <Variable Type="VerticalAlignment" Name="SpeakerNamePlate1.YOrigin" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+    <Variable Type="float" Name="SpeakerNamePlate1.Y" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="PositionUnitType" Name="SpeakerNamePlate1.XUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">2</Value>
+    </Variable>
+    <Variable Type="float" Name="SpeakerNamePlate1.X" SetsValue="true">
+      <Value xsi:type="xsd:float">0</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="SpeakerNamePlate1.WidthUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="VerticalAlignment" Name="SpeakerNamePlate1.VerticalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="bool" Name="SpeakerNamePlate1.UseCustomFont" SetsValue="true">
+      <Value xsi:type="xsd:boolean">false</Value>
+    </Variable>
+    <Variable Type="TextOverflowVerticalMode" Name="SpeakerNamePlate1.TextOverflowVerticalMode" SetsValue="true">
+      <Value xsi:type="xsd:int">0</Value>
+    </Variable>
+    <Variable Type="TextOverflowHorizontalMode" Name="SpeakerNamePlate1.TextOverflowHorizontalMode" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="string" Name="SpeakerNamePlate1.Text" SetsValue="true">
+      <Value xsi:type="xsd:string">holy mother of the ghosts ghouls and goblins</Value>
+    </Variable>
+    <Variable Type="HorizontalAlignment" Name="SpeakerNamePlate1.HorizontalAlignment" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="DimensionUnitType" Name="SpeakerNamePlate1.HeightUnits" SetsValue="true">
+      <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="float" Name="SpeakerNamePlate1.Height" SetsValue="true">
+      <Value xsi:type="xsd:float">100</Value>
+    </Variable>
+    <Variable IsFont="true" Type="string" Name="SpeakerNamePlate1.Font" SetsValue="true">
+      <Value xsi:type="xsd:string">C:\Code\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\Fonts\KGShadowOfTheDay.ttf</Value>
+    </Variable>
   </State>
   <Instance Name="NineSliceInstance" BaseType="NineSlice" />
   <Instance Name="BoardTitle" BaseType="Text" />
   <Instance Name="StackPanel" BaseType="Controls/StackPanel" />
+  <Instance Name="SpeakerNamePlate1" BaseType="Text" />
   <Behaviors />
 </ScreenSave>
