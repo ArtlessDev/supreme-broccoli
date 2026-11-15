@@ -70,6 +70,7 @@ namespace SupremeBroccoli
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.Load();
             Atlases.Load();
+
             // TODO: use this.Content to load your game content here
         }
         protected override void Update(GameTime gameTime)

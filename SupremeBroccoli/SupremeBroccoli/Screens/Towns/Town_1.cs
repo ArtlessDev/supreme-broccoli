@@ -25,7 +25,7 @@ namespace SupremeBroccoli.Screens.Towns
         Rectangle To_Route_1 = new Rectangle(20 * Globals.TileSize, 26 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize);
         Rectangle To_Route_3 = new Rectangle();
         public QuestBoardObject QuestBoardObjectInstance = new QuestBoardObject(new Rectangle(13 * Globals.TileSize, 13 * Globals.TileSize, 2 * Globals.TileSize, 2 * Globals.TileSize));
-
+        DialogueScreen dialogueScreen = new DialogueScreen() { IsEnabled = false};
         public Town_1(Game game) : base(game)
         {
             UpdateWhenInactive = false;
@@ -117,19 +117,20 @@ namespace SupremeBroccoli.Screens.Towns
 
             QuestBoardObjectInstance.Update(gameTime);
 
-            //foreach(var t in town_1_quest.objectives)
+            //foreach (var t in town_1_quest.objectives)
             //{
-            //    if(t.isPlayerInteracting())
-            //        t.OpenGui(town_1_gui, gameTime);
-
+            //    //if (t.isPlayerInteracting())
+            //    //    t.OpenGui(town_1_gui, gameTime);
+            //    DialogueHandler.OpenGumUI(t, gameTime, t.color);
             //    //foreach (AnimatedSprite anim in t.Animations)
             //    //{
             //    //    anim.Update(gameTime);
             //    //}
             //    t.CurrentAnimation.Update(gameTime);
 
-            ///talking animation gets overridden on subsequent frame and goes back to idle. idle animation is also the animation for talking
-            //};
+            //    /// talking animation gets overridden on subsequent frame and goes back to idle.idle animation is also the animation for talking
+            //}
+            //;
 
             foreach (var t in town_1_quest.CurrentQuest.KvpQuests.Values)
             {
@@ -137,26 +138,22 @@ namespace SupremeBroccoli.Screens.Towns
 
                 if (t.isPlayerInteracting())
                 {
-                    t.OpenGui(town_1_gui, gameTime, t.CurrentAnimation.Color);
-                    t.CurrentAnimation.Update(gameTime);
-
+                    OpenGumUI( t, gameTime);
                 }
-
-                //this is essentially a hover
-                if (t.rectangle.Intersects(RpgPlayer.PlayerOverworld.interactionBox) && town_1_gui.baseGui.isGuiEnabled)
+                if (t.rectangle.Intersects(RpgPlayer.PlayerOverworld.interactionBox) && dialogueScreen.IsEnabled)
                     t.CurrentAnimation.Update(gameTime);
             }
+
             foreach (var t in town_1_quest_2.CurrentQuest.KvpQuests.Values)
             {
                 t.AssignNpcState(town_1_gui);
 
                 if (t.isPlayerInteracting())
                 {
-                    t.OpenGui(town_1_gui, gameTime, t.CurrentAnimation.Color);
-                    t.CurrentAnimation.Update(gameTime);
-
+                    OpenGumUI(t, gameTime);
                 }
-
+                if (t.rectangle.Intersects(RpgPlayer.PlayerOverworld.interactionBox) && dialogueScreen.IsEnabled)
+                    t.CurrentAnimation.Update(gameTime);
             }
 
             GoToRoute_1();
@@ -166,6 +163,34 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.LockEKey = false;
         }
 
+        public void OpenGumUI(KeyObjective _ko, GameTime gameTime)
+        {
+            //bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
+            var playerctx = RpgPlayer.PlayerOverworld;
+
+            if (!_ko.isPlayerInteracting())
+                return;
+
+            playerctx.interactWithBox();
+
+            if (!dialogueScreen.IsEnabled)
+            {
+                dialogueScreen.IsEnabled = true;
+                dialogueScreen.IsFocused = true;
+                dialogueScreen.NameplateComponentInstance.SpeakerNamePlate.Text = _ko.identifier;
+                dialogueScreen.DialogueBox.Show(_ko.objectiveDescription); // this needss to be replaced with the list of dialogue in the json file
+                dialogueScreen.AddToRoot();
+            }
+            else
+            {
+                dialogueScreen.DialogueBox.Close();
+                dialogueScreen.IsFocused = false;
+                dialogueScreen.IsEnabled = false;
+                dialogueScreen.RemoveFromRoot();
+            }
+
+            return;
+        }
 
         #endregion
 

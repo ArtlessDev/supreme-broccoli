@@ -3,11 +3,20 @@
   <Name>DialogueScreen</Name>
   <State>
     <Name>Default</Name>
+    <Variable Type="bool" Name="DialogueBox.HasEvents" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
     <Variable Type="float" Name="DialogueBox.Height" SetsValue="true">
       <Value xsi:type="xsd:float">15</Value>
     </Variable>
     <Variable Type="DimensionUnitType" Name="DialogueBox.HeightUnits" SetsValue="true">
       <Value xsi:type="xsd:int">1</Value>
+    </Variable>
+    <Variable Type="bool" Name="DialogueBox.IsEnabled" SetsValue="true">
+      <Value xsi:type="xsd:boolean">true</Value>
+    </Variable>
+    <Variable Type="bool" Name="DialogueBox.IsRenderTarget" SetsValue="true">
+      <Value xsi:type="xsd:boolean">false</Value>
     </Variable>
     <Variable Type="float" Name="DialogueBox.Width" SetsValue="true">
       <Value xsi:type="xsd:float">80</Value>

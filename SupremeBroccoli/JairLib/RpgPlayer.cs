@@ -27,6 +27,7 @@ namespace JairLib
         };
         public static int PLAYER_TILESIZE_IN_WORLD = 100;
         public static List<Quest> Quests = new();
+        public static Quest CurrentQuest = new();
         public static List<CombatActors> PlayerCurrentParty = new();
         public static List<CombatActors> PlayerReserveParty = new();
 

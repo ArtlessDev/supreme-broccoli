@@ -37,7 +37,7 @@ partial class DialogBox : global::Gum.Forms.Controls.Games.DialogBox
         });
     }
     public NineSliceRuntime NineSliceInstance { get; protected set; }
-    public TextRuntime TextInstance { get; protected set; }
+    public TextRuntime TextInstance { get; set; }
     public Icon ContinueIndicatorInstance { get; protected set; }
 
     public DialogBox(InteractiveGue visual) : base(visual)

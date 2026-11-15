@@ -91,6 +91,7 @@ partial class DialogueScreen : global::Gum.Forms.Controls.FrameworkElement
         this.DialogueBox.Visual.Y = 95f;
         this.DialogueBox.Visual.YOrigin = global::RenderingLibrary.Graphics.VerticalAlignment.Bottom;
         this.DialogueBox.Visual.YUnits = global::Gum.Converters.GeneralUnitType.Percentage;
+        this.DialogueBox.IsEnabled = true;
 
         this.NameplateComponentInstance.Visual.X = 10f;
         this.NameplateComponentInstance.Visual.XUnits = global::Gum.Converters.GeneralUnitType.Percentage;

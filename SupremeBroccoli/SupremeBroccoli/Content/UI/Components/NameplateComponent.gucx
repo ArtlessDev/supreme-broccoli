@@ -134,6 +134,6 @@
     </VariableList>
   </State>
   <Instance Name="NineSliceInstance" BaseType="NineSlice" />
-  <Instance Name="SpeakerNamePlate" BaseType="Text" />
+  <Instance Name="SpeakerNamePlate" BaseType="Text" Locked="true" />
   <Behaviors />
 </ComponentSave>

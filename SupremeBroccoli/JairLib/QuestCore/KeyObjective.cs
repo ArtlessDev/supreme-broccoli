@@ -169,6 +169,7 @@ namespace JairLib.QuestCore
             if (!isPlayerInteracting())
                 return gui;
 
+            
             playerctx.interactWithBox();
             
             gui.baseGui.currentText = objectiveDescription;
