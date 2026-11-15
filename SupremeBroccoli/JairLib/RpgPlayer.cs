@@ -1,6 +1,8 @@
 ﻿using JairLib.CombatSimulator;
 using JairLib.QuestCore;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended.Graphics;
+using System.Text.Json;
 
 namespace JairLib
 {
@@ -31,5 +33,15 @@ namespace JairLib
         public static List<CombatActors> PlayerCurrentParty = new();
         public static List<CombatActors> PlayerReserveParty = new();
 
+        public static void SetFirstQuestAsCurrent(string _jsonString, Texture2DAtlas _atlas)
+        {
+            CurrentQuest.QuestFileString = _jsonString;
+            CurrentQuest.questAtlas = _atlas;
+            using Stream stream = TitleContainer.OpenStream(CurrentQuest.QuestFileString);
+            string jsonString = File.ReadAllText(CurrentQuest.QuestFileString);
+            Quest deserializedJson = JsonSerializer.Deserialize<Quest>(jsonString);
+            deserializedJson.QuestComplete = false;
+            CurrentQuest = deserializedJson;
+        }
     }
 }

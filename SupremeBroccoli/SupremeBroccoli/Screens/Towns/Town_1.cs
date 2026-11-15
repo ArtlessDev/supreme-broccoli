@@ -58,29 +58,52 @@ namespace SupremeBroccoli.Screens.Towns
             ///it will be added to their quest log and they will not be able to accept another quest 
             ///until they complete the current one
 
+            RpgPlayer.SetFirstQuestAsCurrent(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.npcBatchOneAtlas);
 
-            for (int i = 0; i < town_1_quest_2.CurrentQuest.KvpQuests.Count; i++)
+            for (int i = 0; i < RpgPlayer.CurrentQuest.KvpQuests.Count; i++)
             {
-                var _reference = town_1_quest_2.CurrentQuest.KvpQuests.ToArray();
-                town_1_quest_2.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
+                var _reference = RpgPlayer.CurrentQuest.KvpQuests.ToArray();
+                RpgPlayer.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
 
             }
-            for (int i = 0; i < town_1_quest.CurrentQuest.KvpQuests.Count; i++)
-            {
-                var _reference = town_1_quest.CurrentQuest.KvpQuests.ToArray();
-                town_1_quest.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
-
-            }
-
 
             town_1_gui = new();
             var qob1 = new QuestOnBoard();
-            qob1.QuestTitle.Text = "lost cat";
-            qob1.QuestDetails.Text = "Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
+            qob1.QuestTitle.Text = town_1_quest.CurrentQuest.QuestIdentifier;//"lost cat";
+            qob1.QuestDetails.Text = town_1_quest.CurrentQuest.QuestDetails;//"Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
+            
+            var qob2 = new QuestOnBoard();
+            qob2.QuestTitle.Text = town_1_quest_2.CurrentQuest.QuestIdentifier;//"lost cat";
+            qob2.QuestDetails.Text = town_1_quest_2.CurrentQuest.QuestDetails;//"Old Lady Maguffette has lost her cat Madam Whispy, again. Cat is usually ";
+
+            qob1.AcceptQuestButton.Click += (sender, args) =>
+            {
+                var tempQuest = RpgPlayer.CurrentQuest;
+                RpgPlayer.CurrentQuest = town_1_quest.CurrentQuest;
+                RpgPlayer.CurrentQuest.questAtlas = tempQuest.questAtlas;
+                //RpgPlayer.CurrentQuest = town_1_quest.CurrentQuest;
+                foreach (var ko in RpgPlayer.CurrentQuest.KvpQuests)
+                {
+                    ko.Value.Animations = ko.Value.LoadAnimations();
+                }
+                qob1.AcceptQuestButton.IsEnabled = false;
+                qob1.RejectQuestButton.IsEnabled = false;
+            };
+            qob2.AcceptQuestButton.Click += (sender, args) =>
+            {
+                RpgPlayer.CurrentQuest = town_1_quest_2.CurrentQuest;
+                foreach (var ko in RpgPlayer.CurrentQuest.KvpQuests)
+                {
+                    ko.Value.Animations = ko.Value.LoadAnimations();
+                }
+                qob2.AcceptQuestButton.IsEnabled = false;
+                qob2.RejectQuestButton.IsEnabled = false;
+            };
 
             QuestBoardObjectInstance.QuestBoardGui.StackPanel.AddChild(qob1);
+            QuestBoardObjectInstance.QuestBoardGui.StackPanel.AddChild(qob2);
             //QuestBoardGui.AddToRoot();
         }
 
@@ -93,8 +116,9 @@ namespace SupremeBroccoli.Screens.Towns
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
 
-            town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
-            town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            RpgPlayer.CurrentQuest.Draw(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            //town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            //town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
             QuestBoardObjectInstance.Draw(Game._spriteBatch);
             //player shadow
@@ -111,46 +135,19 @@ namespace SupremeBroccoli.Screens.Towns
             Game.CameraZoom();
             RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
-            //town_1_quest.Update(gameTime, RpgPlayer.PlayerOverworld);
 
             town_1_gui.update(gameTime);
 
             QuestBoardObjectInstance.Update(gameTime);
 
-            //foreach (var t in town_1_quest.objectives)
-            //{
-            //    //if (t.isPlayerInteracting())
-            //    //    t.OpenGui(town_1_gui, gameTime);
-            //    DialogueHandler.OpenGumUI(t, gameTime, t.color);
-            //    //foreach (AnimatedSprite anim in t.Animations)
-            //    //{
-            //    //    anim.Update(gameTime);
-            //    //}
-            //    t.CurrentAnimation.Update(gameTime);
 
-            //    /// talking animation gets overridden on subsequent frame and goes back to idle.idle animation is also the animation for talking
-            //}
-            //;
-
-            foreach (var t in town_1_quest.CurrentQuest.KvpQuests.Values)
+            foreach (var t in RpgPlayer.CurrentQuest.KvpQuests.Values)
             {
                 t.AssignNpcState(town_1_gui);
 
                 if (t.isPlayerInteracting())
                 {
                     OpenGumUI( t, gameTime);
-                }
-                if (t.rectangle.Intersects(RpgPlayer.PlayerOverworld.interactionBox) && dialogueScreen.IsEnabled)
-                    t.CurrentAnimation.Update(gameTime);
-            }
-
-            foreach (var t in town_1_quest_2.CurrentQuest.KvpQuests.Values)
-            {
-                t.AssignNpcState(town_1_gui);
-
-                if (t.isPlayerInteracting())
-                {
-                    OpenGumUI(t, gameTime);
                 }
                 if (t.rectangle.Intersects(RpgPlayer.PlayerOverworld.interactionBox) && dialogueScreen.IsEnabled)
                     t.CurrentAnimation.Update(gameTime);
@@ -165,7 +162,6 @@ namespace SupremeBroccoli.Screens.Towns
 
         public void OpenGumUI(KeyObjective _ko, GameTime gameTime)
         {
-            //bool tempIsPlayerSelecting = gui.baseGui.DemandsPlayerResponse;
             var playerctx = RpgPlayer.PlayerOverworld;
 
             if (!_ko.isPlayerInteracting())

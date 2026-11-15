@@ -19,7 +19,21 @@ namespace JairLib.QuestCore
     {
         public Quest() { }
 
+        public Quest(string _jsonString)
+        {
+            QuestFileString = _jsonString;
+
+        }
+
+        public Quest(string _jsonString, Texture2DAtlas _atlas)
+        {
+            QuestFileString = _jsonString;
+            questAtlas = _atlas;
+
+        }
+        public string QuestFileString = ".\\Content\\FirstQuest.json";
         public string QuestIdentifier { get; set; }
+        public string QuestDetails { get; set; }
         public KeyObjective StartingObjective { get; set; }
         public KeyObjective MiddleObjective { get; set; }
         public KeyObjective EndingObjective { get; set; }
@@ -27,8 +41,40 @@ namespace JairLib.QuestCore
         //shoutout dean for the dictionary idea
         public Dictionary<QuestList, KeyObjective> KvpQuests { get; set; }
         public bool QuestComplete {  get; set; }
+        public Texture2DAtlas questAtlas;
+
+        public void Draw(SpriteBatch _spriteBatch, PlayerOverworld player)
+        {
+            if (KvpQuests == null)
+                return;
+
+            foreach (KeyObjective obj in KvpQuests.Values)
+            {
+                obj.Draw(_spriteBatch);
+            }
+        }
+        
+        public void Load()
+        {
+            if (RpgPlayer.CurrentQuest.KvpQuests != null)
+            {
+                for (int i = 0; i < RpgPlayer.CurrentQuest.KvpQuests.Count; i++)
+                {
+                    var _reference = RpgPlayer.CurrentQuest.KvpQuests.ToArray();
+                    RpgPlayer.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
+
+                }
+            }
+        }
+
     }
 
+    /// <summary>
+    /// these will be used as 'stand-ins' 
+    /// a stand-in is an inactive quest. the current quest will be attached 
+    /// to the player and easier to save data that way. so whenever the player 
+    /// wants a different quest, this will be used to load the quest into the current quest.
+    /// </summary>
     public class QuestSystem
     {
         #region constructor and variables

@@ -1,4 +1,6 @@
 {
+  "QuestIdentifier": "Gronko's Quest",
+  "QuestDetails": "help! i lost my friends and i need help finding them",
   "KvpQuests": {
     "Town_1_Quest": {
       "objectiveTitle": "n/a",
@@ -17,7 +19,7 @@
     "A": {
       "objectiveTitle": "Getting the Trash",
       "objectiveDescription": "hi im gronko. im playing hide and seek",
-      "identifier": "part one",
+      "identifier": "Gronko",
       "X": 11,
       "Y": 11,
       "width": 128,
