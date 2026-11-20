@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Graphics;
-using System.Diagnostics;
 
 namespace JairLib.Utility
 {
@@ -12,6 +10,7 @@ namespace JairLib.Utility
         public Vector3 altitude { get; set; }
         public bool isPit {  get; set; }
         public TileBeast spaceType { get; set; }
+        public float CustomLayerDepth { get; set; }
 
         public TileSpace()
         {

@@ -19,5 +19,6 @@ namespace JairLib.Utility
         public Color color { get; set; }
         public Vector3 absolutePosition { get; set; }
         public Vector2 Position { get; set; }
+        public Rectangle Collider2d { get; set; }
     }
 }

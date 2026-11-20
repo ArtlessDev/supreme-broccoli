@@ -6,7 +6,6 @@ using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
 using System.Timers;
@@ -31,41 +30,10 @@ public class BasePlayer : AnyObject, QuestCore.IStats
     public int DefensePips { get; set; }
     public int SpeedPips { get; set; }
     public int MagicPips { get; set; }
-    #endregion
-
-    #region dumb animators
-    public void AnimatePlayerIdle(GameTime gameTime)
-    {
-
-        var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
-        //could make methods to handle animations in this sort of way
-        if (deltaTime < 500)
-        {
-            texture = Atlases.tilesetAtlas[0];
-            Debug.WriteLine($"{deltaTime}");
-        }
-        else
-        {
-            texture = Atlases.tilesetAtlas[1];
-            Debug.WriteLine($"{deltaTime}");
-        }
-    }
-    public void AnimatePlayerMoving(GameTime gameTime)
-    {
-        texture = Atlases.tilesetAtlas[0];
-
-        var deltaTime = (float)gameTime.TotalGameTime.Milliseconds;
-
-        if (deltaTime == 0)
-        {
-            state = PlayerState.Waiting;
-
-        }
-    }
-    #endregion
-
     private SpriteSheet _spriteSheet;
-    public AnimatedSprite _walkDown, _walkSide, _walkUp;
+    public AnimatedSprite _walkDown, _walkSide, _walkUp, CURRENT_SPRITE;
+    #endregion
+
     public void LoadAnimations()
     {
 
@@ -102,6 +70,7 @@ public class BasePlayer : AnyObject, QuestCore.IStats
         _walkDown = new AnimatedSprite(_spriteSheet, "walk-down");
         _walkSide = new AnimatedSprite(_spriteSheet, "walk-side");
         _walkUp = new AnimatedSprite(_spriteSheet, "walk-up");
+        CURRENT_SPRITE = _walkDown;
     }
     //proving an alt color will allow for shadows. needs tweaking for polish
     public void Draw(SpriteBatch spriteBatch, Color? altColor = null)
@@ -109,53 +78,24 @@ public class BasePlayer : AnyObject, QuestCore.IStats
         var origin = new Vector2(0, 0);
         var position = new Vector2(rectangle.X, rectangle.Y);
         var scale = new Vector2(1f, 1f);
-        var shadowRectangle = new Rectangle(rectangle.X+16, rectangle.Y+24, rectangle.Width, rectangle.Height);
-
-        color = altColor ?? Color.White;
         var rotation = altColor != null ? .5f : 0f;
-        spriteBatch.Draw(Globals.shadow, shadowRectangle, Color.White);
+        color = altColor ?? Color.White;
+
+        //var shadowRectangle = new Rectangle(rectangle.X+16, rectangle.Y+24, rectangle.Width, rectangle.Height);
+        //spriteBatch.Draw(Globals.shadow, shadowRectangle, Color.White);
 
         if (state == PlayerState.Walking)
-        { 
-            switch (playerDirection)
-            {
-                case (Direction.Down):
-                    spriteBatch.Draw(_walkDown, position, 0, scale);
-                    break;
-                case (Direction.Left):
-                case (Direction.Right):
-                    _walkSide.Effect = flipper; 
-                    spriteBatch.Draw(_walkSide, position, 0, scale);
-                    break;
-                case (Direction.Up):
-                    spriteBatch.Draw(_walkUp, position, 0, scale);
-                    break;
-            }
+        {
+            
+            spriteBatch.Draw(CURRENT_SPRITE, position, 0, scale);
         }
         else
         {
-            switch (playerDirection)
-            {
-                case (Direction.Down):
-                    texture = Atlases.playerAtlas[0];
-                    break;
-                case (Direction.Left):
-                case (Direction.Right):
-                    texture = Atlases.playerAtlas[1];
-                    break;
-                case (Direction.Up):
-                    texture = Atlases.playerAtlas[3];
-                    break;
-            }
-            spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, 1f);
-
+            spriteBatch.Draw(texture, position, color, rotation, origin, scale, flipper, CURRENT_SPRITE.Depth);
         }
 
         //the size of the sprite will always match the size of the tile splitter 
         
-        //if(interactionBox != null)
-        //    spriteBatch.DrawRectangle(interactionBox, color);
-
     }
     public void DrawShader(SpriteBatch spriteBatch, Texture2D shaderTexture)
     {
@@ -310,7 +250,7 @@ public class PlayerPlatformer : BasePlayer
 public class PlayerOverworld : BasePlayer
 {
     public int playerSpeed { get; set; }
-
+    public Rectangle Collider2d { get; set; }
     public PlayerOverworld()
     {
         identifier = "player";
@@ -321,6 +261,9 @@ public class PlayerOverworld : BasePlayer
         rectangle = new Rectangle(startposx, startposy, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         Position = new(startposx, startposy);
 
+        int halfDaHeight = rectangle.Height / 2;
+        Collider2d = new Rectangle(startposx, startposy + halfDaHeight, rectangle.Width, halfDaHeight);
+
         color = Color.White;
         flipper = SpriteEffects.None;
         state = PlayerState.Waiting;
@@ -329,9 +272,9 @@ public class PlayerOverworld : BasePlayer
     public void Update(GameTime gameTime, MapBuilder mapBuilder)
     {
         GridMovement(mapBuilder);
-        _walkDown.Update(gameTime);
-        _walkSide.Update(gameTime);
-        _walkUp.Update(gameTime);
+        HandleWhatToDraw();
+        CURRENT_SPRITE.Update(gameTime);
+        CURRENT_SPRITE.Depth = Collider2d.Y / 10000f;
     }
 
     public PlayerState interactWithBox()
@@ -354,49 +297,135 @@ public class PlayerOverworld : BasePlayer
         if (state == PlayerState.InCommunication)
             return;
 
+        int halfDaHeight = rectangle.Height / 2;
+        
         if (Globals.keyb.IsKeyDown(Keys.Left) || Globals.keyb.IsKeyDown(Keys.A))
         {
+            playerDirection = Direction.Left;
             flipper = SpriteEffects.None;
-            rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
-            Position = new Vector2(rectangle.X, rectangle.Y);
             state = PlayerState.Walking;
 
-            playerDirection = Direction.Left;
+            Collider2d = new Rectangle(Collider2d.X - playerSpeed, Collider2d.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+            Position = new Vector2(Collider2d.X, Collider2d.Y);
+
             interactionBox = new Rectangle(rectangle.X - 64, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         }
         else if (Globals.keyb.IsKeyDown(Keys.Right) || Globals.keyb.IsKeyDown(Keys.D))
         {
+            playerDirection = Direction.Right;
             flipper = SpriteEffects.FlipHorizontally;
-            rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
-            Position = new Vector2(rectangle.X, rectangle.Y);
             state = PlayerState.Walking;
 
-            playerDirection = Direction.Right;
+            Collider2d = new Rectangle(Collider2d.X + playerSpeed, Collider2d.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+            Position = new Vector2(Collider2d.X, Collider2d.Y);
+
             interactionBox = new Rectangle(rectangle.X + 64, rectangle.Y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         }
         else if (Globals.keyb.IsKeyDown(Keys.Up) || Globals.keyb.IsKeyDown(Keys.W))
         {
-            rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
-            Position = new Vector2(rectangle.X, rectangle.Y);
+            playerDirection = Direction.Up;
             state = PlayerState.Walking;
 
-            playerDirection = Direction.Up;
+            Collider2d = new Rectangle(Collider2d.X, Collider2d.Y - playerSpeed, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+            Position = new Vector2(Collider2d.X, Collider2d.Y);
+
             interactionBox = new Rectangle(rectangle.X, rectangle.Y-64, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
         }
         else if (Globals.keyb.IsKeyDown(Keys.Down) || Globals.keyb.IsKeyDown(Keys.S))
         {
-            rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
-            Position = new Vector2(rectangle.X, rectangle.Y);
+            playerDirection = Direction.Down;
             state = PlayerState.Walking;
 
-            playerDirection = Direction.Down;
+            Collider2d = new Rectangle(Collider2d.X, Collider2d.Y + playerSpeed, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+            Position = new Vector2(Collider2d.X, Collider2d.Y);
+
             interactionBox = new Rectangle(rectangle.X, rectangle.Y + 64, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
 
         }
         else
             state = PlayerState.Waiting;
+
+        rectangle = new Rectangle(Collider2d.X, Collider2d.Y - halfDaHeight, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
+
+    }
+    public void HandleWhatToDraw()
+    {
+        var origin = new Vector2(0, 0);
+        var position = new Vector2(rectangle.X, rectangle.Y);
+        var scale = new Vector2(1f, 1f);
+        var shadowRectangle = new Rectangle(rectangle.X + 16, rectangle.Y + 24, rectangle.Width, rectangle.Height);
+
+        color = Color.White;
+
+        if (state == PlayerState.Walking)
+        {
+            switch (playerDirection)
+            {
+                case (Direction.Down):
+                    CURRENT_SPRITE = _walkDown;
+                    break;
+                case (Direction.Left):
+                case (Direction.Right):
+                    _walkSide.Effect = flipper;
+                    CURRENT_SPRITE = _walkSide;
+                    break;
+                case (Direction.Up):
+                    CURRENT_SPRITE = _walkUp;
+                    break;
+            }
+        }
+        else
+        {
+            switch (playerDirection)
+            {
+                case (Direction.Down):
+                    texture = Atlases.playerAtlas[0];
+                    break;
+                case (Direction.Left):
+                case (Direction.Right):
+                    texture = Atlases.playerAtlas[1];
+                    break;
+                case (Direction.Up):
+                    texture = Atlases.playerAtlas[3];
+                    break;
+            }
+        }
+
     }
 
+    public void DetectCollisionWithNPC(KeyObjective _ko)
+    {
+        if (_ko == null)
+            return;
+
+        if (Collider2d.Intersects(_ko.Collider2d))
+        {
+            int halfDaHeight = PLAYER_TILESIZE_IN_WORLD / 2;
+
+            switch (playerDirection)
+            {
+                case Direction.Left:
+                    Collider2d = new Rectangle(Collider2d.X + playerSpeed, Collider2d.Y, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                    Position = new Vector2(Collider2d.X, Collider2d.Y);
+                    return;
+                case Direction.Right:
+                    Collider2d = new Rectangle(Collider2d.X - playerSpeed, Collider2d.Y, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                    Position = new Vector2(Collider2d.X, Collider2d.Y);
+                    return;
+                case Direction.Up:
+                    Collider2d = new Rectangle(Collider2d.X, Collider2d.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                    Position = new Vector2(Collider2d.X, Collider2d.Y + halfDaHeight);
+                    return;
+                case Direction.Down:
+                    Collider2d = new Rectangle(Collider2d.X, Collider2d.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                    Position = new Vector2(Collider2d.X, Collider2d.Y - halfDaHeight);
+                    return;
+            }
+
+            rectangle = new Rectangle(Collider2d.X, Collider2d.Y - halfDaHeight, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+
+        }
+    }
 
     public void DetectCollision(MapBuilder mapBuilder)
     {
@@ -409,29 +438,33 @@ public class PlayerOverworld : BasePlayer
         foreach (var space in mapBuilder.Spaces)
         {
 
-            //this makes the player not allowed to get onto a platform if they miss a jump
-            if (rectangle.Intersects(space.rectangle) 
+            if (Collider2d.Intersects(space.rectangle) 
                 && space.csvValue == 6)
             {
+                int halfDaHeight = PLAYER_TILESIZE_IN_WORLD / 2;
+                
                 switch (playerDirection)
                 {
                     case Direction.Left:
-                        rectangle = new Rectangle(rectangle.X + playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        Collider2d = new Rectangle(Collider2d.X + playerSpeed, Collider2d.Y, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                        Position = new Vector2(Collider2d.X, Collider2d.Y);
                         return;
                     case Direction.Right:
-                        rectangle = new Rectangle(rectangle.X - playerSpeed, rectangle.Y, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        Collider2d = new Rectangle(Collider2d.X - playerSpeed, Collider2d.Y, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                        Position = new Vector2(Collider2d.X, Collider2d.Y);
                         return;
                     case Direction.Up:
-                        rectangle = new Rectangle(rectangle.X, rectangle.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        Collider2d = new Rectangle(Collider2d.X, Collider2d.Y + playerSpeed, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                        Position = new Vector2(Collider2d.X, Collider2d.Y + halfDaHeight);
                         return;
                     case Direction.Down:
-                        rectangle = new Rectangle(rectangle.X, rectangle.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
-                        Position = new Vector2(rectangle.X, rectangle.Y);
+                        Collider2d = new Rectangle(Collider2d.X, Collider2d.Y - playerSpeed, PLAYER_TILESIZE_IN_WORLD, halfDaHeight);
+                        Position = new Vector2(Collider2d.X, Collider2d.Y - halfDaHeight);
                         return;
                 }
+
+                rectangle = new Rectangle(Collider2d.X, Collider2d.Y-halfDaHeight, PLAYER_TILESIZE_IN_WORLD, PLAYER_TILESIZE_IN_WORLD);
+
             }
         }
     }

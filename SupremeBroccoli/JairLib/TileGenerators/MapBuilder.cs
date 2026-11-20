@@ -110,6 +110,29 @@ namespace JairLib.TileGenerators
         public int rows { get; set; }
         public int columns { get; set; }
         public static CsvReader csvFileReader {  get; set; }
+        public float CustomLayerDepth { get; set; }
+        public List<TileSpace> Update(GameTime gameTime, MapLayer mapLayer)
+        {
+            //CustomLayerDepth = ;
+            foreach (var space in this.Spaces)
+            {
+                if(mapLayer == MapLayer.Background)
+                {
+                    space.CustomLayerDepth = .005f;
+                }
+                else
+                {
+                    float depth = space.rectangle.Y / 10000f;
+
+                    space.CustomLayerDepth = depth;
+
+                    if (space.CustomLayerDepth < .005f)
+                        space.CustomLayerDepth = .005f;
+
+                }
+            }
+            return Spaces;
+        }
 
         public void DrawMapFromList(SpriteBatch _spriteBatch)
         {
@@ -118,14 +141,19 @@ namespace JairLib.TileGenerators
 
             var indexer = 0;
 
+            var origin = new Vector2(0, 0);
+            var scale = new Vector2(1f, 1f);
+            var rotation = 0f;
+
             ///currently will make a square and does not fill out the entire map, the map is however coming in correctly and has 1200 values
             for (int down = 0; down < rows; down++)
             {
                 for (int left = 0; left < columns; left++)
                 {
                     TileSpace t = Spaces[indexer];
-                    _spriteBatch.Draw(Spaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), t.color);
-                    //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(32 * left, 32 * down), Color.White);
+                    var position = new Vector2(t.rectangle.X, t.rectangle.Y);
+                    //_spriteBatch.Draw(Spaces[indexer].texture, new Vector2(t.rectangle.X, t.rectangle.Y), , t.color,);
+                    _spriteBatch.Draw(Spaces[indexer].texture, position, Color.White, rotation, origin, scale, SpriteEffects.None, t.CustomLayerDepth);
                     indexer++;
                 }
             }

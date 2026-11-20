@@ -41,14 +41,14 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
-            mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
-            mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 32, 32);
-            mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 32, 32);
+            //mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
+            //mapBottomLayer = new MapBuilder(ConfigStrings.town_1_bottom, 32, 32);
+            //mapTopLayer = new MapBuilder(ConfigStrings.town_1_top, 32, 32);
 
             //work pc
-            //mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 32, 32);
-            //mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 32, 32);
-            //mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 32, 32);
+            mapBlockerLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_blocker_layer.csv", 32, 32);
+            mapBottomLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_bottom_layer.csv", 32, 32);
+            mapTopLayer = new MapBuilder(@"C:\Code\MonogameStudy\supreme-broccoli\SupremeBroccoli\SupremeBroccoli\Content\tilemaps\town_1\worldMap_town_1_top_layer.csv", 32, 32);
 
             ///THESE ARE OLD NOTES, RETAINING FOR REFERENCE
             ///need to add functionality to the buttons
@@ -104,6 +104,11 @@ namespace SupremeBroccoli.Screens.Towns
 
             QuestBoardObjectInstance.QuestBoardGui.StackPanel.AddChild(qob1);
             QuestBoardObjectInstance.QuestBoardGui.StackPanel.AddChild(qob2);
+
+            foreach (var ko in RpgPlayer.CurrentQuest.KvpQuests)
+            {
+                ko.Value.Animations = ko.Value.LoadAnimations();
+            }
             //QuestBoardGui.AddToRoot();
         }
 
@@ -111,11 +116,15 @@ namespace SupremeBroccoli.Screens.Towns
         {
             GraphicsDevice.Clear(Color.Black);
             Game.CameraZoom();
-            Game._spriteBatch.Begin(transformMatrix: Globals.MainCamera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
+            Game._spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, transformMatrix: Globals.MainCamera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
 
             mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
 
+            foreach (KeyObjective ko in RpgPlayer.CurrentQuest.KvpQuests.Values)
+            {
+                Game._spriteBatch.DrawRectangle(ko.Collider2d, Color.White);
+            }
             RpgPlayer.CurrentQuest.Draw(Game._spriteBatch, RpgPlayer.PlayerOverworld);
             //town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
             //town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
@@ -134,7 +143,13 @@ namespace SupremeBroccoli.Screens.Towns
             Globals.Update(gameTime);
             Game.CameraZoom();
             RpgPlayer.PlayerOverworld.DetectCollision(mapBlockerLayer);
+            foreach(KeyObjective ko in RpgPlayer.CurrentQuest.KvpQuests.Values)
+            {
+                RpgPlayer.PlayerOverworld.DetectCollisionWithNPC(ko);
+            }
             RpgPlayer.PlayerOverworld.Update(gameTime, mapTopLayer);
+            mapBottomLayer.Update(gameTime, MapLayer.Background);
+            mapTopLayer.Update(gameTime, MapLayer.Foreground);
 
             town_1_gui.update(gameTime);
 
@@ -144,6 +159,7 @@ namespace SupremeBroccoli.Screens.Towns
             foreach (var t in RpgPlayer.CurrentQuest.KvpQuests.Values)
             {
                 t.AssignNpcState(town_1_gui);
+                t.Update(gameTime, RpgPlayer.PlayerOverworld);
 
                 if (t.isPlayerInteracting())
                 {

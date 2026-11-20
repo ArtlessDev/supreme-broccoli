@@ -8,6 +8,7 @@ public interface IJairObject
     public Rectangle rectangle{get; set;}
     public Texture2D texture{get;}
     public Color color{get; set;}
+    public Rectangle Collider2d { get; set; }
 }
 
 //not used for this game
@@ -25,6 +26,8 @@ public interface ITileObject
     public Rectangle rectangle { get; set; }
     public Color color { get; set; }
     public Vector3 absolutePosition { get; set; }
+    public Rectangle Collider2d { get; set; }
+
 }
 
 public enum PlayerState
@@ -58,7 +61,12 @@ public enum TileSpaceType
     Wall,
     Pit,
 }
-
+public enum MapLayer
+{
+    Background,
+    Middleground,
+    Foreground
+}
 public enum TileBeast
 {
     nameless

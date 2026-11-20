@@ -110,7 +110,7 @@ namespace JairLib.Utility
         /// <param name="player"></param>
         public static void CamMoveHorizontal(PlayerOverworld player)
         {
-            MainCamera.Move(new(player.rectangle.X - 100, player.rectangle.Y - 100));
+            MainCamera.Move(new(player.Position.X - 100, player.Position.Y - 100));
         }
 
         public static void CamMove(Rectangle player)

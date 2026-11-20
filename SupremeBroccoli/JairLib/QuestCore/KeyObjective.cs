@@ -2,13 +2,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
 
 
 namespace JairLib.QuestCore
 {
-    public class KeyObjective : AnyObject//: ITileObject
+    public class KeyObjective : AnyObject
     {
         #region constuctor and variables
         public KeyObjective() {
@@ -50,6 +49,7 @@ namespace JairLib.QuestCore
             set { _height = Globals.TileSize; }
         }
         public Rectangle rectangle => new Rectangle(X,Y,width,height);
+        public Rectangle Collider2d => new Rectangle(X,Y+(Y/2),width,height/2);
         public int textureValue {  get; set; }
         public Texture2DRegion texture { get; set; }
         public Texture2DAtlas textureAtlas { get; set; }
@@ -80,6 +80,21 @@ namespace JairLib.QuestCore
                     IsCompletedFlag = true;
                 }
             }
+
+            if (NpcStates == NpcStates.Idle)
+            {
+                CurrentAnimation = Animations[0];
+
+            }
+            else if (NpcStates == NpcStates.Talking)
+            {
+                CurrentAnimation = Animations[1];
+            }
+            
+            CurrentAnimation.Depth = Collider2d.Y / 10000f;
+
+            if (CurrentAnimation.Depth < .005f)
+                CurrentAnimation.Depth = .005f;
         }
 
         public bool isPlayerInteracting()
@@ -189,28 +204,18 @@ namespace JairLib.QuestCore
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            Vector2 position = new(rectangle.X, rectangle.Y);
+            Vector2 position = new(Collider2d.X, Collider2d.Y- rectangle.Height/2);
             Vector2 shadowPosition = new(rectangle.X+64, rectangle.Y +96);
             var scale = new Vector2(1f, 1f);
             var shadowScale = new Vector2(30f, 10f);
             //Rectangle shadowRectangle = new Rectangle(shadowPosition.X, shadowPosition.Y, rectangle.Width, re);
 
 
-
-
-            if (NpcStates == NpcStates.Idle)
-            {
-                CurrentAnimation = Animations[0];
-
-            }
-            else if (NpcStates == NpcStates.Talking)
-            {
-                CurrentAnimation = Animations[1];
-            }
+            
             
             var tempShadowColor = new Color(1f, 1f, 1f, .5f);
             //_spriteBatch.DrawPolygon(shadowPosition, CreateCircle(radius, sides), color, thickness, layerDepth);
-            _spriteBatch.Draw(Globals.shadow, rectangle, Color.White);
+            _spriteBatch.Draw(Globals.shadow, Collider2d, Color.White);
             //_spriteBatch.DrawEllipse(shadowPosition, shadowScale, 16, tempShadowColor);
             //_spriteBatch.DrawCircle(shadowPosition, 5f, 60, tempShadowColor);
             _spriteBatch.Draw(CurrentAnimation, position, 0, scale);
