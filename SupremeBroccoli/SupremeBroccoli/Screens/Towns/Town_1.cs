@@ -38,7 +38,6 @@ namespace SupremeBroccoli.Screens.Towns
         {
             base.LoadContent();
             Globals.Load();
-            //Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
             //mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
@@ -61,8 +60,8 @@ namespace SupremeBroccoli.Screens.Towns
             RpgPlayer.SetFirstQuestAsCurrent(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.npcBatchOneAtlas);
-            //Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
-
+            town_1_quest.CurrentQuest.Load();
+            town_1_quest_2.CurrentQuest.Load();
             for (int i = 0; i < RpgPlayer.CurrentQuest.KvpQuests.Count; i++)
             {
                 var _reference = RpgPlayer.CurrentQuest.KvpQuests.ToArray();
@@ -90,7 +89,7 @@ namespace SupremeBroccoli.Screens.Towns
                     ko.Value.Animations = ko.Value.LoadAnimations();
                 }
                 qob1.AcceptQuestButton.IsEnabled = false;
-                qob1.RejectQuestButton.IsEnabled = false;
+                qob1.RejectQuestButton.IsEnabled = true;
             };
             qob2.AcceptQuestButton.Click += (sender, args) =>
             {
@@ -100,7 +99,7 @@ namespace SupremeBroccoli.Screens.Towns
                     ko.Value.Animations = ko.Value.LoadAnimations();
                 }
                 qob2.AcceptQuestButton.IsEnabled = false;
-                qob2.RejectQuestButton.IsEnabled = false;
+                qob2.RejectQuestButton.IsEnabled = true;
             };
 
             QuestBoardObjectInstance.QuestBoardGui.StackPanel.AddChild(qob1);
@@ -110,7 +109,6 @@ namespace SupremeBroccoli.Screens.Towns
             {
                 ko.Value.Animations = ko.Value.LoadAnimations();
             }
-            //QuestBoardGui.AddToRoot();
         }
 
         public override void Draw(GameTime gameTime)
@@ -127,8 +125,8 @@ namespace SupremeBroccoli.Screens.Towns
                 Game._spriteBatch.DrawRectangle(ko.Collider2d, Color.White);
             }
             RpgPlayer.CurrentQuest.Draw(Game._spriteBatch, RpgPlayer.PlayerOverworld);
-            //town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
-            //town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            town_1_quest.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
+            town_1_quest_2.DrawCurrentQuestObjective(Game._spriteBatch, RpgPlayer.PlayerOverworld);
 
             QuestBoardObjectInstance.Draw(Game._spriteBatch);
             //player shadow

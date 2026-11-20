@@ -56,12 +56,12 @@ namespace JairLib.QuestCore
         
         public void Load()
         {
-            if (RpgPlayer.CurrentQuest.KvpQuests != null)
+            if (KvpQuests != null)
             {
-                for (int i = 0; i < RpgPlayer.CurrentQuest.KvpQuests.Count; i++)
+                for (int i = 0; i < KvpQuests.Count; i++)
                 {
-                    var _reference = RpgPlayer.CurrentQuest.KvpQuests.ToArray();
-                    RpgPlayer.CurrentQuest.KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
+                    var _reference = KvpQuests.ToArray();
+                    KvpQuests[_reference[i].Key].Animations = _reference[i].Value.LoadAnimations();
 
                 }
             }
@@ -115,7 +115,8 @@ namespace JairLib.QuestCore
         public void DrawCurrentQuestObjective(SpriteBatch _spriteBatch, PlayerOverworld player)
         {
 
-            //if (CurrentQuest.SideObjectives != null)
+            if (RpgPlayer.CurrentQuest.QuestIdentifier == this.CurrentQuest.QuestIdentifier)
+                return;
             //    DrawSideObjectives(_spriteBatch, player);
 
             foreach (KeyObjective obj in CurrentQuest.KvpQuests.Values)
