@@ -49,7 +49,7 @@ namespace JairLib.QuestCore
             set { _height = Globals.TileSize; }
         }
         public Rectangle rectangle => new Rectangle(X,Y,width,height);
-        public Rectangle Collider2d => new Rectangle(X,Y+(Y/2),width,height/2);
+        public Rectangle Collider2d => new Rectangle(X,Y,width,height/2);
         public int textureValue {  get; set; }
         public Texture2DRegion texture { get; set; }
         public Texture2DAtlas textureAtlas { get; set; }

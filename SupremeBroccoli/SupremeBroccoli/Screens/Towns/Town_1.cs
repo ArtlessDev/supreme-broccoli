@@ -119,7 +119,7 @@ namespace SupremeBroccoli.Screens.Towns
             Game.CameraZoom();
             Game._spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, transformMatrix: Globals.MainCamera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
 
-            mapBottomLayer.DrawMapFromList(Game._spriteBatch);
+            //mapBottomLayer.DrawMapFromList(Game._spriteBatch);
             mapTopLayer.DrawMapFromList(Game._spriteBatch);
 
             foreach (KeyObjective ko in RpgPlayer.CurrentQuest.KvpQuests.Values)
