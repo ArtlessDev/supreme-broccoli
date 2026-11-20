@@ -38,7 +38,7 @@ namespace SupremeBroccoli.Screens.Towns
         {
             base.LoadContent();
             Globals.Load();
-            Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
+            //Globals.MainCamera = new OrthographicCamera(Game._graphics.GraphicsDevice);
 
             //non-work-pc
             //mapBlockerLayer = new MapBuilder(ConfigStrings.town_1_blocker, 32, 32);
@@ -61,6 +61,7 @@ namespace SupremeBroccoli.Screens.Towns
             RpgPlayer.SetFirstQuestAsCurrent(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest = new QuestSystem(ConfigStrings.town_1_quest, Atlases.npcBatchOneAtlas);
             town_1_quest_2 = new QuestSystem(ConfigStrings.town_1_quest_2, Atlases.npcBatchOneAtlas);
+            //Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
 
             for (int i = 0; i < RpgPlayer.CurrentQuest.KvpQuests.Count; i++)
             {
@@ -172,7 +173,7 @@ namespace SupremeBroccoli.Screens.Towns
             GoToRoute_1();
 
             Game.GumUI.Update(gameTime);
-            Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
+            Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.rectangle.Center.ToVector2());
             Globals.LockEKey = false;
         }
 

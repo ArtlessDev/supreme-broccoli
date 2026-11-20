@@ -53,17 +53,6 @@ namespace SupremeBroccoli
 
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Globals.ViewportWidth, Globals.ViewportHeight);
             Globals.MainCamera = new OrthographicCamera(viewportAdapter);
-
-            /// SETS STARTING POSITION OF PLAYER IN GAME
-            RpgPlayer.PlayerOverworld.Position = startingPosition;
-            RpgPlayer.PlayerOverworld.rectangle = new((int)RpgPlayer.PlayerOverworld.Position.X, (int)RpgPlayer.PlayerOverworld.Position.Y, RpgPlayer.PlayerOverworld.rectangle.Width, RpgPlayer.PlayerOverworld.rectangle.Height);
-
-            int halfDaHeight = RpgPlayer.PlayerOverworld.rectangle.Height / 2;
-            RpgPlayer.PlayerOverworld.Collider2d = new((int)RpgPlayer.PlayerOverworld.Position.X, (int)RpgPlayer.PlayerOverworld.Position.Y + halfDaHeight, RpgPlayer.PlayerOverworld.rectangle.Width, RpgPlayer.PlayerOverworld.rectangle.Height - halfDaHeight);
-            //Globals.MainCamera.Position = RpgPlayer.PlayerOverworld.Position;
-            //Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.Position);
-            
-            //screenManager.ShowScreen(otherscreen);
         }
 
         #region init/load/draw/update
@@ -74,7 +63,6 @@ namespace SupremeBroccoli
             Globals.Load();
             Atlases.Load();
 
-            // TODO: use this.Content to load your game content here
         }
         protected override void Update(GameTime gameTime)
         {

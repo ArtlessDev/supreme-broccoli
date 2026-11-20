@@ -42,9 +42,11 @@ namespace SupremeBroccoli.Screens
                 int x = 16 * Globals.TileSize,
                     y = (23 * Globals.TileSize) - Globals.TileSize;
 
+                int halfDeHeight = RpgPlayer.PLAYER_TILESIZE_IN_WORLD / 2;
+                RpgPlayer.PlayerOverworld.Collider2d = new(x, y + halfDeHeight, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, halfDeHeight);
                 RpgPlayer.PlayerOverworld.Position = new(x, y);
                 RpgPlayer.PlayerOverworld.rectangle = new(x, y, RpgPlayer.PLAYER_TILESIZE_IN_WORLD, RpgPlayer.PLAYER_TILESIZE_IN_WORLD);
-
+                Globals.MainCamera.LookAt(RpgPlayer.PlayerOverworld.rectangle.Center.ToVector2());
                 Game.GumUI.Root.Children.Clear();
                 ScreenManager.CloseScreen();
                 ScreenManager.ShowScreen(new Towns.Town_1(Game), new FadeTransition(GraphicsDevice, Color.Black, 0.5f));
