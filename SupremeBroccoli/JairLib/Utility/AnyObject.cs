@@ -20,5 +20,6 @@ namespace JairLib.Utility
         public Vector3 absolutePosition { get; set; }
         public Vector2 Position { get; set; }
         public Rectangle Collider2d { get; set; }
+        public float CustomLayerDepth { get; set; }
     }
 }

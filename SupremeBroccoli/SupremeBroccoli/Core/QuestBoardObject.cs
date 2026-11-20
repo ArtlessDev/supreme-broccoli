@@ -4,9 +4,8 @@ using JairLib.QuestCore;
 using JairLib.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SupremeBroccoli.Components;
+using MonoGame.Extended;
 using SupremeBroccoli.Screens;
-using System.Collections.Generic;
 
 namespace SupremeBroccoli.Core
 {
@@ -23,18 +22,30 @@ namespace SupremeBroccoli.Core
         public QuestBoardObject()
         {
             texture2D = Globals.GlobalContent.Load<Texture2D>(TextureFileString);
+            //texture = Globals.GlobalContent.Load<Texture2D>(TextureFileString);
         }
         public QuestBoardObject(Rectangle _rect)
         {
             texture2D = Globals.GlobalContent.Load<Texture2D>(TextureFileString);
             rectangle = _rect;
+            int colliderHeight = rectangle.Height / 2;
+
+            color = Color.White;
+            Collider2d = new Rectangle(_rect.X, _rect.Y+colliderHeight, rectangle.Width, colliderHeight);
             QuestBoardGui = new();
         }
         internal QuestBoard QuestBoardGui { get; set; }
         const string TextureFileString = "OverworldTextures/QuestBoard";
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture2D, rectangle, Color.White);
+            var origin = new Vector2(0, 0);
+            var position = new Vector2(rectangle.X, rectangle.Y);
+            var scale = new Vector2(.5f, .5f);
+            var rotation = 0f;
+
+            float customLayerDepth = (Collider2d.Center.X) / 10000f;
+
+            spriteBatch.Draw(texture2D, position, null, color, rotation, origin, scale, SpriteEffects.None, customLayerDepth);
         }
 
         internal void Update(GameTime gameTime)

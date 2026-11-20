@@ -122,9 +122,8 @@ namespace JairLib.TileGenerators
                 }
                 else
                 {
-                    float depth = space.rectangle.Y / 10000f;
+                    space.CustomLayerDepth = space.rectangle.Y / 10000f;
 
-                    space.CustomLayerDepth = depth;
 
                     if (space.CustomLayerDepth < .005f)
                         space.CustomLayerDepth = .005f;
